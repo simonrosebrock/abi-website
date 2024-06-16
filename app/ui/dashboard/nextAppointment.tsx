@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { CSSProperties } from 'react';
 
 
 export function NextAppointment() {  //{ header }: { header: string }
@@ -40,25 +41,25 @@ export function NextAppointment() {  //{ header }: { header: string }
                     <div className="grid grid-flow-row gap-5 text-center auto-cols-max scale-50 w-[70px] origin-top-right float-right">
                         <div className="flex flex-col p-2 bg-[#DCFCE7] rounded-box text-abi-black">
                             <span className="countdown font-mono text-5xl">
-                            <span style={{"--value":days}}></span>
+                            <span style={{"--value":days} as CSSProperties}></span>
                             </span>
                             days
                         </div> 
                         <div className="flex flex-col p-2 bg-[#DCFCE7] rounded-box text-abi-black">
                             <span className="countdown font-mono text-5xl">
-                            <span style={{"--value":hours}}></span>
+                            <span style={{"--value":hours} as CSSProperties}></span>
                             </span>
                             hours
                         </div> 
                         <div className="flex flex-col p-2 bg-[#DCFCE7] rounded-box text-abi-black">
                             <span className="countdown font-mono text-5xl">
-                            <span style={{"--value":minutes}}></span>
+                            <span style={{"--value":minutes} as CSSProperties}></span>
                             </span>
                             min
                         </div> 
                         <div className="flex flex-col p-2 bg-[#DCFCE7] rounded-box text-abi-black">
                             <span className="countdown font-mono text-5xl">
-                            <span style={{"--value":seconds}}></span>
+                            <span style={{"--value":seconds} as CSSProperties}></span>
                             </span>
                             sec
                         </div>
