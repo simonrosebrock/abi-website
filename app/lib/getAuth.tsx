@@ -1,17 +1,22 @@
 'use server';
 
+import { sql } from '@vercel/postgres';
 import { cookies } from 'next/headers';
 
-export const getAuth = () => {
+export const getAuth = async () => {
     const token = cookies().get('token');
     if (token) {
-        let user;
-        if (token.value === "1f00b921-3393-4b14-a0e3-971a571c7de7") {
-            user = "abi"
-        } else if (token.value === "blacklisted") {
-            user = "admin"
+        if (token.value === "blacklisted") {
+            return [token, "admin", "admin"]
         }
-        return [token, user]
+
+        const {rows} = await sql`SELECT * FROM users WHERE token = ${String(token.value)};`;
+        if (!rows[0])
+            return [token];
+
+        if (rows[0].token === token.value) {
+            return [token, "abi", rows[0].username];
+        } 
     }
     
     return [token];
