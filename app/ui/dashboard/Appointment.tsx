@@ -50,7 +50,7 @@ export function Appointment({title, description, ort, date, start_time, end_time
                                 <span className="font-bold">Verkauf</span>
                                 <div id="personen-div" className="flex gap-3 mt-2">
                                     {personen.map((name, index) => (
-                                        <div id={`${name}-${index}`} className="indicator">
+                                        <div key={index} id={`${name}-${index}`} className="indicator">
                                             <button onClick={() => {var element = document.getElementById(`${name}-${index}`) as HTMLElement; element.style.display = 'none';}} className="indicator-item badge bg-white scale-75 hover:bg-gray-300 font-bold border-black">X</button> 
                                             <div className="grid w-auto h-auto bg-white place-items-center rounded-md pl-1 pr-1">{name}</div>
                                         </div>
