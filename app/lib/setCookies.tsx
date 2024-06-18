@@ -1,9 +1,9 @@
 'use server';
-
+import { sql } from "@vercel/postgres";
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 
-export const setCookies = (formData: FormData) => {
+export const setCookies = async (formData: FormData) => {
   const username = formData.get('username');
   const password = formData.get('password');
 
@@ -14,9 +14,12 @@ export const setCookies = (formData: FormData) => {
     };
   }
 
-  if (username === "abi" && password === "THG-25") {
-    cookies().set('token', "1f00b921-3393-4b14-a0e3-971a571c7de7");
-    redirect('/dashboard');
+  const {rows} = await sql`SELECT * FROM users WHERE username = ${String(username)};`;
+  if (rows[0]) {
+    if (rows[0].password === password) {
+      cookies().set('token', rows[0].token);
+      redirect('/dashboard');
+    }
   } else if (username === "admin" && password === "access!4ADMINS") {
     cookies().set('token', "5bb13aaf-462b-42e6-8060-d01c289b8ed5");
     redirect('/dashboard');

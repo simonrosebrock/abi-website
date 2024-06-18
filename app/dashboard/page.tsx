@@ -1,32 +1,28 @@
-'use client'
 
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { getAuth } from '@/app/lib/getAuth';
-import { useEffect, useState } from 'react';
-import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { NextAppointment } from '@/app/ui/dashboard/nextAppointment';
 
-const Dashboard = () => {
-    const router = useRouter()
-    const [token, setToken] = useState<string | RequestCookie | undefined>();
-    const [user, setUser] = useState<string | RequestCookie | undefined>();
+const Dashboard = async () => {
+    const auth = await getAuth();
+    const token = auth[0];
+    const role = auth[1];
+    const user = auth[2];
 
-    useEffect(() => {
-        Promise.resolve(getAuth()).then((info) => {setToken(info[0]); setUser(info[1]); if(!info[0]) {router.push("/login")}});
-    }, [])
-
-    if (token) {
-        if (user === "abi") //abi user
-            return (
-                <div className='h-auto flex flex-wrap'>
-                    <NextAppointment/>
-                    <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
-                    <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
-                    <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
-                </div>);
-        else if (user === "admin") //admin user
-            return <h1>Welcome Admin</h1>;
+    if (!token) {
+        redirect("/login");
     }
+    
+    if (role === "abi") //abi user
+        return (
+            <div className='h-auto flex flex-wrap'>
+                <NextAppointment/>
+                <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
+                <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
+                <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
+            </div>);
+    else if (role === "admin") //admin user
+        return <h1>Welcome Admin</h1>;
     
     
 };

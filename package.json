@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/canvas-confetti": "^1.6.4",
+    "@vercel/postgres": "^0.8.0",
     "canvas-confetti": "^1.9.3",
     "next": "14.2.3",
     "nookies": "^2.5.2",
