@@ -10,7 +10,7 @@ const Termine = async() => {
     return(
         <>
             {termine.map((termin: QueryResultRow, index: any) => (
-                <Appointment title={termin.title} description={termin.description} ort={termin.ort} date={termin.date} start_time={termin.start_time} end_time={termin.end_time} personen={["Simon", "Marek", "David"]} />
+                <Appointment key={index} title={termin.title} description={termin.description} ort={termin.ort} date={termin.date} start_time={termin.start_time} end_time={termin.end_time} personen={["Simon", "Marek", "David"]} />
             ))}
         </>
         
