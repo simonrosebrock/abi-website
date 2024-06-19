@@ -142,7 +142,7 @@ export function Appointment({title, description, ort, date, start_time, end_time
                 </div>
                 {
                     gruppen.map((gruppe, index) => (
-                        <div className="w-[200px] text-abi-gray text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                        <div key={`1-${gruppe}-${id}`} className="w-[200px] text-abi-gray text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                             <span className="text-red-500">•</span>
                             <span>{` ${personen[gruppe].join(", ")}`}</span>
                         </div>
