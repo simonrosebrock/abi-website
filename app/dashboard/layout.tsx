@@ -16,11 +16,11 @@ export default function RootLayout({
 
     const pathname = usePathname()
     return(
-        <div className='h-[calc(100vh-40px)] w-[calc(100vw-40px)] bg-[#F9FAFB] m-5 rounded-xl flex'>
-            <div className="drawer block lg:hidden h-[60px]">
+        <div className='h-[calc(100vh-40px)] w-[calc(100vw-40px)] bg-[#F9FAFB] m-5 rounded-xl flex lg:flex-row flex-col'>
+            <div className="drawer block lg:hidden h-[60px] w-[calc(100vw-40px)]">
                 <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
-                    <label htmlFor="my-drawer" className="btn btn-ghost drawer-button p-[5px] w-[60px] h-[60px]">
+                    <label htmlFor="my-drawer" className="btn btn-ghost drawer-button p-[5px] h-[60px]">
                         <Image src={"/menu.png"} alt='menu' width={50} height={50}></Image>
                     </label>
                 </div> 

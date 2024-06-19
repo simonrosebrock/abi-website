@@ -4,10 +4,7 @@ import { getAuth } from '@/app/lib/getAuth';
 import { NextAppointment } from '@/app/ui/dashboard/nextAppointment';
 
 const Dashboard = async () => {
-    const auth = await getAuth();
-    const token = auth[0];
-    const role = auth[1];
-    const user = auth[2];
+    const [token, role, user] = await getAuth();
 
     if (!token) {
         redirect("/login");
