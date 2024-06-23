@@ -7,7 +7,7 @@ import { setCookies } from '../lib/setCookies';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 
-export default function login() {
+export default function Login() {
     const router = useRouter()
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState<boolean>(false);
