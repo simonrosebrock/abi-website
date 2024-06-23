@@ -2,17 +2,36 @@
 
 import { useEffect, useState } from 'react';
 import { CSSProperties } from 'react';
+import { getDateString } from '@/app/lib/miniFuncs';
+import { getClosestTermin } from '@/app/lib/dbConnection';
 
+type Personen = {
+    [key: string]: string[];
+};
 
-export function NextAppointment() {  //{ header }: { header: string }
+type AppointmentProps = {
+    title: string;
+    ort: string;
+    date: Date;
+    start_time: string;
+    end_time: string;
+    persons: Personen;
+};
+
+export function NextAppointment({title, ort, date, start_time, end_time, persons}: AppointmentProps) {
     const [days, setDays] = useState<number>()
     const [hours, setHours] = useState<number>()
     const [minutes, setMinutes] = useState<number>()
     const [seconds, setSeconds] = useState<number>()
 
+    start_time = start_time.slice(0, -3);
+    end_time = end_time.slice(0, -3);
+
+    var gruppen = Object.keys(persons)
+
     useEffect(() => {
         var intervalId = setInterval(() => {
-            var countDownDate = new Date("Jul 15, 2024 08:00:00").getTime();
+            var countDownDate = new Date(date).getTime();
             var now = new Date().getTime();
             var distance = countDownDate - now;
 
@@ -29,17 +48,29 @@ export function NextAppointment() {  //{ header }: { header: string }
 
     return(
         <div className="w-[250px] h-[250px] bg-white shadow-sm rounded-lg p-2 flex flex-col">
-                <span className="text-[#05004E] text-xl">Nächster Termin</span>
+                <h3 className="text-[#05004E] text-xl">Nächster Termin</h3>
                 
                 <div className='h-[206px] flex'>
                     <div className='flex flex-col'>
-                        <span className="text-abi-gray text-md">Waffelverkauf Decathlon</span>
-                        <span className="text-abi-gray text-md mt-auto">Mo, 15 Jul 2024</span>
-                        <span className="text-abi-gray text-md">08:00 - 10:00 Uhr</span>
+                        <h4 className="text-abi-gray text-md">{title}</h4>
+                        <span className="text-abi-gray text-md">{ort}</span>
+                        <div className='mt-auto mb-auto'>
+                            {
+                                gruppen.map((gruppe, index) => (
+                                    <div key={`${gruppe}-${index}`} className="w-[165px] text-abi-gray text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                                        <span className="text-red-500">•</span>
+                                        <span>{` ${persons[gruppe].join(", ")}`}</span>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        
+                        <span className="text-abi-gray text-md">{getDateString(date)}</span>
+                        <span className="text-abi-gray text-md">{`${start_time} - ${end_time} Uhr`}</span>
                     </div>
                     
-                    <div className="grid grid-flow-row gap-5 text-center auto-cols-max scale-50 w-[70px] origin-top-right float-right">
-                        <div className="flex flex-col p-2 bg-[#DCFCE7] rounded-box text-abi-black">
+                    <div className="grid grid-flow-row gap-5 text-center auto-cols-max scale-50 w-[70px] origin-top-right float-right z-0 ml-auto">
+                        <div className="flex flex-col p-2 bg-[#dcfce7] rounded-box text-abi-black">
                             <span className="countdown font-mono text-5xl">
                             <span style={{"--value":days} as CSSProperties}></span>
                             </span>
