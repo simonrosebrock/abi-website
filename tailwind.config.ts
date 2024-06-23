@@ -1,3 +1,4 @@
+import daisyui from 'daisyui'
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -5,6 +6,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/components/(calendar|button|ripple|spinner).js"
   ],
   theme: {
     extend: {
@@ -26,12 +28,12 @@ const config: Config = {
         'abi-black': '#151D48',
         'abi-gray': '#737791',
       },
+      screens: {
+        'xs': '450px',
+      },
     },
   },
-  plugins: [
-    require('daisyui'),
-    require('tailwind-scrollbar'),
-  ],
+  plugins: [daisyui,require('tailwind-scrollbar')],
   daisyui: {
     themes: [
       {
