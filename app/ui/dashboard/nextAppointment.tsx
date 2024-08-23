@@ -19,10 +19,28 @@ type AppointmentProps = {
 };
 
 export function NextAppointment({termin}: QueryResultRow) {
+
+    if (termin != null) {
+        useEffect(() => {
+            var intervalId = setInterval(() => {
+                var countDownDate = new Date(date).getTime();
+                var now = new Date().getTime();
+                var distance = countDownDate - now;
     
-    if (termin == null) {
-        return;
+                setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
+                setHours(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
+                
+                if (distance < 0) {
+                    clearInterval(intervalId);
+                }
+            }, 1000)
+        }, [])
+    } else {
+        return
     }
+    
 
     var title = termin.title;
     var ort = termin.ort;
