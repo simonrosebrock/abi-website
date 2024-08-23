@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { CSSProperties } from 'react';
 import { getDateString } from '@/app/lib/miniFuncs';
 import { getClosestTermin } from '@/app/lib/dbConnection';
+import { QueryResultRow } from '@vercel/postgres';
 
 type Personen = {
     [key: string]: string[];
@@ -17,8 +18,17 @@ type AppointmentProps = {
     end_time: string;
     persons: Personen;
 };
-
-export function NextAppointment({title, ort, date, start_time, end_time, persons}: AppointmentProps) {
+ //{title, ort, date, start_time, end_time, persons}: AppointmentProps
+export function NextAppointment({termin}: QueryResultRow) {
+    if (termin == null) {
+        return;
+    }
+    var title = termin.title;
+    var ort = termin.ort;
+    var date = termin.date;
+    var start_time = termin.start_time;
+    var end_time = termin.end_time;
+    var persons = termin.helfer;
     const [days, setDays] = useState<number>()
     const [hours, setHours] = useState<number>()
     const [minutes, setMinutes] = useState<number>()
@@ -96,7 +106,6 @@ export function NextAppointment({title, ort, date, start_time, end_time, persons
                         </div>
                     </div>
             </div>
-
         </div>
     );
 }
