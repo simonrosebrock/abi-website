@@ -13,13 +13,14 @@ const Dashboard = async () => {
         redirect("/login");
     }
     
-    if (role === "abi") //abi user
+    // <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
+    // <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
+    // <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
+
+    if (role === "abi")
         return (
             <div className='grow flex flex-wrap gap-5 p-5 max-h-[calc(100vh-103px)] lg:max-h-[calc(100vh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal'>
-                <NextAppointment title={termin.title} ort={termin.ort} date={termin.date} start_time={termin.start_time} end_time={termin.end_time} persons={termin.helfer}/>
-                <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
-                <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
-                <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
+                <NextAppointment termin={termin}/> 
             </div>);
     else if (role === "admin") //admin user
         return <h1>Welcome Admin</h1>;
