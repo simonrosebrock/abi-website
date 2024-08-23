@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { CSSProperties } from 'react';
 import { getDateString } from '@/app/lib/miniFuncs';
-import { getClosestTermin } from '@/app/lib/dbConnection';
 import { QueryResultRow } from '@vercel/postgres';
 
 type Personen = {
@@ -18,11 +17,13 @@ type AppointmentProps = {
     end_time: string;
     persons: Personen;
 };
- //{title, ort, date, start_time, end_time, persons}: AppointmentProps
+
 export function NextAppointment({termin}: QueryResultRow) {
+    
     if (termin == null) {
         return;
     }
+
     var title = termin.title;
     var ort = termin.ort;
     var date = termin.date;
