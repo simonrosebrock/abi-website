@@ -6,16 +6,7 @@ import { getDateString } from '@/app/lib/miniFuncs';
 import { QueryResultRow } from '@vercel/postgres';
 
 type Personen = {
-    [key: string]: string[];
-};
-
-type AppointmentProps = {
-    title: string;
-    ort: string;
-    date: Date;
-    start_time: string;
-    end_time: string;
-    persons: Personen;
+    [key: string]: String[];
 };
 
 export function NextAppointment({termin}: QueryResultRow) {
@@ -29,7 +20,6 @@ export function NextAppointment({termin}: QueryResultRow) {
         var end_time = termin.end_time;
         persons = termin.helfer;
     }
-
 
     const [days, setDays] = useState<number>()
     const [hours, setHours] = useState<number>()
@@ -77,7 +67,7 @@ export function NextAppointment({termin}: QueryResultRow) {
                                     gruppen.map((gruppe, index) => (
                                         <div key={`${gruppe}-${index}`} className="w-[165px] text-abi-gray text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                                             <span className="text-red-500">•</span>
-                                            <span>{` ${persons.gruppe.join(", ")}`}</span>
+                                            <span>{` ${persons[gruppe as string].join(", ")}`}</span>
                                         </div>
                                     ))
                                 }
