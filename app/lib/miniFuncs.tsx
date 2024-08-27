@@ -19,7 +19,7 @@ export function getDateString(date: Date) {
     }
 
     if (date) {
-        return `${weekDayToString(date.getDay()+1)}, ${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
+        return `${weekDayToString(date.getDay())}, ${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
     }
     
 }
