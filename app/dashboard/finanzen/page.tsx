@@ -1,7 +1,6 @@
 import { getAusgaben, getEinnahmen } from "@/app/lib/dbConnection";
 import PieChart from "@/app/ui/finanzen/pieChart";
 import RevenueTrackerBig from "@/app/ui/finanzen/revenueTrackerBig";
-import { QueryResultRow } from "@vercel/postgres";
 import { getAuth } from "@/app/lib/getAuth";
 import EditFinanzen from "@/app/ui/finanzen/editFinanzen";
 

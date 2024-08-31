@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} background max-h-screen overflow-auto scrollbar-none`}>{children}</body>
+      <body className={`${poppins.className} background`}>{children}</body>
     </html>
   );
 }

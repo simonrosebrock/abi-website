@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { CSSProperties } from 'react';
 import { getDateString } from '@/app/lib/miniFuncs';
 import { QueryResultRow } from '@vercel/postgres';
@@ -25,6 +25,8 @@ export default function NextAppointment({termin}: QueryResultRow) {
     const [hours, setHours] = useState<number>()
     const [minutes, setMinutes] = useState<number>()
     const [seconds, setSeconds] = useState<number>()
+
+    const dateRef = useRef(date);
     
     var gruppen: string[] = [];
     if (termin != null) {
@@ -36,7 +38,7 @@ export default function NextAppointment({termin}: QueryResultRow) {
 
     useEffect(() => {
         var intervalId = setInterval(() => {
-            var countDownDate = new Date(date).getTime();
+            var countDownDate = new Date(dateRef.current).getTime();
             var now = new Date().getTime();
             var distance = countDownDate - now;
 

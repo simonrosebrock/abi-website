@@ -11,6 +11,6 @@ export default async function RootLayout({children,}: Readonly<{children: React.
     }
 
     return(
-        <Sidebar children={children} user={user}/>
+        <Sidebar user={user}>{children}</Sidebar>
     )
 }
