@@ -1,4 +1,4 @@
-import { QueryResultRow } from "@vercel/postgres";
+
 
 export default function RevenueTrackerBig({ausgaben, einnahmen}: {ausgaben: number, einnahmen: number}) {
     return(
