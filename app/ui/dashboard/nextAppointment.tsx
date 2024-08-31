@@ -6,10 +6,10 @@ import { getDateString } from '@/app/lib/miniFuncs';
 import { QueryResultRow } from '@vercel/postgres';
 
 type Personen = {
-    [key: string]: String[];
+    [key: string]: string[];
 };
 
-export function NextAppointment({termin}: QueryResultRow) {
+export default function NextAppointment({termin}: QueryResultRow) {
     var date = new Date("2024-08-31T22:00:00.000Z");
     var persons: Personen = {};
     if (termin != null) {
@@ -26,7 +26,7 @@ export function NextAppointment({termin}: QueryResultRow) {
     const [minutes, setMinutes] = useState<number>()
     const [seconds, setSeconds] = useState<number>()
     
-    var gruppen: String[] = [];
+    var gruppen: string[] = [];
     if (termin != null) {
         start_time = start_time.slice(0, -3);
         end_time = end_time.slice(0, -3);

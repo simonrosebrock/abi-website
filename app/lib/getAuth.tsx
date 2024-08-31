@@ -15,7 +15,7 @@ export const getAuth = async () => {
             return [token];
 
         if (rows[0].token === token.value) {
-            return [token, "abi", rows[0].username];
+            return [token, "user", rows[0].username];
         } 
     }
     
