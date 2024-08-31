@@ -21,6 +21,10 @@ export const getUsers = async () => {
     return users;
 }
 
+export const changePassword = async (token: string, password: string) => {
+    await sql`UPDATE users SET password = ${password} WHERE token = ${token}`
+}
+
 type Personen = {
     [key: string]: string[];
 };
@@ -51,4 +55,29 @@ export const deleteTermin = async (id: string) => {
 export const updateTermin = async (id: string, termin: Termin) => {
     console.log(id)
     await sql`UPDATE termine SET title = ${termin.title}, description = ${termin.description}, ort = ${termin.ort}, date = ${termin.date}, start_time = ${termin.start_time}, end_time = ${termin.end_time}, helfer = ${termin.helfer} WHERE id = ${id}`
+}
+
+type FinanzenTable = {name: string, money: number}[]
+const einnahmenToken = '0956deb0-141b-48a6-b7bd-5181fc205f76'
+
+export const getAusgaben = async () => {
+    noStore();
+    const rows = await sql`SELECT name, money FROM finanzen WHERE NOT token = ${einnahmenToken}`
+    return rows.rows as FinanzenTable; 
+}
+
+export const getEinnahmen = async () => {
+    noStore();
+    const rows = await sql`SELECT money FROM finanzen WHERE token = ${einnahmenToken}`
+    return rows.rows[0].money as number;
+}
+
+export const updateFinanzen = async (finanzen: FinanzenTable, einnahmen: number) => {
+    if (finanzen.length > 1) {
+        await sql`DELETE FROM finanzen WHERE NOT token = ${einnahmenToken}`
+        await sql`UPDATE finanzen SET money = ${einnahmen} WHERE token = ${einnahmenToken}`
+        for (const row of finanzen) {
+            await sql`INSERT INTO finanzen (name, money) VALUES (${row.name}, ${row.money})`
+        }
+    }
 }

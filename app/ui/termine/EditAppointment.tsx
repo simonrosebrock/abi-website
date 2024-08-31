@@ -41,7 +41,7 @@ export const EditAppointment = ({termin_id, id, title, description, ort, start_t
                         <form method="dialog">
                             <button className="btn" onClick={async (event) => {
                                 event.preventDefault();
-                                const form = document.getElementById("edit-form") as HTMLFormElement
+                                const form = document.getElementById(`edit-form-${id}`) as HTMLFormElement
                                 var formData = new FormData(form);
 
                                 var title_temp = (formData.get('title') as string).trim();
