@@ -14,6 +14,7 @@ type AusgabenRow = {name: string, money: number}
 
 export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, ausgaben: FinanzenTable}) {
     const [localAusgaben, setLocalAusgaben] = useState(ausgaben);
+    const [localEinnahmen, setLocalEinnahmen] = useState(einnahmen);
     const router = useRouter();
 
     const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,13 +26,18 @@ export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, 
         });
       };
     
+    
+    
     return(
         <div className="min-w-[250px] w-[500px] h-[580px] bg-white shadow-sm rounded-lg p-10 flex flex-col">
             <div className="flex flex-col overflow-auto scrollbar-none mb-8">
                 <h2 className="text-[#05004E] text-xl mb-4">Einnahmen</h2>
                 <div>
                     <label className="input input-bordered flex items-center">
-                        <input type="number" name='einnahmen' placeholder="Einnahmen" className="grow" defaultValue={einnahmen}/>
+                        <input type="number" name='einnahmen' placeholder="Einnahmen" className="grow" value={localEinnahmen} onChange={e => {
+                            const { name, value } = e.target;
+                            setLocalEinnahmen(Number(value));
+                        }}/>
                     </label>
                 </div>
                 
@@ -73,10 +79,10 @@ export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, 
                 }}>Zurück</button>
                 <button className="btn" onClick={() => {
                     const localCleanedAusgaben = localAusgaben.filter(item => !(item.name === "" && item.money === 0));
-                    if (JSON.stringify(ausgaben) === JSON.stringify(localCleanedAusgaben)) {
+                    if (JSON.stringify(ausgaben) === JSON.stringify(localCleanedAusgaben) && einnahmen == localEinnahmen) {
                         return
                     }
-                    updateFinanzen(localCleanedAusgaben, einnahmen);
+                    updateFinanzen(localCleanedAusgaben, localEinnahmen);
                 }}>Speichern</button>
             </div>
         </div>
