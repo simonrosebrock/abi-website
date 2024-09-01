@@ -2,7 +2,6 @@
 
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
-import { QueryResultRow } from "@vercel/postgres";
 
 type FinanzenTable = {name: string, money: number}[]
 
@@ -49,7 +48,7 @@ export default function PieChart({ausgaben}: {ausgaben: FinanzenTable}) {
             
             chartRef.current.chart = newChart
         }
-    }, [])
+    }, [ausgaben])
 
     return(
         <div className="w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-white shadow-sm rounded-lg p-2 flex flex-col items-center">
