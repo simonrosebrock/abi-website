@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateFinanzen } from "@/app/lib/dbConnection";
-import Document from "next/document";
-import { reset } from "canvas-confetti";
 
 const plusSVG = (
     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 50 50">
@@ -17,6 +15,15 @@ type AusgabenRow = {name: string, money: number}
 export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, ausgaben: FinanzenTable}) {
     const [localAusgaben, setLocalAusgaben] = useState(ausgaben);
     const router = useRouter();
+
+    const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setLocalAusgaben(prevAusgaben => {
+          const newAusgaben = [...prevAusgaben];
+          newAusgaben[index] = { ...newAusgaben[index], [name]: value };
+          return newAusgaben;
+        });
+      };
     
     return(
         <div className="min-w-[250px] w-[500px] h-[580px] bg-white shadow-sm rounded-lg p-10 flex flex-col">
@@ -24,7 +31,7 @@ export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, 
                 <h2 className="text-[#05004E] text-xl mb-4">Einnahmen</h2>
                 <div>
                     <label className="input input-bordered flex items-center">
-                        <input type="number" name='title' placeholder="Einnahmen" className="grow" defaultValue={einnahmen}/>
+                        <input type="number" name='einnahmen' placeholder="Einnahmen" className="grow" defaultValue={einnahmen}/>
                     </label>
                 </div>
                 
@@ -35,23 +42,18 @@ export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, 
                         localAusgaben.map((row: AusgabenRow, index: number) => (
                             <div className="mb-4 xs:flex" key={index}>
                                 <label className="input input-bordered flex items-center min-w-[150px]">
-                                    <input type="text" name='title' placeholder="Name" className="grow" defaultValue={row.name}/>
+                                    <input type="text" name='name' placeholder="Name" className="grow" value={row.name} onChange={e => handleInputChange(index, e)}/>
                                 </label>
                                 <div className="flex xs:ml-1 xs:w-[170px]">
                                     <label className="input input-bordered flex items-center grow overflow-hidden">
-                                        <input type="number" name='title' placeholder="Kosten" className="grow xs:w-14" defaultValue={row.money}/>
+                                        <input type="number" name='money' placeholder="Kosten" className="grow xs:w-14" value={row.money} onChange={e => handleInputChange(index, e)}/>
                                     </label>
                                     <button className="btn btn-error ml-1 shrink-0" onClick={() => {
                                         setLocalAusgaben(prevAusgaben => {
                                             const newAusgaben = [...prevAusgaben];
                                             newAusgaben.splice(index, 1);
-                                            console.log(newAusgaben)
                                             return newAusgaben;
                                         });
-
-                                        setTimeout(() => {
-                                            resetInputValues();
-                                        }, 0)
                                     }}>X</button>
                                 </div>
                             </div>
@@ -68,47 +70,16 @@ export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, 
             <div className="flex justify-between">
                 <button className="btn" onClick={() => {
                     setLocalAusgaben(ausgaben)
-
-                    setTimeout(() => {
-                        resetInputValues();
-                    }, 0)
                 }}>Zurück</button>
                 <button className="btn" onClick={() => {
-                    let localAusgabenTemp = [] as FinanzenTable;
-                    const ausgaben_div = (document.getElementById('ausgaben') as HTMLElement).children;
-                    Array.from(ausgaben_div).forEach(element => {
-                        let ausgaben_row = {name: "", money: 0};
-                        var labels = element.querySelectorAll('label');
-                        ausgaben_row.name = labels[0].getElementsByTagName('input')[0].value;
-                        ausgaben_row.money = labels[1].getElementsByTagName('input')[0].valueAsNumber;
-                        localAusgabenTemp.push(ausgaben_row);
-                    });
-
-                    
-                    setLocalAusgaben(localAusgabenTemp);
-
-                    const localCleanedAusgaben = localAusgabenTemp.filter(item => !(item.name === "" && item.money === 0));
-
+                    const localCleanedAusgaben = localAusgaben.filter(item => !(item.name === "" && item.money === 0));
                     if (JSON.stringify(ausgaben) === JSON.stringify(localCleanedAusgaben)) {
                         return
                     }
                     updateFinanzen(localCleanedAusgaben, einnahmen);
-                    router.refresh();
                 }}>Speichern</button>
             </div>
-            
         </div>
         
     );
-}
-
-function resetInputValues() {
-    const ausgaben_div = (document.getElementById('ausgaben') as HTMLElement).children;
-    Array.from(ausgaben_div).forEach(element => {
-        var labels = element.querySelectorAll('label');
-        var ausgaben_name = labels[0].getElementsByTagName('input')[0];
-        var ausgaben_money = labels[1].getElementsByTagName('input')[0];
-        ausgaben_name.value = ausgaben_name.defaultValue;
-        ausgaben_money.value = ausgaben_money.defaultValue;
-    });
 }
