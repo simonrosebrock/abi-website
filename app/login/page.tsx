@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { setCookies } from '../lib/setCookies';
+import { setCookies } from '@/app/lib/setCookies';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 

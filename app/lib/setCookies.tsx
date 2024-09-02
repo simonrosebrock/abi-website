@@ -9,8 +9,8 @@ type response = {
 }
 
 export const setCookies = async (formData: FormData) => {
-  const username = formData.get('username');
-  const password = formData.get('password');
+  const username = (formData.get('username') as string).trim();
+  const password = (formData.get('password') as string).trim();
 
   if (!username || !password) {
     return {

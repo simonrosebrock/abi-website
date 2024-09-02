@@ -21,10 +21,13 @@ export default function RevenueTrackerBig({ausgaben, einnahmen}: {ausgaben: numb
 
 const ProgressBar = ({value, max}: {value: number, max: number}) => {
     var percentage = Math.round(100/max*value);
+    if (percentage > 100) {
+        percentage = 100;
+    }
     return(
         <>
             <div className="w-full bg-gray-200 rounded-full h-20 overflow-hidden">
-                <div className={`bg-gradient-to-r from-blue-700 to-cyan-300 text-xs font-medium text-blue-100 text-center p-0.5 w-[73%] rounded-full h-20 flex items-center justify-center`} style={{width: percentage+"%"}}>
+                <div className={`bg-gradient-to-r from-blue-700 to-cyan-300 text-xs font-medium text-blue-100 text-center p-0.5 rounded-full h-20 flex items-center justify-center`} style={{width: percentage+"%"}}>
                     <span className="text-white text-2xl">{percentage + "%"}</span>
                 </div>
             </div>
