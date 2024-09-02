@@ -78,21 +78,8 @@ export const EditAppointment = ({termin_id, id, title, description, ort, start_t
                                         console.log(updated_persons)
                                     }
                                 }
-
-
-                                console.log("persons",updated_persons)
-                                console.log("gruppen", gruppen)
-                                
                                 
                                 setPersons(updated_persons);
-
-                                console.log(persons)
-                                
-
-                                const helferObject: { [key: string]: any } = {};
-                                    gruppen.map(name => {
-                                    helferObject[name] = [];
-                                });
 
                                 const updated_termin = {
                                     'title': title_temp,
@@ -101,7 +88,7 @@ export const EditAppointment = ({termin_id, id, title, description, ort, start_t
                                     'start_time': start_time_temp,
                                     'end_time': end_time_temp,
                                     'date': date_temp,
-                                    'helfer': JSON.stringify(helferObject)
+                                    'helfer': JSON.stringify(updated_persons)
                                 }
 
                                 updateTermin(termin_id, updated_termin);

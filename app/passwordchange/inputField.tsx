@@ -8,8 +8,7 @@ export function InputField({token, user}: {token: string, user: string}) {
 
     return(
         <form action={async (formData: FormData) => {
-            console.log(formData)
-            const password = formData.get('password')
+            const password = (formData.get('password') as string).trim();
             if (password === "" || password == null) {
                 return
             }
@@ -21,7 +20,7 @@ export function InputField({token, user}: {token: string, user: string}) {
                 <input type="text" name='username' placeholder="Username" className="grow" value={user} readOnly/>
             </label>
             <label className="input input-bordered flex items-center m-10">
-                <input type="text" name='password' placeholder="Password" className="grow"/>
+                <input type="text" name='password' placeholder="New Password" className="grow"/>
             </label>
             </div>
             

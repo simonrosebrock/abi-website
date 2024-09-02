@@ -57,7 +57,7 @@ export default function NextAppointment({termin}: QueryResultRow) {
         return(<></>);
     } else {
         return(
-            <div className="w-[250px] h-[250px] bg-white shadow-sm rounded-lg p-2 flex flex-col">
+            <div className="w-[250px] h-[250px] bg-white shadow-sm rounded-lg p-2 flex flex-col ">
                     <h3 className="text-[#05004E] text-xl">Nächster Termin</h3>
                     
                     <div className='h-[206px] flex'>
@@ -79,7 +79,7 @@ export default function NextAppointment({termin}: QueryResultRow) {
                             <span className="text-abi-gray text-md">{`${start_time} - ${end_time} Uhr`}</span>
                         </div>
                         
-                        <div className="grid grid-flow-row gap-5 text-center auto-cols-max scale-50 w-[70px] origin-top-right float-right z-0 ml-auto">
+                        <div className="grid grid-flow-row gap-5 text-center auto-cols-max scale-50 w-[70px] origin-top-right float-right ml-auto">
                             <div className="flex flex-col p-2 bg-[#dcfce7] rounded-box text-abi-black">
                                 <span className="countdown font-mono text-5xl">
                                 <span style={{"--value":days} as CSSProperties}></span>

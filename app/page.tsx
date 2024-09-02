@@ -27,7 +27,7 @@ export default function Home() {
           <span className="text-8xl text-abi-black">ABI 25</span>
           <span className="absolute text-4xl rotate-12 text-abi-black ml-96">THG</span>
         </div>
-        <Link href={"/dashboard"} className="btn btn-primary w-64 h-20 text-3xl text-white lg:ml-auto lg:mr-10 ">{"Login"}{pfeilSVG}</Link>
+        <Link href={"/dashboard"} className="btn btn-primary w-64 h-20 text-3xl text-white lg:ml-auto lg:mr-10 mt-10 lg:mt-0">{"Login"}{pfeilSVG}</Link>
       </div>
       {/* <div className="w-auto ml-10 mr-10 mt-10">
         <div className="h-96 w-96 bg-white rounded-md">Lorem Ipsum Dolor</div>

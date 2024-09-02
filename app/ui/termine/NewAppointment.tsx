@@ -214,7 +214,7 @@ export const GruppenSettings = ({id, gruppen, setGruppen}: GruppenSettingsProps)
                     </svg>
                 </button>
                 <div id={`gruppe-input-div-${id}`} className="bg-gray-100 hidden flex-row rounded-lg items-center">
-                    <input id={`gruppe-input-${id}`} type="text" className="input input-xs bg-gray-100 h-[32px] w-32 text-base" onSubmit={() => console.log("hi")}/>
+                    <input id={`gruppe-input-${id}`} type="text" className="input input-xs bg-gray-100 h-[32px] w-32 text-base"/>
                     <button type="button" onClick={() => {
                         const self_input = document.getElementById(`gruppe-input-${id}`) as HTMLInputElement
                         var value = self_input.value.trim();
@@ -236,9 +236,7 @@ export const GruppenSettings = ({id, gruppen, setGruppen}: GruppenSettingsProps)
                         }
                     }} className="btn btn-ghost btn-circle btn-xs ml-2 mr-2 bg-gray-200">{plusSVG}</button>
                 </div>
-                
             </div>
-            
         </div>
     )
     

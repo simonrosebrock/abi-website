@@ -14,7 +14,7 @@ export default function Sidebar({children, user}: Readonly<{children: React.Reac
 
     return(
         <div className='h-[calc(100vh-40px)] w-[calc(100vw-40px)] bg-[#F9FAFB] m-5 rounded-xl flex lg:flex-row flex-col'>
-            <div className="drawer block lg:hidden h-[60px] w-[calc(100vw-40px)]">
+            <div className="drawer block lg:hidden h-[60px] w-[calc(100vw-40px)] z-10">
                 <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
                     <label htmlFor="my-drawer" className="btn btn-ghost drawer-button p-[5px] h-[60px]">
