@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react"
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
@@ -14,9 +15,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+  return (    
     <html lang="en">
-      <body className={`${poppins.className} background`}>{children}</body>
+      <body className={`${poppins.className} background`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
