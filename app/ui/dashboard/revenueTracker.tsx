@@ -70,9 +70,9 @@ function CardPrice({value, max, checkpoints}: {value: number, max: number, check
                 <h3 className="text-[#05004E] text-2xl">Überschuss</h3>
                 <DescriptionModal title="Erklärung" description={
                     <>
-                        Das gesamte Geld was wir "überschüssig" verdienen senkt den Kartenpreis. <br /> 
-                        Dieses Geld wird also dazu genutzt die Variablen Kosten (Catering & Getränke) zu senken.
-                    </>
+                    Wenn die Einnahmen die Fixkosten (Wichtig: können aufgrund von Kostenerhöhungen bei der Hohensyburg noch steigen) überschreiten, 
+                    könnten diese Überschüsse zur Senkung des Kartenpreises verwendet werden. 
+                </>
                 }/>
                 <button className="btn btn-circle btn-ghost btn-xs self-start absolute ml-[200px] mt-1" onClick={() => {
                     var modal = document.getElementById(`description_modal_money`) as HTMLDialogElement; 
