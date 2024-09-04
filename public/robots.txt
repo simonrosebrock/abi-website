@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://abi-thg.vercel.app
-
-# Sitemaps
-Sitemap: https://abi-thg.vercel.app/sitemap.xml
