@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postbuild": "next-sitemap"
+    "lint": "next lint"
   },
   "dependencies": {
     "@types/canvas-confetti": "^1.6.4",
@@ -17,7 +16,6 @@
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.31",
     "next": "14.2.3",
-    "next-sitemap": "^4.2.3",
     "nookies": "^2.5.2",
     "react": "^18",
     "react-dom": "^18",
