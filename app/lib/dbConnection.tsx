@@ -53,7 +53,6 @@ export const deleteTermin = async (id: string) => {
 }
 
 export const updateTermin = async (id: string, termin: Termin) => {
-    console.log(id)
     await sql`UPDATE termine SET title = ${termin.title}, description = ${termin.description}, ort = ${termin.ort}, date = ${termin.date}, start_time = ${termin.start_time}, end_time = ${termin.end_time}, helfer = ${termin.helfer} WHERE id = ${id}`
 }
 
@@ -78,6 +77,31 @@ export const updateFinanzen = async (finanzen: FinanzenTable, einnahmen: number)
         await sql`UPDATE finanzen SET money = ${einnahmen} WHERE token = ${einnahmenToken}`
         for (const row of finanzen) {
             await sql`INSERT INTO finanzen (name, money) VALUES (${row.name}, ${row.money})`
+        }
+    }
+}
+
+type CheckpointsTable = {money: number, cardprice: number}[]
+const goalToken = '39166ec5-b68d-4fd0-81e0-2b3eebe2488a'
+
+export const getExcessGoal = async () => {
+    noStore();
+    const rows = await sql`SELECT money FROM checkpoints WHERE id = ${goalToken}`
+    return rows.rows[0].money as number;
+}
+
+export const getCheckpoints = async () => {
+    noStore();
+    const rows = await sql`SELECT money, cardprice FROM checkpoints WHERE NOT id = ${goalToken}`
+    return rows.rows as CheckpointsTable;
+}
+
+export const updateCheckpoints = async (checkpoints: CheckpointsTable, goal: number) => {
+    if (checkpoints.length > 1) {
+        await sql`DELETE FROM checkpoints WHERE NOT id = ${goalToken}`
+        await sql`UPDATE checkpoints SET money = ${goal} WHERE id = ${goalToken}`
+        for (const row of checkpoints) {
+            await sql`INSERT INTO checkpoints (money, cardprice) VALUES (${row.money}, ${row.cardprice})`
         }
     }
 }

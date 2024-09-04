@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from 'next/link';
+import HorizontalMottos from "@/app/ui/homepage/horizontalMottos";
 
 const pfeilSVG = (
   <svg version="1.0" xmlns="http://www.w3.org/2000/svg"width="32.000000pt" height="32.000000pt" viewBox="0 0 1280.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
@@ -21,7 +22,7 @@ const pfeilSVG = (
 
 export default function Home() {
   return (
-    <>
+    <div className="overflow-auto scrollbar-none min-h-full h-full">
       <div className="flex items-center mt-10 relative flex-col lg:flex-row">
         <div className="flex justify-center scale-[80%] sm:scale-100 lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
           <span className="text-8xl text-abi-black">ABI 25</span>
@@ -29,14 +30,9 @@ export default function Home() {
         </div>
         <Link href={"/dashboard"} className="btn btn-primary w-64 h-20 text-3xl text-white lg:ml-auto lg:mr-10 mt-10 lg:mt-0">{"Login"}{pfeilSVG}</Link>
       </div>
-      {/* <div className="w-auto ml-10 mr-10 mt-10">
-        <div className="h-96 w-96 bg-white rounded-md">Lorem Ipsum Dolor</div>
-        <div className="w-auto h-80 bg-white"></div>
-      </div> */}
-    </>
+      <div className="p-10">
+        {/* <HorizontalMottos/> */}
+      </div>
+    </div>
   );
 }
-{/* <div className="flex flex-col items-center mt-20 sm:mt-40 sm:flex-row sm:justify-around space-y-4">
-<Link href={"/abimotto"} className="btn bg-white text-abi-gray w-64 h-20 text-3xl">Abimotto</Link>
-<Link href={"/mottowoche"} className="btn bg-white text-abi-gray w-64 h-20 text-3xl">Mottowoche</Link>
-</div> */}

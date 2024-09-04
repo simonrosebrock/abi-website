@@ -73,9 +73,7 @@ export const EditAppointment = ({termin_id, id, title, description, ort, start_t
                                 for (let gruppe of gruppen) {
                                     if (!(gruppe in persons)) {
                                         let key = gruppe;
-                                        console.log(key)
                                         updated_persons[key] = [];
-                                        console.log(updated_persons)
                                     }
                                 }
                                 
