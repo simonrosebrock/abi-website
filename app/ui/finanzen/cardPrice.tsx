@@ -69,7 +69,13 @@ const Checkpoint = ({value, max, cardprice}: {value: number, max: number, cardpr
     }
 
     useEffect(() => {
-        calculatePercentage();
+        const screenWidth = window.innerWidth;
+        let newPercentage = Math.round(360 - (1 / max * value * 360) - 28);
+        if (screenWidth < 768) {
+            newPercentage = Math.round(150 - (1 / max * value * 150) - 22); 
+        }
+        setPercentage(newPercentage);
+        
         window.addEventListener('resize', calculatePercentage);
     }, [value, max])
 
