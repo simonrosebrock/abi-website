@@ -30,7 +30,7 @@ const Dashboard = async () => {
     // <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
     if (role === "user")
         return (
-            <div className='grow flex flex-wrap gap-5 p-5 max-h-[calc(100vh-103px)] lg:max-h-[calc(100vh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal'>
+            <div className='grow flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal'>
                 <NextAppointment termin={termin}/> 
                 <RevenueTracker value={einnahmen} max={ausgabenSum} excessGoal={excessGoal} checkpoints={checkpoints}/>
             </div>);
