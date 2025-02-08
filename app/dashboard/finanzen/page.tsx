@@ -25,7 +25,7 @@ const Finanzen = async () => {
 
     if (user === "admin") {
         return(
-            <div className="flex flex-wrap gap-5 p-5 max-h-[calc(100vh-103px)] lg:max-h-[calc(100vh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
+            <div className="flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
                 <EditFinanzen einnahmen={einnahmen} ausgaben={ausgaben}/>
                 <EditCardPrices checkpoints={checkpoints} excessGoal={excessGoal} />
             </div>
@@ -45,7 +45,7 @@ const Finanzen = async () => {
     // ]
 
     return(
-        <div className="flex flex-wrap gap-5 p-5 max-h-[calc(100vh-103px)] lg:max-h-[calc(100vh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
+        <div className="flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
             <RevenueTrackerBig ausgaben={ausgabenSum} einnahmen={einnahmen} />
             <PieChart ausgaben={ausgaben}/>
             <CardPrice value={uberschuss_einnahmen} max={excessGoal} checkpoints={checkpoints}/>

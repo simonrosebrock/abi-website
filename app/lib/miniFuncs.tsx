@@ -23,3 +23,7 @@ export function getDateString(date: Date) {
     }
     
 }
+
+export function getPrettyStudent(student: string) {
+    return student.replaceAll("_", " ").split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+}

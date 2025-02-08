@@ -46,7 +46,7 @@ const Termine = async () => {
     //console.log(termine);
 
     return(
-        <div className="grow flex flex-wrap gap-5 p-5 max-h-[calc(100vh-103px)] lg:max-h-[calc(100vh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
+        <div className="grow flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
             {
                 user === "admin" ? <NewAppointment termine={termine} setTermine={setTermine} /> : <></>
             }
@@ -62,7 +62,7 @@ const Termine = async () => {
 
     // if (loaded) {
     //     return(
-    //         <div className="grow flex flex-wrap gap-5 p-5 max-h-[calc(100vh-103px)] lg:max-h-[calc(100vh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
+    //         <div className="grow flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
     //             {
     //                 user === "admin" ? <NewAppointment termine={termine} setTermine={setTermine} /> : <></>
     //             }
@@ -74,7 +74,7 @@ const Termine = async () => {
     //     );
     // }
     // return (
-    //     <div className="grow flex flex-wrap gap-5 p-5 max-h-[calc(100vh-103px)] lg:max-h-[calc(100vh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
+    //     <div className="grow flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
     //         <div className="skeleton w-[250px] h-[250px] rounded-lg"></div>
     //         <div className="skeleton w-[250px] h-[250px] rounded-lg"></div>
     //         <div className="skeleton w-[250px] h-[250px] rounded-lg"></div>
