@@ -81,9 +81,16 @@ export default function NextAppointment({termin}: QueryResultRow) {
                         
                         <div className="grid grid-flow-row gap-5 text-center auto-cols-max scale-50 w-[70px] origin-top-right float-right ml-auto">
                             <div className="flex flex-col p-2 bg-[#dcfce7] rounded-box text-abi-black">
-                                <span className="countdown font-mono text-5xl">
-                                <span style={{"--value":days} as CSSProperties}></span>
-                                </span>
+                                {
+                                    days! > 99 ? 
+                                    <span className='font-mono text-3xl'>
+                                        99+
+                                    </span>
+                                    : 
+                                    <span className="countdown font-mono text-5xl">
+                                        <span style={{"--value":days} as CSSProperties}></span>
+                                    </span> 
+                                }
                                 days
                             </div> 
                             <div className="flex flex-col p-2 bg-[#DCFCE7] rounded-box text-abi-black">
