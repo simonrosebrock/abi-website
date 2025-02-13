@@ -59,17 +59,19 @@ const ProgressBar = ({value, max}: {value: number, max: number}) => {
 const Checkpoint = ({value, max, cardprice}: {value: number, max: number, cardprice: number}) => {
     const [percentage, setPercentage] = useState(0);
     
-    const calculatePercentage = () => {
-        const screenWidth = window.innerWidth;
-        let newPercentage = Math.round(360 - (1 / max * value * 360) - 28);
-        if (screenWidth < 768) {
-            newPercentage = Math.round(150 - (1 / max * value * 150) - 22); 
-        }
-        setPercentage(newPercentage);
-    }
-
+    
     useEffect(() => {
+        const calculatePercentage = () => {
+            const screenWidth = window.innerWidth;
+            let newPercentage = Math.round(360 - (1 / max * value * 360) - 28);
+            if (screenWidth < 768) {
+                newPercentage = Math.round(150 - (1 / max * value * 150) - 22); 
+            }
+            setPercentage(newPercentage);
+        }
+
         calculatePercentage();
+    
 
         window.addEventListener('resize', calculatePercentage);
     }, [value, max])

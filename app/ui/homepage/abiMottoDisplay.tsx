@@ -33,9 +33,7 @@ export function Chat() {
       <div className="chat chat-end absolute right-0">
       <div className="chat-image avatar">
           <div className="w-10 rounded-full">
-            <img
-              alt="avatar"
-              src="/thg-media.jpg" />
+            <Image src="/thg-media.jpg" alt="avatar" width={50} height={50}/>
           </div>
         </div>
         <div className="chat-header">THG</div>
@@ -44,9 +42,7 @@ export function Chat() {
       <div className="chat chat-start absolute top-16 md:top-12">
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">
-            <img
-              alt="avatar"
-              src="/ChatGPT-Logo.png" />
+            <Image src="/ChatGPT-Logo.png" alt="avatar" width={50} height={50}/>
           </div>
         </div>
         <div className="chat-header">ChatGPT</div>

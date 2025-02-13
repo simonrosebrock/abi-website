@@ -53,7 +53,7 @@ interface UploadFormProps {
     reset: () => void;
   }
   
-  const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ user }, ref) => {
+const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ user }, ref) => {
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const [currentFile, setCurrentFile] = useState<number>(0);
     const [currentState, setCurrentState] = useState<string>("");
@@ -96,7 +96,7 @@ interface UploadFormProps {
         }
     };
 
-    const handleFileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         
         if (selectedFiles === null) {
@@ -181,3 +181,4 @@ interface UploadFormProps {
     
 });
 
+UploadForm.displayName = 'UploadForm';
