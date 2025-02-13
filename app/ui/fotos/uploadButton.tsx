@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useState, useRef } from "react";
+import  React, { ChangeEvent, FormEvent, useState, useRef, useImperativeHandle, forwardRef } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 //import { uploadFile } from "@/app/lib/fileHandling";
 
@@ -25,6 +25,7 @@ export default function UploadButton({user} : {user: string}) {
 
 //w-[250px] h-[250px] bg-white shadow-sm rounded-lg
 function UploadModal({user} : {user: string}) {
+    const uploadFormRef = useRef<any>(null);
     const router = useRouter()
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams);
@@ -32,22 +33,50 @@ function UploadModal({user} : {user: string}) {
     return(
         <dialog className="modal" id="upload-modal" >
             <div className="modal-box">
-                <UploadForm user={user}/>
+                <UploadForm ref={uploadFormRef} user={user}/>
             </div>
             <form method="dialog" className="modal-backdrop">
                 <button onClick={() => {
+                    uploadFormRef.current?.reset();
                     router.push(pathname+"?"+params.toString())
                 }}>close</button>
             </form>
         </dialog>
     );
 }
-
-function UploadForm({user} : {user: string}) {
+interface UploadFormProps {
+    user: string;
+  }
+  
+  // Define the ref type to access the reset method
+  interface UploadFormRef {
+    reset: () => void;
+  }
+  
+  const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ user }, ref) => {
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const [currentFile, setCurrentFile] = useState<number>(0);
     const [currentState, setCurrentState] = useState<string>("");
     const [isVisible, setIsVisible] = useState<boolean>(true);
+    const [hasRights, setHasRights] = useState<boolean>(true);
+    const [allowSharing, setAllowSharing] = useState<boolean>(true);
+
+    const formRef = useRef<HTMLFormElement | null>(null);
+
+    useImperativeHandle(ref, () => ({
+        reset: () => {
+            if (formRef.current) {
+                formRef.current.reset();
+              }
+            setSelectedFiles(null);
+            setCurrentFile(0);
+            setCurrentState("");
+            setIsVisible(true);
+            setHasRights(true);
+            setAllowSharing(true);
+        }
+      }));
+
     const router = useRouter()
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -67,13 +96,26 @@ function UploadForm({user} : {user: string}) {
         }
     };
 
-    const handleFileSubmit = async (e: FormEvent) => {
+    const handleFileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         
         if (selectedFiles === null) {
             setCurrentState(`Wähle zuerst Bilder aus!`);
             return;
         }
+
+        const formData = new FormData(e.currentTarget);
+        const hasRights = formData.get("hasRights") === "on";
+        const allowSharing = formData.get("allowSharing") === "on";
+
+        setHasRights(hasRights)
+        setAllowSharing(allowSharing)
+
+        if (!hasRights || !allowSharing) {
+            setCurrentState(`Bitte akzeptiere alle Bedingungen!`);
+            return;
+        }
+
 
         setIsVisible(false);
         
@@ -106,12 +148,25 @@ function UploadForm({user} : {user: string}) {
     
     if (isVisible) {
         return(
-            <form onSubmit={handleFileSubmit}>
+            <form onSubmit={handleFileSubmit} ref={formRef}>
                 <input type="file" name="file" accept=".png, .jpg, .jpeg, .webp" multiple={true} onChange={handleFileChange} className="file-input file-input-bordered w-full"/>
-                <div className="flex mt-6 items-center">
-                    { isVisible ?  <button type="submit" className="btn">Upload</button> : <></>}
+                <div className="flex flex-col mt-6 items-center">
+                    <div className="flex ">
+                        <button type="submit" className="flex btn mr-4">Upload</button>
+                        <div className="flex flex-col ">
+                            <div className="flex gap-2">
+                                <input type="checkbox" name="hasRights" className={`${hasRights ? "" : "border-red-600 checked:border-gray-400"} checkbox [--chkbg:theme(colors.gray.500)] [--chkfg:white] scale-90`} />
+                                <span className="">Ich erkläre, dass ich die Rechte an den hochgeladenen Bildern besitze und dass keine Persönlichkeitsrechte verletzt werden.</span>
+                            </div>
+                            
+                            <div className="flex gap-2 mt-2">
+                                <input type="checkbox" name="allowSharing" className={`${allowSharing ? "" : "border-red-600 checked:border-gray-400"} checkbox [--chkbg:theme(colors.gray.500)] [--chkfg:white] scale-90`} />
+                                <span className="">Ich stimme zu, dass die Bilder von der gesamten Stufe eingesehen und geteilt werden können.</span>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <span className="ml-auto">{currentState}</span>
+                    <span className={`text-red-600 font-semibold ${currentState==="" ? "" : "mt-4"}`}>{currentState}</span>
                 </div>
             </form>
         );
@@ -124,5 +179,5 @@ function UploadForm({user} : {user: string}) {
         </div>
     )
     
-}
+});
 
