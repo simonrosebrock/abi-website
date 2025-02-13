@@ -3,7 +3,7 @@ import Image from "next/image"
 
 export default function AbiMottoDisplay() {
   return(
-    <div className="w-[400px] sm:w-[600px] md:w-[800px] h-auto min-h-[400px] bg-white flex rounded-box border-2 border-black md ml-2 mr-2">
+    <div className="w-auto max-w-[400] sm:w-[600px] md:w-[800px] h-auto min-h-[400px] bg-white flex rounded-box border-2 border-black md ml-2 mr-2">
       <div className="hidden sm:flex h-full justify-center items-center ml-[30px] pt-[30px] pb-[30px]">
         <div className="border-2 border-gray-300 rounded-box h-full w-[250px] flex justify-center items-center">
             <Image src={"/ChatGPT-Logo.png"} alt="image" width={150} height={150}/>
