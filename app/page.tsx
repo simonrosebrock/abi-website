@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from 'next/link';
-import HorizontalMottos from "@/app/ui/homepage/horizontalMottos";
+import MottosWocheDisplay from "./ui/homepage/mottoWocheDisplay";
 import { motion, useTransform, useScroll, useMotionValueEvent } from "framer-motion";
+import AbiMottoDisplay from "./ui/homepage/abiMottoDisplay";
+import LehrerSelection from "./ui/homepage/lehrerSelection";
 
 const pfeilSVG = (
   <svg version="1.0" xmlns="http://www.w3.org/2000/svg"width="32.000000pt" height="32.000000pt" viewBox="0 0 1280.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
@@ -22,11 +24,10 @@ const pfeilSVG = (
 
 
 export default function Home() {
-
   return (
     
     <div className="overflow-y-auto scrollbar-none max-h-[100dvh]">
-      <div className="flex items-center mt-10 flex-col lg:flex-row">
+      <div className="relative flex items-center mt-10 flex-col lg:flex-row">
         <div className="flex justify-center scale-[80%] sm:scale-100 lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
           <span className="text-8xl text-abi-black">ABI 25</span>
           <span className="absolute text-4xl rotate-12 text-abi-black ml-96">THG</span>
@@ -38,7 +39,21 @@ export default function Home() {
               Scroll down
           </span>
       </div> */}
-      <HorizontalMottos/>
+      {/* <h1 className="text-5xl font-semibold text-abi-black font-serif mb-4 text-center mt-20">Abimotto</h1> */}
+      <div className="flex mt-20 justify-center flex-wrap gap-20">
+        {/* <div className="flex justify-center">
+            <LehrerSelection/>
+        </div> */}
+        <div className="flex justify-center">
+            <AbiMottoDisplay/>
+        </div>
+      </div>
+      
+      <h1 className="text-5xl font-semibold text-abi-black font-serif mb-4 text-center mt-20">Mottowoche</h1>
+      <div className="flex justify-center">
+        <MottosWocheDisplay/>
+      </div>
+      
       {/* <div className="flex h-48 items-center justify-center">
           <span className="font-semibold uppercase text-neutral-500">
               Scroll up
