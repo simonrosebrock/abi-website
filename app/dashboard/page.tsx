@@ -23,11 +23,6 @@ const Dashboard = async () => {
         ausgabenSum += element.money;
     });
 
-    
-    
-    // <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
-    // <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
-    // <div className='w-[250px] h-[250px] bg-red-900 rounded-lg'></div>
     if (role === "user")
         return (
             <div className='grow flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal'>

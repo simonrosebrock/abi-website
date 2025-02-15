@@ -1,8 +1,6 @@
 import UploadButton from "@/app/ui/fotos/uploadButton";
 import DownloadButton from "@/app/ui/fotos/downloadButton";
-import InfoButton from "@/app/ui/fotos/infoButton";
-import { getFileList, getVerifiedList, getFileCount } from "@/app/lib/imageHandling"; // getFile, 
-import Image from "next/image";
+import {getVerifiedList, getFileCount } from "@/app/lib/imageHandling"; // getFile, 
 import ImageList from "@/app/ui/fotos/imageList";
 import { getAuth } from "@/app/lib/getAuth";
 import ImagePagination from "@/app/ui/fotos/imagePagination";
@@ -35,9 +33,6 @@ const AlleFotos = async ({ searchParams }: { searchParams: { [key: string]: stri
             <div className="flex flex-wrap w-auto gap-5 items-center mb-5 xs:justify-normal justify-center">
                 {user === "admin" ? <></> : <UploadButton user={user}/>}
                 <DownloadButton/>
-                {/* <div className="ml-auto mr-5">
-                    <InfoButton/>
-                </div> */}
             </div>
             <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
                 <ImageList images={images}/>
