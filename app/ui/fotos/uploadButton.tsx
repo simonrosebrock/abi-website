@@ -3,7 +3,6 @@
 import Image from "next/image";
 import  React, { ChangeEvent, FormEvent, useState, useRef, useImperativeHandle, forwardRef } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-//import { uploadFile } from "@/app/lib/fileHandling";
 
 
 
@@ -23,7 +22,6 @@ export default function UploadButton({user} : {user: string}) {
     );
 }
 
-//w-[250px] h-[250px] bg-white shadow-sm rounded-lg
 function UploadModal({user} : {user: string}) {
     const uploadFormRef = useRef<any>(null);
     const router = useRouter()

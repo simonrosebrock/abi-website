@@ -183,14 +183,7 @@ const DeleteAppointment = ({termin_id, id, title}:DeleteAppointmentProps) => {
                     </form>
                     <form method="dialog">
                         <button className="btn btn-error" onClick={async () => {
-                            
-
                             deleteTermin(termin_id);
-
-                            // var updated_termine = JSON.parse(JSON.stringify(termine))
-                            // updated_termine.splice(index, 1);
-                            // setTermine(updated_termine);
-
                             router.refresh()
                         }}>Delete</button>
                     </form>

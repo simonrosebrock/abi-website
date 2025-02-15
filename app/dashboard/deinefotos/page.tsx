@@ -1,7 +1,6 @@
 import UploadButton from "@/app/ui/fotos/uploadButton";
 import TypeSelection from "@/app/ui/fotos/typeSelection";
-import { getFileList, getVerifiedList, getFileCount } from "@/app/lib/imageHandling"; // getFile, 
-import Image from "next/image";
+import { getFileList, getFileCount } from "@/app/lib/imageHandling"; // getFile, 
 import ImageList from "@/app/ui/fotos/imageList";
 import { getAuth } from "@/app/lib/getAuth";
 import { redirect } from 'next/navigation';

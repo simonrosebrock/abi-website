@@ -39,8 +39,6 @@ export default function Sidebar({children, user}: Readonly<{children: React.Reac
                             <span className="text-abi-black text-5xl">ABI 25</span>
                         </div>
                         <li className='content-center'><Link href={"/dashboard"} className={`btn ${getButtonStatus("/dashboard")} mt-5 w-[170px] left content-start flex-col`}>Dashboard</Link></li>
-                        {/* <li className='content-center'><Link href={"/dashboard/abimotto"} className={`btn ${getButtonStatus("/dashboard/abimotto")} mt-5 w-[170px] content-start flex-col`}>Abimotto</Link></li>
-                        <li className='content-center'><Link href={"/dashboard/mottowoche"} className={`btn ${getButtonStatus("/dashboard/mottowoche")} mt-5 w-[170px] content-start flex-col`}>Mottowoche</Link></li> */}
                         <li className='content-center'><Link href={"/dashboard/termine"} className={`btn ${getButtonStatus("/dashboard/termine")} mt-5 w-[170px] content-start flex-col`}>Termine</Link></li>
                         <li className='content-center'><Link href={"/dashboard/finanzen"} className={`btn ${getButtonStatus("/dashboard/finanzen")} mt-5 w-[170px] content-start flex-col`}>Finanzen</Link></li>
                         {user === "admin" ? <></> : <li className='content-center'><Link href={"/dashboard/deinefotos?type=uploaded&page=1"} className={`btn ${getButtonStatus("/dashboard/deinefotos")} mt-5 w-[170px] content-start flex-col`}>Deine Fotos</Link></li> }
@@ -73,8 +71,6 @@ export default function Sidebar({children, user}: Readonly<{children: React.Reac
                     </div>
                     <div className='flex grow flex-col items-center w-[256px]'>
                         <Link href={"/dashboard"} className={`btn ${getButtonStatus("/dashboard")} mt-5 w-[170px] left content-start flex-col`}>Dashboard</Link>
-                        {/* <Link href={"/dashboard/abimotto"} className={`btn ${getButtonStatus("/dashboard/abimotto")} mt-5 w-[170px] content-start flex-col`}>Abimotto</Link>
-                        <Link href={"/dashboard/mottowoche"} className={`btn ${getButtonStatus("/dashboard/mottowoche")} mt-5 w-[170px] content-start flex-col`}>Mottowoche</Link> */}
                         <Link href={"/dashboard/termine"} className={`btn ${getButtonStatus("/dashboard/termine")} mt-5 w-[170px] content-start flex-col`}>Termine</Link>
                         <Link href={"/dashboard/finanzen"} className={`btn ${getButtonStatus("/dashboard/finanzen")} mt-5 w-[170px] content-start flex-col`}>Finanzen</Link>
                         {user === "admin" ? <></> : <Link href={"/dashboard/deinefotos?type=uploaded&page=1"} className={`btn ${getButtonStatus("/dashboard/deinefotos")} mt-5 w-[170px] content-start flex-col`}>Deine Fotos</Link>}

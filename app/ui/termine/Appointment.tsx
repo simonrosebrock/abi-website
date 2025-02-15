@@ -247,11 +247,3 @@ const PersonenGruppe = ({gruppe, personen, setPersonen, user, id, users}: Person
         </div>
     )
 }
-
-const TerminEditModal = () => {
-    return(
-        <>
-        
-        </>
-    );
-}

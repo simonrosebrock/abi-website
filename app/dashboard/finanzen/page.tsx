@@ -35,15 +35,7 @@ const Finanzen = async () => {
     if (uberschuss_einnahmen < 0) {
         uberschuss_einnahmen = 0;
     }
-
-    // var checkpoints = [
-    //     {value: 0, cardprice: 80},
-    //     {value: 1000, cardprice: 70},
-    //     {value: 2000, cardprice: 60},
-    //     {value: 3000, cardprice: 50},
-    //     {value: 4000, cardprice: 40}
-    // ]
-
+    
     return(
         <div className="flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
             <RevenueTrackerBig ausgaben={ausgabenSum} einnahmen={einnahmen} />

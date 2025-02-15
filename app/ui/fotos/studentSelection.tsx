@@ -13,11 +13,6 @@ export default function StudentSelection({studentEntries, fileCount}: {studentEn
 
     const newStudentEntries = studentEntries.slice(0, -1);
     const prettyStudentEntries = newStudentEntries.map(student =>
-        // student
-        //     .replaceAll("_", " ")
-        //     .split(" ")
-        //     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        //     .join(" ")
         student = getPrettyStudent(student)
     );
     

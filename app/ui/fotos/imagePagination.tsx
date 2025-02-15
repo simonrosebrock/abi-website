@@ -9,20 +9,8 @@ export default function ImagePagination({image_limit_per_page, fileCount}: {imag
     const params = new URLSearchParams(searchParams);
     const page = searchParams.get('page')
 
-    // if (!page) {
-    //     params.set('page', "1");
-    //     replace(`${pathname}?${params.toString()}`);
-    // }
-
     const pageNumber = parseInt((page as string), 10)
 
-    // if (pageNumber < 1) {
-    //     params.set('page', "1");
-    //     replace(`${pathname}?${params.toString()}`);
-    // } else if (pageNumber > pageCount) {
-    //     params.set('page', `${pageCount}`);
-    //     replace(`${pathname}?${params.toString()}`);
-    // }
     
     const pageCount = Math.max(1, Math.ceil(fileCount/image_limit_per_page))
 

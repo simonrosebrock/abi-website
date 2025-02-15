@@ -3,7 +3,6 @@ import { QueryResultRow } from "@vercel/postgres";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addTermin } from "@/app/lib/dbConnection";
-// import { v4 } from "uuid";
 
 
 const plusSVG = (
@@ -81,28 +80,7 @@ const CreateAppointmentModal = ({termine, setTermine}: CreateAppointmentModalPro
                                             'helfer': JSON.stringify(helferObject)
                                         }
 
-                                        // const id = v4();
-                                        // const dateObj = new Date(date);
-                                        // dateObj.setUTCHours(0, 0, 0, 0);
-                                        // const isoFormatDate = dateObj.toISOString();
-
-                                        // const new_local_termin = {
-                                        //     'id': id,
-                                        //     'title': title,
-                                        //     'description': description,
-                                        //     'ort': ort,
-                                        //     'start_time': start_time,
-                                        //     'end_time': end_time,
-                                        //     'date': isoFormatDate,
-                                        //     'helfer': helferObject
-                                        // }
-
                                         addTermin(new_termin);
-
-                                        // var updated_termine = JSON.parse(JSON.stringify(termine));
-                                        // updated_termine.push(new_local_termin);
-                                        // updated_termine.sort(compareDates);
-                                        // setTermine(updated_termine);
 
                                         const dialog = document.getElementById('create_appointment_modal') as HTMLDialogElement;
                                         dialog.close();
@@ -124,18 +102,6 @@ const CreateAppointmentModal = ({termine, setTermine}: CreateAppointmentModalPro
                         </form>
                     </dialog>
     )
-}
-
-function compareDates(a: any, b: any) {
-    const a_date = new Date(a.date);
-    const b_date = new Date(b.date);
-
-    if (a_date < b_date) {
-        return -1
-    } else if (a_date > b_date) {
-        return 1;
-    }
-    return 0;
 }
 
 type CreateAppointmentFormProps = {

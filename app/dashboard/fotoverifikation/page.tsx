@@ -1,9 +1,3 @@
-// import StudentSelection from "@/app/ui/fotos/studentSelection";
-
-// import DeleteButton from "@/app/ui/fotos/deleteButton";
-// import VerifyButton from "@/app/ui/fotos/verifyButton";
-// import ZipButton from "@/app/ui/fotos/zipButton";
-// import ImageListSelection from "@/app/ui/fotos/imageListSelection";
 import ImagePagination from "@/app/ui/fotos/imagePagination";
 import { getAuth } from "@/app/lib/getAuth";
 import { redirect } from 'next/navigation';
@@ -43,15 +37,6 @@ const FotoVerifikation = async ({ searchParams }: { searchParams: { [key: string
 
     return(
         <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
-            {/* <div className="flex flex-wrap w-auto gap-5 items-center mb-5 justify-center sm:justify-normal">
-                <StudentSelection studentEntries={studentEntries} fileCount={fileCount}/>
-                <DeleteButton/>
-                <VerifyButton/>
-                <ZipButton/>
-            </div>
-            <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
-                <ImageListSelection images={images}/>
-            </div> */}
             <ImageEditing images={images} studentEntries={studentEntries} fileCount={fileCount}/>
             { images.length == 0 ? 
                 <></> : <div className="w-auto mt-5 flex">
