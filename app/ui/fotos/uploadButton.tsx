@@ -7,12 +7,10 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 
 export default function UploadButton({token} : {token: string}) {
-    console.log(token)
     return(
         <>
             <button className="btn w-[250px] xs:w-[180px] h-[50px] xs:h-[80px] bg-white shadow-sm rounded-lg flex justify-center items-center" onClick={() => {
                 var modal = document.getElementById(`upload-modal`) as HTMLDialogElement;
-                console.log(modal)
                 if(modal) {modal.showModal()}
             }}>
                 <span className="font-semibold text-xl xs:text-2xl">Upload</span>
