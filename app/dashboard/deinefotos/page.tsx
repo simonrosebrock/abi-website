@@ -24,7 +24,7 @@ const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: str
         redirect(`/dashboard/deinefotos?type=uploaded&page=${page}`)
     }
 
-    const cleanUser = user.replaceAll(" ", "_")
+    const cleanUser = (user as string).toLowerCase().replaceAll(" ", "_")
 
     const fileCount: number = (await getFileCount(type, cleanUser));
     const pageCount = Math.max(1, Math.ceil(fileCount/image_limit_per_page))
@@ -43,11 +43,11 @@ const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: str
     return(
         <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
             <div className="flex w-auto gap-5 items-center mb-5 flex-wrap justify-center xs:justify-normal">
-                <UploadButton user={cleanUser}/>
+                <UploadButton token={token}/>
                 <TypeSelection/>
             </div>
             <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
-                <ImageList images={images}/>
+                <ImageList images={images} token={token}/>
             </div>
             { images.length == 0 ? 
                 <></> : <div className="w-auto mt-5 flex">

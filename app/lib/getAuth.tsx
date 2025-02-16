@@ -12,12 +12,25 @@ export const getAuth = async () => {
 
         const {rows} = await sql`SELECT * FROM users WHERE token = ${String(token.value)};`;
         if (!rows[0])
-            return [token];
+            return [token.value];
 
         if (rows[0].token === token.value) {
-            return [token, "user", rows[0].username];
+            return [token.value, "user", rows[0].username];
         } 
     }
     
     return [token];
+}
+
+export const getUsername = async (token: string) => {
+    const {rows} = await sql`SELECT * FROM users WHERE token = ${token};`;
+    return rows[0].username;
+}
+
+export const validToken = async (token: string) => {
+    const {rows} = await sql`SELECT * FROM users WHERE token = ${token};`;
+    if (rows.length === 0) {
+        return false
+    }
+    return true
 }

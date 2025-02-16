@@ -4,7 +4,7 @@ import Image from "next/image"
 
 type imageListType = string[]
 
-export default function ImageList({images}: {images: imageListType}) {
+export default function ImageList({images, token}: {images: imageListType, token: string}) {
     if (images.length == 0) {
         return(
             <div className="w-[250px] h-[250px] rounded-lg flex items-center justify-center">
@@ -18,7 +18,7 @@ export default function ImageList({images}: {images: imageListType}) {
                 images.map((image: string) => (
                     <div className="w-[125px] h-[125px] xs:w-[150px] xs:h-[150px] sm:w-[200px] sm:h-[200px] lg:w-[250px] lg:h-[250px] rounded-lg flex items-center justify-center" key={`div/${image}`}>
                         <Image
-                        src={`/api/getImage?url=${image}`}
+                        src={`/api/getImage?url=${image}&token=${token}`}
                         alt={`image`}
                         width={250}
                         height={250}

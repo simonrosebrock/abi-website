@@ -5,7 +5,7 @@ import Image from "next/image"
 
 type imageListType = string[]
 
-export default function ImageListSelection({images, setSelectedImages}: {images: imageListType, setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>}) {
+export default function ImageListSelection({images, token,setSelectedImages}: {images: imageListType, token: string, setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>}) {
     if (images.length == 0) {
         return(
             <div className="w-[250px] h-[250px] rounded-lg flex items-center justify-center">
@@ -35,12 +35,12 @@ export default function ImageListSelection({images, setSelectedImages}: {images:
                     }}>
                         <div className="absolute w-[80px] h-[40px] rounded-lg flex items-center justify-center bg-white border-2 border-gray-200 left-3 top-3 overflow-hidden">
                             <span className="text-xs">{
-                                getPrettyStudent(image.split("/")[3])
+                                getPrettyStudent(image.split("/")[1])
                             }</span>
                         </div>
                         <input type="checkbox" defaultChecked={false} className="checkbox checkbox-primary bg-white absolute right-3 top-3" />
                         <Image
-                        src={`/api/getImage?url=${image}`}
+                        src={`/api/getImage?url=${image}&token=${token}`}
                         alt={`image`}
                         width={246}
                         height={246}
