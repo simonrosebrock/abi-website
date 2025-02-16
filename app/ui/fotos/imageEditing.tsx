@@ -6,7 +6,7 @@ import ZipButton from "./zipButton"
 import ImageListSelection from "./imageListSelection"
 import { useState } from "react"
 
-export default function ImageEditing ({images, studentEntries, fileCount}: {images: string[], studentEntries: string[], fileCount: {[key: string]: number}}) {
+export default function ImageEditing ({images, token, studentEntries, fileCount}: {images: string[], token: string,studentEntries: string[], fileCount: {[key: string]: number}}) {
     const [selectedImages, setSelectedImages] = useState<string[]>([])
 
     return(
@@ -18,7 +18,7 @@ export default function ImageEditing ({images, studentEntries, fileCount}: {imag
                 <ZipButton/>
             </div>
             <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
-                <ImageListSelection images={images} setSelectedImages={setSelectedImages}/>
+                <ImageListSelection images={images} token={token} setSelectedImages={setSelectedImages}/>
             </div>
         </>
     )

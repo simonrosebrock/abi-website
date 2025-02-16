@@ -31,11 +31,11 @@ const AlleFotos = async ({ searchParams }: { searchParams: { [key: string]: stri
     return(
         <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
             <div className="flex flex-wrap w-auto gap-5 items-center mb-5 xs:justify-normal justify-center">
-                {user === "admin" ? <></> : <UploadButton user={user}/>}
-                <DownloadButton/>
+                {user === "admin" ? <></> : <UploadButton token={token}/>}
+                <DownloadButton token={token}/>
             </div>
             <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
-                <ImageList images={images}/>
+                <ImageList images={images} token={token}/>
             </div>
             { images.length == 0 ? 
                 <></> : <div className="w-auto flex mt-5">

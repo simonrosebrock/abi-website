@@ -37,7 +37,7 @@ const FotoVerifikation = async ({ searchParams }: { searchParams: { [key: string
 
     return(
         <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
-            <ImageEditing images={images} studentEntries={studentEntries} fileCount={fileCount}/>
+            <ImageEditing images={images} token="blacklisted" studentEntries={studentEntries} fileCount={fileCount}/>
             { images.length == 0 ? 
                 <></> : <div className="w-auto mt-5 flex">
                             <ImagePagination image_limit_per_page={image_limit_per_page} fileCount={fileCount.all}/>

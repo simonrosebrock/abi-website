@@ -1,10 +1,21 @@
 "use server";
 
 import { unstable_noStore as noStore } from "next/cache";
-import {NextResponse } from "next/server";
+import {NextResponse, NextRequest } from "next/server";
+import { validToken, getUsername } from "@/app/lib/getAuth";
 
-async function GET() {
+async function GET(req: NextRequest) {
   noStore()
+  const token = new URL(req.url).searchParams.get('token')
+
+  if (token === "") {
+    return NextResponse.json(
+      { value: "No Token given" },
+      { status: 400, }
+    );
+  }
+  
+  if (token === "blacklisted" || await validToken(token!)) {
     const res = await fetch(`blacklisted/download`, {
       method: 'GET',
       headers: {
@@ -30,5 +41,6 @@ async function GET() {
       );
     }
   }
-  
-  export { GET };
+}
+
+export { GET };

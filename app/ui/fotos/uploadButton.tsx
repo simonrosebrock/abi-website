@@ -6,7 +6,8 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 
 
-export default function UploadButton({user} : {user: string}) {
+export default function UploadButton({token} : {token: string}) {
+    console.log(token)
     return(
         <>
             <button className="btn w-[250px] xs:w-[180px] h-[50px] xs:h-[80px] bg-white shadow-sm rounded-lg flex justify-center items-center" onClick={() => {
@@ -17,12 +18,12 @@ export default function UploadButton({user} : {user: string}) {
                 <span className="font-semibold text-xl xs:text-2xl">Upload</span>
                 <Image src={"/upload.png"} width={30} height={30} alt="Upload" className="w-[20px] h-[20px] xs:w-[30px] xs:h-[30px]"></Image>
             </button>
-            <UploadModal user={user}/>
+            <UploadModal token={token}/>
         </>
     );
 }
 
-function UploadModal({user} : {user: string}) {
+function UploadModal({token} : {token: string}) {
     const uploadFormRef = useRef<any>(null);
     const router = useRouter()
     const searchParams = useSearchParams();
@@ -31,7 +32,7 @@ function UploadModal({user} : {user: string}) {
     return(
         <dialog className="modal" id="upload-modal" >
             <div className="modal-box">
-                <UploadForm ref={uploadFormRef} user={user}/>
+                <UploadForm ref={uploadFormRef} token={token}/>
             </div>
             <form method="dialog" className="modal-backdrop">
                 <button onClick={() => {
@@ -43,7 +44,7 @@ function UploadModal({user} : {user: string}) {
     );
 }
 interface UploadFormProps {
-    user: string;
+    token: string;
   }
   
   // Define the ref type to access the reset method
@@ -51,7 +52,7 @@ interface UploadFormProps {
     reset: () => void;
   }
   
-const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ user }, ref) => {
+const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ token }, ref) => {
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const [currentFile, setCurrentFile] = useState<number>(0);
     const [currentState, setCurrentState] = useState<string>("");
@@ -121,12 +122,9 @@ const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ user }, ref) =>
             const formData = new FormData();
             formData.append('file', file);
             try {
-                const res = await fetch('/api/uploadFile', {
+                const res = await fetch(`/api/uploadFile?token=${token}`, {
                     method: 'POST',
                     body: formData,
-                    headers: {
-                        'student': user, 
-                    }
                 });
                 setCurrentFile((prev) => prev + 1)
             } catch (error) {
