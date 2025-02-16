@@ -47,12 +47,9 @@ export function Appointment({id, termin_id, title, description, ort, date, start
     const [savedPersonen, setSavedPersonen] = useState<Personen>(persons); 
     const [personen, setPersonen] = useState<Personen>(persons)
 
-    //console.log(savedPersonen)
-
     start_time = start_time.slice(0, -3);
     end_time = end_time.slice(0, -3);
     var gruppen = Object.keys(savedPersonen)
-    //console.log(gruppen)
     
     return(
         <div className="w-[250px] h-[250px] bg-white shadow-sm rounded-lg p-2 flex flex-col">
@@ -64,7 +61,6 @@ export function Appointment({id, termin_id, title, description, ort, date, start
                 <DescriptionModal id={id} title={title} description={description}/>
                 <button className="btn btn-circle btn-ghost btn-xs ml-auto self-start" onClick={() => {
                     var modal = document.getElementById(`description_modal_${id}`) as HTMLDialogElement; 
-                    console.log(modal)
                     if (modal) {modal.showModal()}
                 }}>
                     {infoSVG}

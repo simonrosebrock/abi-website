@@ -12,7 +12,6 @@ export default function InfoButton() {
         <>
             <button className="btn btn-circle btn-ghost flex justify-center items-center" onClick={() => {
                 var modal = document.getElementById(`info-modal`) as HTMLDialogElement; 
-                console.log(modal)
                 if(modal) {modal.showModal()}
             }}>
                 {questionSVG}
