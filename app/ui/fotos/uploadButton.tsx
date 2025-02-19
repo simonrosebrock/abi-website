@@ -57,22 +57,30 @@ const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ token }, ref) =
     const [isVisible, setIsVisible] = useState<boolean>(true);
     const [hasRights, setHasRights] = useState<boolean>(true);
     const [allowSharing, setAllowSharing] = useState<boolean>(true);
+    const [selectedRights, setSelectedRights] = useState<boolean>(false);
+    const [selectedSharing, setSelectedSharing] = useState<boolean>(false);
+
 
     const formRef = useRef<HTMLFormElement | null>(null);
 
     useImperativeHandle(ref, () => ({
         reset: () => {
-            if (formRef.current) {
-                formRef.current.reset();
-              }
-            setSelectedFiles(null);
-            setCurrentFile(0);
-            setCurrentState("");
-            setIsVisible(true);
-            setHasRights(true);
-            setAllowSharing(true);
+            reset();
         }
       }));
+    function reset() {
+        if (formRef.current) {
+            formRef.current.reset();
+          }
+        setSelectedFiles(null);
+        setCurrentFile(0);
+        setCurrentState("");
+        setIsVisible(true);
+        setHasRights(true);
+        setAllowSharing(true);
+        setSelectedRights(false);
+        setSelectedSharing(false);
+    }
 
     const router = useRouter()
 
@@ -133,28 +141,28 @@ const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ token }, ref) =
         
         var modal = document.getElementById(`upload-modal`) as HTMLDialogElement; 
         if(modal) {modal.close()}
-        setIsVisible(true)
-        setCurrentFile(0)
-        setCurrentState("");
+        reset()
+        
 
         router.refresh()
     }
     
+
     if (isVisible) {
         return(
             <form onSubmit={handleFileSubmit} ref={formRef}>
                 <input type="file" name="file" accept=".png, .jpg, .jpeg, .webp" multiple={true} onChange={handleFileChange} className="file-input file-input-bordered w-full"/>
                 <div className="flex flex-col mt-6 items-center">
                     <div className="flex ">
-                        <button type="submit" className="flex btn mr-4">Upload</button>
+                        <button type="submit" className={`flex btn mr-4 ${(selectedRights && selectedSharing && selectedFiles) ? "btn-success" : ""}`}>Upload</button>
                         <div className="flex flex-col ">
                             <div className="flex gap-2">
-                                <input type="checkbox" name="hasRights" className={`${hasRights ? "" : "border-red-600 checked:border-gray-400"} checkbox [--chkbg:theme(colors.gray.500)] [--chkfg:white] scale-90`} />
+                                <input type="checkbox" name="hasRights" onClick={(e) => {setSelectedRights((e.target as HTMLInputElement).checked)}} className={`${hasRights ? "" : "border-red-600 checked:border-gray-400"} checkbox [--chkbg:theme(colors.gray.500)] [--chkfg:white] scale-90`}/>
                                 <span className="">Ich erkläre, dass ich die Rechte an den hochgeladenen Bildern besitze und dass keine Persönlichkeitsrechte verletzt werden.</span>
                             </div>
                             
                             <div className="flex gap-2 mt-2">
-                                <input type="checkbox" name="allowSharing" className={`${allowSharing ? "" : "border-red-600 checked:border-gray-400"} checkbox [--chkbg:theme(colors.gray.500)] [--chkfg:white] scale-90`} />
+                                <input type="checkbox" name="allowSharing" onClick={(e) => {setSelectedSharing((e.target as HTMLInputElement).checked)}} className={`${allowSharing ? "" : "border-red-600 checked:border-gray-400"} checkbox [--chkbg:theme(colors.gray.500)] [--chkfg:white] scale-90`} />
                                 <span className="">Ich stimme zu, dass die Bilder von der gesamten Stufe eingesehen und geteilt werden können.</span>
                             </div>
                         </div>
