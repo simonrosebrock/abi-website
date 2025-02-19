@@ -5,7 +5,6 @@ import { unstable_noStore as noStore } from "next/cache";
 import { getUsername, validToken } from "@/app/lib/getAuth";
 
 async function GET(req: NextRequest) {
-  noStore()
   const imageUrl = new URL(req.url).searchParams.get('url')
   const token = new URL(req.url).searchParams.get('token')
 
