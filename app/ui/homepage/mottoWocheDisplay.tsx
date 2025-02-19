@@ -3,17 +3,26 @@ import Image from "next/image"
 
 export default function MottoWocheDisplay() {
   return(
-    <div className="carousel carousel-center gap-4 w-auto flex p-4">
+    <div className="carousel carousel-center gap-4 w-auto flex p-4 min-h-40">
         <MottoCard day="Montag" motto="Nationalitäten" date="07.04.25" additions="" image="/Nationalitäten.jpg"/>
         <MottoCard day="Dienstag" motto="Gruppenkostüme" date="08.04.25" additions="" image="/Gruppenkostüme.jpg"/>
         <MottoCard day="Mittwoch" motto="Filme/Serien/ Videospiele" date="09.04.25" additions="Everything but a Backpack" image="/FilmSerieVideospiele.png"/>
         <MottoCard day="Donnerstag" motto="Kindheitshelden" date="10.04.25" additions="" image="/Kindheitshelden.jpg"/>
         <MottoCard day="Freitag" motto="Mafia" date="11.04.25" additions="Chaos Tag und Aula Programm" image="/Mafia.jpg"/>
+        <NoMottoCard date="07.04.25"/>
     </div>
   )
 }
 
 export function MottoCard({day, motto, date, additions, image}: {day: string, motto: string, date: string, additions: string, image: string}) {
+  const now = new Date().setHours(0,0,0,0);
+  const splitDate = date.split(".");
+  const mottoDate = new Date(`20${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`).setHours(0,0,0,0);
+
+ if (now < mottoDate) {
+  return(<></>);
+ }
+
   return(
     <div className="carousel-item w-[234px] h-[334px] bg-white rounded-box flex flex-col items-center p-4 overflow-hidden border-black border-2">
         <h1 className="text-2xl font-mono text-abi-black flex justify-center">{day}</h1>
@@ -31,5 +40,17 @@ export function MottoCard({day, motto, date, additions, image}: {day: string, mo
         }
         <span className="mt-auto ml-auto mr-4 text-gray-500 text-sm">{date}</span>
     </div>
+  )
+}
+
+export function NoMottoCard({date}: {date: string}) {
+  const now = new Date().setHours(0,0,0,0);
+  const splitDate = date.split(".");
+  const firstDay = new Date(`20${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`).setHours(0,0,0,0);
+  if (now >= firstDay) {
+    return(<></>);
+  }
+  return(
+      <span className="-rotate-12 font-bold text-sky-400 mt-10">Geheim bis es soweit ist!</span>
   )
 }
