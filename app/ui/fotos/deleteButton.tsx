@@ -42,8 +42,8 @@ const handleDeletion = async (selectedImages: string[], setSelectedImages: React
     var modal = document.getElementById(`delete-modal`) as HTMLDialogElement;
     modal.showModal();
     for (var image of selectedImages) {
-        var student = image.split("/")[3]
-        var fileName = image.split("/")[4]
+        var student = image.split("/")[1]
+        var fileName = image.split("/")[2]
         await deleteFile(student, fileName)
         setCurrentImage(prev => prev+1)
     }

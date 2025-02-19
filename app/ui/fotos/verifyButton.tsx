@@ -36,8 +36,8 @@ const handleVerification = async (selectedImages: string[], setSelectedImages: R
     var modal = document.getElementById(`verify-modal`) as HTMLDialogElement;
     modal.showModal();
     for (var image of selectedImages) {
-        var student = image.split("/")[3]
-        var fileName = image.split("/")[4]
+        var student = image.split("/")[1]
+        var fileName = image.split("/")[2]
         await verifyFile(student, fileName)
         setCurrentImage(prev => prev+1)
     }

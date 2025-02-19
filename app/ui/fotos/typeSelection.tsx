@@ -11,12 +11,12 @@ export default function TypeSelection() {
     const type = searchParams.get('type');
 
     return(
-        <select className="select select-bordered flex font-semibold h-[50px] xs:h-[80px] w-[250px] xs:w-auto  text-lg border border-gray-200" onChange={(e) => {
+        <select className="select select-bordered flex font-sans font-bold text-xl h-[50px] xs:h-[80px] w-[250px] xs:w-auto border border-gray-200" onChange={(e) => {
             params.set('type', `${e.target.value}`);
             replace(`${pathname}?${params.toString()}`);
         }} value={(type as string)}>
-            <option value="uploaded" className="font-semibold">Unverifizierte Bilder</option>
-            <option value="verified" className="font-semibold">Verifizierte Bilder</option>
+            <option value="uploaded">Unverifizierte Bilder</option>
+            <option value="verified">Verifizierte Bilder</option>
         </select> 
     );
 }
