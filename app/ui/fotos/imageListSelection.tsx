@@ -33,7 +33,7 @@ export default function ImageListSelection({images, token,setSelectedImages}: {i
                                 setSelectedImages(prevImages => [...prevImages, image])
                             }
                     }}>
-                        <div className="absolute w-[80px] h-[40px] rounded-lg flex items-center justify-center bg-white border-2 border-gray-200 left-3 top-3 overflow-hidden">
+                        <div className="absolute w-[50px] h-[25px] xs:w-[60px] xs:h-[30px] sm:w-[80px] sm:h-[40px] rounded-lg flex items-center justify-center bg-white border-2 border-gray-200 left-3 top-3 overflow-hidden">
                             <span className="text-xs">{
                                 getPrettyStudent(image.split("/")[1])
                             }</span>

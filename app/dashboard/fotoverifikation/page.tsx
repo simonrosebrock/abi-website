@@ -40,7 +40,7 @@ const FotoVerifikation = async ({ searchParams }: { searchParams: { [key: string
             <ImageEditing images={images} token="5bb13aaf-462b-42e6-8060-d01c289b8ed5" studentEntries={studentEntries} fileCount={fileCount}/>
             { images.length == 0 ? 
                 <></> : <div className="w-auto mt-5 flex">
-                            <ImagePagination image_limit_per_page={image_limit_per_page} fileCount={fileCount.all}/>
+                            <ImagePagination image_limit_per_page={image_limit_per_page} fileCount={fileCount[student]}/>
                         </div>
             }
         </div>
