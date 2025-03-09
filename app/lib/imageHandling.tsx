@@ -141,3 +141,15 @@ export const deleteFile = async (student: string, file: string) => {
         }
     });
 }
+
+export const deleteFilePermanent = async (student: string, file: string) => {
+    console.log(file)
+    await fetch('blacklisted/delete', {
+        method: 'POST',
+        headers: {
+            'x-api-key': 'blacklisted',
+            'folder-name': student,
+            'file-name': file,
+        }
+    });
+}

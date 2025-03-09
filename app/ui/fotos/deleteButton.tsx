@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteFile } from "@/app/lib/imageHandling";
+import { deleteFile, deleteFilePermanent } from "@/app/lib/imageHandling";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -16,7 +16,7 @@ const crossSVG = (
     </svg>
 )
 
-export default function DeleteButton({selectedImages, setSelectedImages}: {selectedImages: string[], setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>}) {
+export default function DeleteButton({selectedImages, setSelectedImages, permanent}: {selectedImages: string[], setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>, permanent: boolean}) {
     const [currentImage, setCurrentImage] = useState<number>(0)
     const router = useRouter();
 
@@ -26,7 +26,7 @@ export default function DeleteButton({selectedImages, setSelectedImages}: {selec
                 if (selectedImages.length == 0) {
                     return;
                 }
-                handleDeletion(selectedImages, setSelectedImages, setCurrentImage, router)
+                handleDeletion(permanent, selectedImages, setSelectedImages, setCurrentImage, router)
             }}>
                 <span className="font-semibold text-xl xs:text-2xl">Delete</span>
                 {crossSVG}
@@ -37,14 +37,18 @@ export default function DeleteButton({selectedImages, setSelectedImages}: {selec
     );
 }
 
-const handleDeletion = async (selectedImages: string[], setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>, setCurrentImage: React.Dispatch<React.SetStateAction<number>>, router: ReturnType<typeof useRouter>) => {
+const handleDeletion = async (permanent: boolean, selectedImages: string[], setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>, setCurrentImage: React.Dispatch<React.SetStateAction<number>>, router: ReturnType<typeof useRouter>) => {
     setCurrentImage(0)
     var modal = document.getElementById(`delete-modal`) as HTMLDialogElement;
     modal.showModal();
     for (var image of selectedImages) {
         var student = image.split("/")[1]
         var fileName = image.split("/")[2]
-        await deleteFile(student, fileName)
+        if (permanent) {
+            await deleteFilePermanent(student, fileName);
+        } else {
+            await deleteFile(student, fileName)
+        }
         setCurrentImage(prev => prev+1)
     }
     setSelectedImages([])

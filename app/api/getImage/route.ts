@@ -30,11 +30,13 @@ async function GET(req: NextRequest) {
 
   //authentication
   var hasAuth = false;
-  if (token === "blacklisted") {
+  if (imageUrl.includes("verified")) {
+    hasAuth = true;
+  } else if (token === "blacklisted") {
     hasAuth = true;
   } else if (await validToken(token!)) {
     const user = (await getUsername(token!) as string)
-    if (imageUrl.includes(user) && (imageUrl.includes("uploaded") || imageUrl.includes("verified"))) {
+    if (imageUrl.includes(user) && (imageUrl.includes("uploaded") || imageUrl.includes("verified") || imageUrl.includes("deleted"))) {
       hasAuth = true;
     }
   }

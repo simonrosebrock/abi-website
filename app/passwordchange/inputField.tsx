@@ -1,10 +1,12 @@
 'use client'
 import Link from 'next/link';
-import { changePassword } from '@/app/lib/dbConnection';
+import { updateAccountPassword } from '@/app/lib/dbConnection';
 import { useRouter } from 'next/navigation';
+import { getCleanUser } from '../lib/miniFuncs';
 
 export function InputField({token, user}: {token: string, user: string}) {
     const router = useRouter();
+    const cleanUser = getCleanUser(user);
 
     return(
         <form action={async (formData: FormData) => {
@@ -12,16 +14,17 @@ export function InputField({token, user}: {token: string, user: string}) {
             if (password === "" || password == null || password.length > 255) {
                 return
             }
-            changePassword(token as string, password as string);
+            updateAccountPassword(token as string, password as string);
             router.push("/dashboard");
         }}> 
             <div className='sm:mt-10'>
-            <label className="input input-bordered flex items-center m-10">
-                <input type="text" name='username' placeholder="Username" className="grow" value={user} readOnly/>
-            </label>
-            <label className="input input-bordered flex items-center m-10">
-                <input type="text" name='password' placeholder="New Password" className="grow"/>
-            </label>
+                <div className='flex justify-center text-2xl text-gray-400 gap-2'>
+                    <span>{`Account:`}</span>
+                    <span className='text-gray-600'>{cleanUser}</span>
+                </div>
+                <label className="input input-bordered flex items-center m-10">
+                    <input type="text" name='password' placeholder="New Password" className="grow"/>
+                </label>
             </div>
             
             <div className='flex justify-around mr-6 ml-6 sm:mr-40 sm:ml-40 mb-10'>

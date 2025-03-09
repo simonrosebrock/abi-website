@@ -4,7 +4,7 @@ import { getCleanUser } from "@/app/lib/miniFuncs"
 
 type imageListType = string[]
 
-export default function ImageListSelection({images, token,setSelectedImages}: {images: imageListType, token: string, setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>}) {
+export default function ImageListSelection({images, token, setSelectedImages, showName}: {images: imageListType, token: string, setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>, showName: boolean}) {
     if (images.length == 0) {
         return(
             <div className="w-[250px] h-[250px] rounded-lg flex items-center justify-center">
@@ -32,11 +32,14 @@ export default function ImageListSelection({images, token,setSelectedImages}: {i
                                 setSelectedImages(prevImages => [...prevImages, image])
                             }
                     }}>
-                        <div data-tip={getCleanUser(image.split("/")[1])} className="tooltip tooltip-right absolute w-[50px] h-[25px] xs:w-[60px] xs:h-[30px] sm:w-[80px] sm:h-[40px] rounded-lg flex items-center justify-center bg-white border-2 border-gray-200 left-3 top-3">
-                            <span className="text-xs">{
-                                getCleanUser(image.split("/")[1]).split(" ")[0]
-                            }</span>
-                        </div>
+                        {
+                            showName ? <div data-tip={getCleanUser(image.split("/")[1])} className="tooltip tooltip-right absolute w-[50px] h-[25px] xs:w-[60px] xs:h-[30px] sm:w-[80px] sm:h-[40px] rounded-lg flex items-center justify-center bg-white border-2 border-gray-200 left-3 top-3">
+                                            <span className="text-xs">{
+                                                getCleanUser(image.split("/")[1]).split(" ")[0]
+                                            }</span>
+                                        </div> : <></>
+                        }
+                        
                         <input type="checkbox" defaultChecked={false} className="checkbox checkbox-primary bg-white absolute right-3 top-3" />
                         <Image
                         src={`/api/getImage?url=${image}&token=${token}`}

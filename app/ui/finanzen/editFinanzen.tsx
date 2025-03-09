@@ -24,7 +24,7 @@ export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, 
           newAusgaben[index] = { ...newAusgaben[index], [name]: value };
           return newAusgaben;
         });
-      };
+    };
     
     
     
