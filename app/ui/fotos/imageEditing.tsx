@@ -13,12 +13,12 @@ export default function ImageEditing ({images, token, studentEntries, fileCount}
         <>
             <div className="flex flex-wrap w-auto gap-5 items-center mb-5 justify-center sm:justify-normal">
                 <StudentSelection studentEntries={studentEntries} fileCount={fileCount} />
-                <DeleteButton selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>
+                <DeleteButton permanent={false} selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>
                 <VerifyButton selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>
                 <ZipButton/>
             </div>
             <div className="flex-grow overflow-x-hidden overflow-y-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
-                <ImageListSelection images={images} token={token} setSelectedImages={setSelectedImages}/>
+                <ImageListSelection images={images} token={token} setSelectedImages={setSelectedImages} showName={true}/>
             </div>
         </>
     )

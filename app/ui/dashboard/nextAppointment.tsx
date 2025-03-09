@@ -69,7 +69,7 @@ export default function NextAppointment({termin}: QueryResultRow) {
                                     gruppen.map((gruppe, index) => (
                                         <div key={`${gruppe}-${index}`} className="w-[165px] text-abi-gray text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                                             <span className="text-red-500">•</span>
-                                            <span>{` ${persons[gruppe as string].join(", ")}`}</span>
+                                            <span>{` ${persons[gruppe as string].map(name => name.split(" ")[0]).join(", ")}`}</span>
                                         </div>
                                     ))
                                 }

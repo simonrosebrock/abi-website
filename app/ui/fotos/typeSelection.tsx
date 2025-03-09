@@ -17,6 +17,7 @@ export default function TypeSelection() {
         }} value={(type as string)}>
             <option value="uploaded">Unverifizierte Bilder</option>
             <option value="verified">Verifizierte Bilder</option>
+            <option value="deleted">Gelöschte Bilder</option>
         </select> 
     );
 }

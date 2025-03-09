@@ -30,11 +30,13 @@ async function GET(req: NextRequest) {
 
   //authentication
   var hasAuth = false;
-  if (token === "5bb13aaf-462b-42e6-8060-d01c289b8ed5") {
+  if (imageUrl.includes("verified")) {
+    hasAuth = true;
+  } else if (token === "5bb13aaf-462b-42e6-8060-d01c289b8ed5") {
     hasAuth = true;
   } else if (await validToken(token!)) {
     const user = (await getUsername(token!) as string)
-    if (imageUrl.includes(user) && (imageUrl.includes("uploaded") || imageUrl.includes("verified"))) {
+    if (imageUrl.includes(user) && (imageUrl.includes("uploaded") || imageUrl.includes("verified") || imageUrl.includes("deleted"))) {
       hasAuth = true;
     }
   }

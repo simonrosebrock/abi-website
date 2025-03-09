@@ -1,10 +1,10 @@
-import UploadButton from "@/app/ui/fotos/uploadButton";
-import TypeSelection from "@/app/ui/fotos/typeSelection";
+'use server'
+
 import { getFileList, getFileCount } from "@/app/lib/imageHandling"; // getFile, 
-import ImageList from "@/app/ui/fotos/imageList";
 import { getAuth } from "@/app/lib/getAuth";
 import { redirect } from 'next/navigation';
 import ImagePagination from "@/app/ui/fotos/imagePagination";
+import UserImageEditing from "@/app/ui/fotos/userImageEditing";
 
 type imageListType = string[]
 
@@ -24,7 +24,7 @@ const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: str
     const type = searchParams.type as string;
 
     
-    if (!type || !['verified', 'uploaded'].includes(type)) {
+    if (!type || !['verified', 'uploaded', 'deleted'].includes(type)) {
         redirect(`/dashboard/deinefotos?type=uploaded&page=${page}`)
     }
 
@@ -46,13 +46,7 @@ const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: str
 
     return(
         <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
-            <div className="flex w-auto gap-5 items-center mb-5 flex-wrap justify-center xs:justify-normal">
-                <UploadButton token={token}/>
-                <TypeSelection/>
-            </div>
-            <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
-                <ImageList images={images} token={token}/>
-            </div>
+            <UserImageEditing images={images} token={token}/>
             { images.length == 0 ? 
                 <></> : <div className="w-auto mt-5 flex">
                             <ImagePagination image_limit_per_page={image_limit_per_page} fileCount={fileCount}/>

@@ -141,3 +141,15 @@ export const deleteFile = async (student: string, file: string) => {
         }
     });
 }
+
+export const deleteFilePermanent = async (student: string, file: string) => {
+    console.log(file)
+    await fetch('http://homeapp.webredirect.org:4000/delete', {
+        method: 'POST',
+        headers: {
+            'x-api-key': 'your-secure-key',
+            'folder-name': student,
+            'file-name': file,
+        }
+    });
+}

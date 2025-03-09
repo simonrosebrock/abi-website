@@ -24,7 +24,6 @@ export const getAuth = async (): Promise<null | [string, string, string]> => {
 
 export const getUsername = async (token: string) => {
     const {rows} = await sql`SELECT * FROM users WHERE token = ${token};`;
-    console.log(rows)
     return rows[0].username;
 }
 
