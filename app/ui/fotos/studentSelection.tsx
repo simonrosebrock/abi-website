@@ -1,6 +1,7 @@
 'use client'
 
-import { getPrettyStudent } from '@/app/lib/miniFuncs';
+
+import { getCleanUser } from '@/app/lib/miniFuncs';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export default function StudentSelection({studentEntries, fileCount}: {studentEntries: string[], fileCount: {[key: string]: number}}) {
@@ -13,7 +14,7 @@ export default function StudentSelection({studentEntries, fileCount}: {studentEn
 
     const newStudentEntries = studentEntries.slice(0, -1);
     const prettyStudentEntries = newStudentEntries.map(student =>
-        student = getPrettyStudent(student)
+        student = getCleanUser(student)
     );
     
 

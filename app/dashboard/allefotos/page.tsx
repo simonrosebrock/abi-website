@@ -9,7 +9,11 @@ import { redirect } from 'next/navigation'
 type imageListType = string[]
 
 const AlleFotos = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
-    const [token, role, user] = await getAuth();
+    const auth = await getAuth()
+    if (!auth) {
+        return(<></>)
+    }
+    const [token, role, user] = auth as [string, string, string];
     const image_limit_per_page = 20;
 
     const page = parseInt((searchParams.page as string), 10);
@@ -31,7 +35,7 @@ const AlleFotos = async ({ searchParams }: { searchParams: { [key: string]: stri
     return(
         <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
             <div className="flex flex-wrap w-auto gap-5 items-center mb-5 xs:justify-normal justify-center">
-                {user === "admin" ? <></> : <UploadButton token={token}/>}
+                {role === "admin" ? <></> : <UploadButton token={token}/>}
                 <DownloadButton token={token}/>
             </div>
             <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">

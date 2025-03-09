@@ -7,7 +7,11 @@ import ImageEditing from "@/app/ui/fotos/imageEditing";
 
 type imageListType = string[]
 const FotoVerifikation = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
-    const [token, role, user] = await getAuth();
+    const auth = await getAuth()
+    if (!auth) {
+        return(<></>)
+    }
+    const [token, role, user] = auth as [string, string, string];
     if (user !== "admin") return <></>
 
     const image_limit_per_page = 20;

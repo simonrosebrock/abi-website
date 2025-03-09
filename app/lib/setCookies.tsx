@@ -2,6 +2,7 @@
 import { sql } from "@vercel/postgres";
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import bcrypt from 'bcrypt';
 
 type response = {
   message: string,
@@ -9,7 +10,9 @@ type response = {
 }
 
 export const setCookies = async (formData: FormData) => {
-  const username = (formData.get('username') as string).trim();
+  const vorname = (formData.get('vorname') as string).toLowerCase().trim();
+  const nachname = (formData.get('nachname') as string).toLowerCase().trim();
+  const username =  vorname === "admin" ?  vorname : `${vorname}_${nachname}`
   const password = (formData.get('password') as string).trim();
 
   if (!username || !password) {
@@ -25,7 +28,8 @@ export const setCookies = async (formData: FormData) => {
   } 
   const {rows} = await sql`SELECT * FROM users WHERE username = ${String(username)};`;
   if (rows[0]) {
-    if (rows[0].password === password) {
+    const isValid = await bcrypt.compare(password, rows[0].password);
+    if (isValid) {
       cookies().set('token', rows[0].token);
       return { success: true, message: 'Login successful, redirecting...' } as response;
     }

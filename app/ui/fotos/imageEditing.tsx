@@ -17,7 +17,7 @@ export default function ImageEditing ({images, token, studentEntries, fileCount}
                 <VerifyButton selectedImages={selectedImages} setSelectedImages={setSelectedImages}/>
                 <ZipButton/>
             </div>
-            <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
+            <div className="flex-grow overflow-x-hidden overflow-y-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
                 <ImageListSelection images={images} token={token} setSelectedImages={setSelectedImages}/>
             </div>
         </>

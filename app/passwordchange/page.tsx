@@ -6,9 +6,9 @@ import { getAuth } from '@/app/lib/getAuth';
 import { InputField } from '@/app/passwordchange/inputField';
 
 export default async function PasswordChange() {
-    const [token, role, user] = await getAuth();
+    const [token, role, user] = await getAuth() as [string, string, string];
 
-    if (user === "admin") {
+    if (role === "admin") {
         redirect("/dashboard")
     }
 
@@ -30,7 +30,7 @@ export default async function PasswordChange() {
                         />
                         <span className="text-abi-black text-5xl">Passwort ändern</span>
                     </div>
-                    <InputField token={String(token.value)} user={String(user)}/>
+                    <InputField token={String(token)} user={String(user)}/>
                 </div>
             </div>
         </div>

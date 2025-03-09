@@ -11,7 +11,7 @@ async function POST(req: NextRequest) {
         }
 
         if (await validToken(token!)) {
-            const user = (await getUsername(token!) as string).toLowerCase().replaceAll(" ", "_");
+            const user = (await getUsername(token!) as string)
             
             const formData = await req.formData();
             const res = await fetch('blacklisted/upload', {

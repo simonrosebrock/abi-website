@@ -9,7 +9,7 @@ export function InputField({token, user}: {token: string, user: string}) {
     return(
         <form action={async (formData: FormData) => {
             const password = (formData.get('password') as string).trim();
-            if (password === "" || password == null) {
+            if (password === "" || password == null || password.length > 255) {
                 return
             }
             changePassword(token as string, password as string);

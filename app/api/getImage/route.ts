@@ -32,9 +32,8 @@ async function GET(req: NextRequest) {
   var hasAuth = false;
   if (token === "blacklisted") {
     hasAuth = true;
-  }
-  if (await validToken(token!)) {
-    const user = (await getUsername(token!) as string).toLowerCase().replaceAll(" ", "_");
+  } else if (await validToken(token!)) {
+    const user = (await getUsername(token!) as string)
     if (imageUrl.includes(user) && (imageUrl.includes("uploaded") || imageUrl.includes("verified"))) {
       hasAuth = true;
     }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { setHelfer } from "@/app/lib/dbConnection";
-import { getDateString } from "@/app/lib/miniFuncs";
+import { getCleanUser, getDateString } from "@/app/lib/miniFuncs";
 import { EditAppointment } from "./EditAppointment";
 
 const infoSVG = (
@@ -81,7 +81,7 @@ export function Appointment({id, termin_id, title, description, ort, date, start
                     gruppen.map((gruppe, index) => (
                         <div key={`${index}-${gruppe}-${id}`} className="w-[200px] text-abi-gray text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                             <span className="text-red-500">•</span>
-                            <span>{` ${savedPersonen[gruppe].join(", ")}`}</span>
+                            <span>{` ${savedPersonen[gruppe].map(name => name.split(" ")[0]).join(", ")}`}</span>
                         </div>
                     ))
                 }
@@ -150,6 +150,12 @@ const PersonenModal = ({termin_id, id, title, user, personen, setPersonen, saved
                 <div className="modal-action">
                     <form method="dialog">
                         <button className="btn" onClick={async () => {
+                            for (const key in personen) {
+                                if (personen.hasOwnProperty(key)) {
+                                    personen[key].sort();
+                                }
+                            }
+
                             setSavedPersonen(personen);
                             setHelfer(personen, termin_id);
                         }}>Speichern</button>
@@ -189,15 +195,21 @@ const PersonenGruppe = ({gruppe, personen, setPersonen, user, id, users}: Person
             <span className="font-bold">{gruppe}</span>
             
             <div id={`personen_div_${id}_${gruppe}`} className="flex flex-wrap gap-3 mt-2">
-                { personen[gruppe] ? personen[gruppe].map((name, index_2) => (
-                    <div key={index_2} id={`${name}-${gruppe}-${id}`} className="indicator h-[32px]">
-                        <button onClick={() => { // on delete click
-                            var updated_personen = JSON.parse(JSON.stringify(personen))
-                            updated_personen[gruppe].splice(index_2, 1);
-                            setPersonen(updated_personen);
-                        }} className={`${user === name || user === "admin" ? "block" : "hidden"} indicator-item badge bg-white scale-75 hover:bg-gray-300 font-bold border-black`}>X</button> 
-                        <div className="grid w-auto h-auto bg-white place-items-center rounded-md pl-1 pr-1">{name}</div>
+                { personen[gruppe].length > 0 ? personen[gruppe].map((name, index_2) => ( // mapping personen
+                    <div key={index_2} className="tooltip" data-tip={name}>
+                        <div id={`${name}-${gruppe}-${id}`} className="indicator h-[32px]">
+                            <button onClick={() => { // on delete click
+                                var updated_personen = JSON.parse(JSON.stringify(personen))
+                                updated_personen[gruppe].splice(index_2, 1);
+                                setPersonen(updated_personen);
+                            }} className={`${user === name || user === "admin" ? "block" : "hidden"} indicator-item badge bg-white scale-75 hover:bg-gray-300 font-bold border-black`}>X</button> 
+                            
+                            <div className="grid w-auto h-auto bg-white place-items-center rounded-md pl-1 pr-1" >
+                                {name.split(" ")[0]}
+                            </div>
+                        </div>
                     </div>
+                    
                 )) : <></>}
                 <button id={`plus-${gruppe}-${id}`} onClick={() => { // on create click
                     if (user === "admin") {
@@ -213,7 +225,7 @@ const PersonenGruppe = ({gruppe, personen, setPersonen, user, id, users}: Person
                             setPersonen(updated_personen);
                         }
                     }
-                }} className={`btn btn-sm bg-white rounded-md h-auto ${personen[gruppe] ? (personen[gruppe].includes(user) ? "hidden" : "block") : ''} show`}>
+                }} className={`btn btn-sm bg-white rounded-md h-auto ${personen[gruppe].includes(user) ? "hidden" : "block"}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50">
                         <path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 24 13 L 24 24 L 13 24 L 13 26 L 24 26 L 24 37 L 26 37 L 26 26 L 37 26 L 37 24 L 26 24 L 26 13 L 24 13 z"></path>
                     </svg>

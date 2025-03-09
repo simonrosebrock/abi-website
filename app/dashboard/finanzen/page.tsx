@@ -10,20 +10,24 @@ type FinanzenTable = {name: string, money: number}[]
 type CheckpointsTable = {money: number, cardprice: number}[]
 
 const Finanzen = async () => {
+    const auth = await getAuth()
+    if (!auth) {
+        return(<></>)
+    }
+    const [token, role, user] = auth as [string, string, string];
+
     const ausgaben:FinanzenTable = await getAusgaben();
     const einnahmen:number = await getEinnahmen();
 
     const checkpoints:CheckpointsTable = await getCheckpoints();
     const excessGoal:number = await getExcessGoal();
 
-    var [token, role, user] = await getAuth();
-
     var ausgabenSum = 0;
     ausgaben.forEach((element: any) => {
         ausgabenSum += element.money;
     });
 
-    if (user === "admin") {
+    if (role === "admin") {
         return(
             <div className="flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
                 <EditFinanzen einnahmen={einnahmen} ausgaben={ausgaben}/>

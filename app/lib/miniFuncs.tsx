@@ -1,5 +1,4 @@
 
-
 function weekDayToString(day: number) {
     switch (day) {
         case 1: return "Mon"; break;
@@ -24,6 +23,6 @@ export function getDateString(date: Date) {
     
 }
 
-export function getPrettyStudent(student: string) {
-    return student.replaceAll("_", " ").split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+export function getCleanUser(user: string) {
+    return user?.replaceAll("_", " ").split(" ").map(word => word[0]?.toUpperCase() + word.slice(1)).join(" ")
 }
