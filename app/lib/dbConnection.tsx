@@ -28,10 +28,6 @@ export const getUsersAdmin = async () => {
     return users;
 }
 
-export const changePassword = async (token: string, password: string) => {
-    await sql`UPDATE users SET password = ${password} WHERE token = ${token}`
-}
-
 type Personen = {
     [key: string]: string[];
 };
