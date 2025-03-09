@@ -5,12 +5,13 @@ import { redirect } from 'next/navigation';
 import Sidebar from '@/app/dashboard/sidebar';
 
 export default async function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
-    const [token, role, user] = await getAuth();
-    if (!token) {
+    const auth = await getAuth();
+    if (!auth) {
         redirect("/login");
     }
+    const [token, role, user] = auth;
 
     return(
-        <Sidebar user={user}>{children}</Sidebar>
+        <Sidebar role={role}>{children}</Sidebar>
     )
 }

@@ -32,9 +32,8 @@ async function GET(req: NextRequest) {
   var hasAuth = false;
   if (token === "5bb13aaf-462b-42e6-8060-d01c289b8ed5") {
     hasAuth = true;
-  }
-  if (await validToken(token!)) {
-    const user = (await getUsername(token!) as string).toLowerCase().replaceAll(" ", "_");
+  } else if (await validToken(token!)) {
+    const user = (await getUsername(token!) as string)
     if (imageUrl.includes(user) && (imageUrl.includes("uploaded") || imageUrl.includes("verified"))) {
       hasAuth = true;
     }

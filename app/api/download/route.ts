@@ -2,7 +2,7 @@
 
 import { unstable_noStore as noStore } from "next/cache";
 import {NextResponse, NextRequest } from "next/server";
-import { validToken, getUsername } from "@/app/lib/getAuth";
+import { validToken } from "@/app/lib/getAuth";
 
 async function GET(req: NextRequest) {
   noStore()
@@ -15,7 +15,7 @@ async function GET(req: NextRequest) {
     );
   }
   
-  if (token === "5bb13aaf-462b-42e6-8060-d01c289b8ed5" || await validToken(token!)) {
+  if (await validToken(token!)) {
     const res = await fetch(`http://homeapp.webredirect.org:4000/download`, {
       method: 'GET',
       headers: {

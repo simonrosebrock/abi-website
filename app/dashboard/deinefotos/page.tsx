@@ -9,8 +9,12 @@ import ImagePagination from "@/app/ui/fotos/imagePagination";
 type imageListType = string[]
 
 const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
-    const [token, role, user] = await getAuth();
-    if(user === "admin") {
+    const auth = await getAuth()
+    if (!auth) {
+        return(<></>)
+    }
+    const [token, role, user] = auth as [string, string, string];
+    if(role === "admin") {
         redirect("/dashboard/allefotos")
     }
 

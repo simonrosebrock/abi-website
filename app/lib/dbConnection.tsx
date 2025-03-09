@@ -2,6 +2,7 @@
 
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore} from 'next/cache';
+import bcrypt from 'bcrypt';
 
 export const getTermine = async () => {
     noStore();
@@ -18,6 +19,12 @@ export const getClosestTermin = async () => {
 export const getUsers = async () => {
     const rows = await sql`SELECT username FROM users ORDER BY username`;
     const users = rows.rows.map(row => row.username)
+    return users;
+}
+
+export const getUsersAdmin = async () => {
+    const rows = await sql`SELECT username, token FROM users ORDER BY username`;
+    const users = rows.rows.map(row => ({ name: row.username, token: row.token }))
     return users;
 }
 
@@ -57,24 +64,24 @@ export const updateTermin = async (id: string, termin: Termin) => {
 }
 
 type FinanzenTable = {name: string, money: number}[]
-const einnahmenToken = '0956deb0-141b-48a6-b7bd-5181fc205f76'
+const einnahmenID = '0956deb0-141b-48a6-b7bd-5181fc205f76'
 
 export const getAusgaben = async () => {
     noStore();
-    const rows = await sql`SELECT name, money FROM finanzen WHERE NOT token = ${einnahmenToken}`
+    const rows = await sql`SELECT name, money FROM finanzen WHERE NOT id = ${einnahmenID}`
     return rows.rows as FinanzenTable; 
 }
 
 export const getEinnahmen = async () => {
     noStore();
-    const rows = await sql`SELECT money FROM finanzen WHERE token = ${einnahmenToken}`
+    const rows = await sql`SELECT money FROM finanzen WHERE id = ${einnahmenID}`
     return rows.rows[0].money as number;
 }
 
 export const updateFinanzen = async (finanzen: FinanzenTable, einnahmen: number) => {
     if (finanzen.length > 1) {
-        await sql`DELETE FROM finanzen WHERE NOT token = ${einnahmenToken}`
-        await sql`UPDATE finanzen SET money = ${einnahmen} WHERE token = ${einnahmenToken}`
+        await sql`DELETE FROM finanzen WHERE NOT id = ${einnahmenID}`
+        await sql`UPDATE finanzen SET money = ${einnahmen} WHERE id = ${einnahmenID}`
         for (const row of finanzen) {
             await sql`INSERT INTO finanzen (name, money) VALUES (${row.name}, ${row.money})`
         }
@@ -82,26 +89,56 @@ export const updateFinanzen = async (finanzen: FinanzenTable, einnahmen: number)
 }
 
 type CheckpointsTable = {money: number, cardprice: number}[]
-const goalToken = '39166ec5-b68d-4fd0-81e0-2b3eebe2488a'
+const goalID = '39166ec5-b68d-4fd0-81e0-2b3eebe2488a'
 
 export const getExcessGoal = async () => {
     noStore();
-    const rows = await sql`SELECT money FROM checkpoints WHERE id = ${goalToken}`
+    const rows = await sql`SELECT money FROM checkpoints WHERE id = ${goalID}`
     return rows.rows[0].money as number;
 }
 
 export const getCheckpoints = async () => {
     noStore();
-    const rows = await sql`SELECT money, cardprice FROM checkpoints WHERE NOT id = ${goalToken}`
+    const rows = await sql`SELECT money, cardprice FROM checkpoints WHERE NOT id = ${goalID}`
     return rows.rows as CheckpointsTable;
 }
 
 export const updateCheckpoints = async (checkpoints: CheckpointsTable, goal: number) => {
     if (checkpoints.length > 1) {
-        await sql`DELETE FROM checkpoints WHERE NOT id = ${goalToken}`
-        await sql`UPDATE checkpoints SET money = ${goal} WHERE id = ${goalToken}`
+        await sql`DELETE FROM checkpoints WHERE NOT id = ${goalID}`
+        await sql`UPDATE checkpoints SET money = ${goal} WHERE id = ${goalID}`
         for (const row of checkpoints) {
             await sql`INSERT INTO checkpoints (money, cardprice) VALUES (${row.money}, ${row.cardprice})`
         }
     }
 }
+
+export const updateAccountName = async (token: string, username: string) => {
+    try {
+        await sql`UPDATE users SET username = ${username} WHERE token = ${token};`
+        return 'success'
+    } catch (error) {
+        return null
+    }
+}
+
+export const updateAccountPassword = async (token: string, password: string) => {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await sql`UPDATE users SET password = ${hashedPassword} WHERE token = ${token};`
+}
+
+export const createAccount = async (username: string, password: string) => {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    try {
+        await sql`INSERT INTO users (username, password) VALUES (${username}, ${hashedPassword});`
+        return 'success'
+    } catch (error) {
+        return null
+    }
+    
+}
+
+export const deleteAccount = async (token: string) => {
+    await sql`DELETE FROM users WHERE token = ${token}`
+}
+

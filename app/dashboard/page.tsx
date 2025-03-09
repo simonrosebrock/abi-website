@@ -1,4 +1,4 @@
-
+'use server'
 import { getAuth } from '@/app/lib/getAuth';
 import NextAppointment from '@/app/ui/dashboard/nextAppointment';
 import RevenueTracker from '@/app/ui/dashboard/revenueTracker';
@@ -9,7 +9,11 @@ type FinanzenTable = {name: string, money: number}[]
 type CheckpointsTable = {money: number, cardprice: number}[]
 
 const Dashboard = async () => {
-    const [token, role, user] = await getAuth();
+    const auth = await getAuth()
+    if (!auth) {
+        return(<></>)
+    }
+    const [token, role, user] = auth as [string, string, string];
     const termin: QueryResultRow = await getClosestTermin();
     const ausgaben: FinanzenTable = await getAusgaben();
     const einnahmen: number = await getEinnahmen();

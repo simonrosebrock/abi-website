@@ -1,7 +1,6 @@
 'use client'
-import { getPrettyStudent } from "@/app/lib/miniFuncs";
 import Image from "next/image"
-
+import { getCleanUser } from "@/app/lib/miniFuncs"
 
 type imageListType = string[]
 
@@ -33,9 +32,9 @@ export default function ImageListSelection({images, token,setSelectedImages}: {i
                                 setSelectedImages(prevImages => [...prevImages, image])
                             }
                     }}>
-                        <div className="absolute w-[50px] h-[25px] xs:w-[60px] xs:h-[30px] sm:w-[80px] sm:h-[40px] rounded-lg flex items-center justify-center bg-white border-2 border-gray-200 left-3 top-3 overflow-hidden">
+                        <div data-tip={getCleanUser(image.split("/")[1])} className="tooltip tooltip-right absolute w-[50px] h-[25px] xs:w-[60px] xs:h-[30px] sm:w-[80px] sm:h-[40px] rounded-lg flex items-center justify-center bg-white border-2 border-gray-200 left-3 top-3">
                             <span className="text-xs">{
-                                getPrettyStudent(image.split("/")[1])
+                                getCleanUser(image.split("/")[1]).split(" ")[0]
                             }</span>
                         </div>
                         <input type="checkbox" defaultChecked={false} className="checkbox checkbox-primary bg-white absolute right-3 top-3" />

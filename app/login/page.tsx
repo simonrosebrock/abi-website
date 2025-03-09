@@ -28,6 +28,7 @@ export default function Login() {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
+    const [nachnameRequired, setNachnameRequired] = useState<boolean>(true);
 
 
     const handleSubmit = async (formData: FormData) => {
@@ -68,11 +69,22 @@ export default function Login() {
                             <span className={`${success ? "text-green-600" : "text-red-600"}`}>{message}</span>
                         </div>
                         
-                        <label className="input input-bordered flex items-center m-10">
-                            <input type="text" name='username' placeholder="Username" className="grow"/>
-                        </label>
-                        <label className="input input-bordered flex items-center m-10">
-                            <input type={visible ? "text":"password"} name='password' placeholder="Password" className="grow"/>
+                        <div className='flex m-5 xs:m-10 gap-5'>
+                            <label className="input input-bordered flex items-center w-[calc(50%-10px)]">
+                                <input type="text" name='vorname' placeholder="Vorname" required onChange={(e) => {
+                                    if (e.target.value === "admin") {
+                                        setNachnameRequired(false)
+                                    } else if (!nachnameRequired) {
+                                        setNachnameRequired(true)
+                                    }
+                                }}/>
+                            </label>
+                            <label className="input input-bordered flex items-center w-[calc(50%-10px)]">
+                                <input type="text" name='nachname' placeholder="Nachname" required={nachnameRequired}/>
+                            </label>
+                        </div>
+                        <label className="input input-bordered flex items-center m-5 xs:m-10">
+                            <input type={visible ? "text":"password"} name='password' placeholder="Password" className="grow" required/>
                             <button className='w-6' onClick={(e) => {
                                 e.preventDefault();
                                 setVisible(prev => !prev)
