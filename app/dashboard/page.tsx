@@ -2,7 +2,7 @@
 import { getAuth } from '@/app/lib/getAuth';
 import NextAppointment from '@/app/ui/dashboard/nextAppointment';
 import RevenueTracker from '@/app/ui/dashboard/revenueTracker';
-import { getClosestTermin, getEinnahmen, getCheckpoints, getExcessGoal, getFixCost } from '@/app/lib/dbConnection';
+import { getClosestTermin, getFixCost } from '@/app/lib/dbConnection';
 import { QueryResultRow } from '@vercel/postgres';
 
 type FinanzenTable = {name: string, money: number}[]
@@ -16,9 +16,6 @@ const Dashboard = async () => {
     const [token, role, user] = auth as [string, string, string];
     const termin: QueryResultRow = await getClosestTermin();
     const ausgaben: FinanzenTable = await getFixCost();
-    const einnahmen: number = await getEinnahmen();
-    const checkpoints:CheckpointsTable = await getCheckpoints();
-    const excessGoal:number = await getExcessGoal();
 
     
 
