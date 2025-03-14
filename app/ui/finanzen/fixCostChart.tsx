@@ -12,7 +12,7 @@ type AusgabenRow = {
 
 //  ["#ff0000", "#1900ff", "#ff2a00", "#ffee00", "#0a2418", "#de760d", "#0d0dde", "#0d98de", "#800dde", "#de0dc6"]
 
-export default function PieChart({ausgaben}: {ausgaben: FinanzenTable}) {
+export default function FixCostChart({ausgaben}: {ausgaben: FinanzenTable}) {
     const chartRef = useRef(null) as any;
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export default function PieChart({ausgaben}: {ausgaben: FinanzenTable}) {
                             display: false,
                         },
                         htmlLegend: {
-                            containerID: 'legend-container',
+                            containerID: 'legend-container-fixcost',
                         },
                         tooltip: {
                             callbacks: {
@@ -63,11 +63,11 @@ export default function PieChart({ausgaben}: {ausgaben: FinanzenTable}) {
 
     return(
         <div className="w-[250px] h-[350px] md:w-[500px] md:h-[500px] bg-white shadow-sm rounded-lg p-2 flex flex-col items-center">
-            <h3 className="text-[#05004E] text-xl">Abiball Fixkosten</h3>
-            <div id="legend-container" className="w-full overflow-auto scrollbar-none">
+            <h3 className="text-[#05004E] text-xl">Fixkosten</h3>
+            <div id="legend-container-fixcost" className="w-full overflow-auto scrollbar-none h-[200px]">
                 <ul className="flex flex-wrap justify-center"></ul>
             </div>
-            <div className="w-[200px] md:w-[380px] h-[380px]" style={{position: "relative"}}>
+            <div className="ml-auto mr-auto w-[200px] md:w-[380px] h-[380px]" style={{position: "relative"}}>
                 <canvas ref={chartRef}/>
             </div>
         </div>

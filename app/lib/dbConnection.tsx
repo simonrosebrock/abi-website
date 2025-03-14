@@ -61,52 +61,48 @@ export const updateTermin = async (id: string, termin: Termin) => {
 
 type FinanzenTable = {name: string, money: number}[]
 const einnahmenID = '0956deb0-141b-48a6-b7bd-5181fc205f76'
+const guestCountID = 'ed77f63a-d6e9-4b81-9d28-f2285e2ce584'
+const customCardPriceID = '124ffcab-cdcb-4a6c-8a77-668951eb78e7'
+const customZielID = 'b2b6df9e-daad-4301-bc48-536692258001'
 
-export const getAusgaben = async () => {
+export const getFixCost = async () => {
     noStore();
-    const rows = await sql`SELECT name, money FROM finanzen WHERE NOT id = ${einnahmenID}`
+    const rows = await sql`SELECT name, money FROM fixkosten ORDER BY money ASC`
     return rows.rows as FinanzenTable; 
 }
 
-export const getEinnahmen = async () => {
+export const getVarCost = async () => {
     noStore();
-    const rows = await sql`SELECT money FROM finanzen WHERE id = ${einnahmenID}`
-    return rows.rows[0].money as number;
+    const rows = await sql`SELECT name, money FROM varkosten ORDER BY money ASC`
+    return rows.rows as FinanzenTable;
 }
 
-export const updateFinanzen = async (finanzen: FinanzenTable, einnahmen: number) => {
-    if (finanzen.length > 1) {
-        await sql`DELETE FROM finanzen WHERE NOT id = ${einnahmenID}`
-        await sql`UPDATE finanzen SET money = ${einnahmen} WHERE id = ${einnahmenID}`
-        for (const row of finanzen) {
-            await sql`INSERT INTO finanzen (name, money) VALUES (${row.name}, ${row.money})`
-        }
+export const getGeneralFinanzen = async () => {
+    noStore();
+    const rows = await sql`SELECT name, value FROM finanzen`
+    return rows.rows as {name: string, value: number}[];
+}
+
+export const setFixCost = async (fixCost: FinanzenTable) => {
+    await sql`DELETE FROM fixkosten`
+    for (const row of fixCost) {
+        await sql`INSERT INTO fixkosten (name, money) VALUES (${row.name}, ${row.money})`
     }
 }
 
-type CheckpointsTable = {money: number, cardprice: number}[]
-const goalID = '39166ec5-b68d-4fd0-81e0-2b3eebe2488a'
-
-export const getExcessGoal = async () => {
-    noStore();
-    const rows = await sql`SELECT money FROM checkpoints WHERE id = ${goalID}`
-    return rows.rows[0].money as number;
-}
-
-export const getCheckpoints = async () => {
-    noStore();
-    const rows = await sql`SELECT money, cardprice FROM checkpoints WHERE NOT id = ${goalID}`
-    return rows.rows as CheckpointsTable;
-}
-
-export const updateCheckpoints = async (checkpoints: CheckpointsTable, goal: number) => {
-    if (checkpoints.length > 1) {
-        await sql`DELETE FROM checkpoints WHERE NOT id = ${goalID}`
-        await sql`UPDATE checkpoints SET money = ${goal} WHERE id = ${goalID}`
-        for (const row of checkpoints) {
-            await sql`INSERT INTO checkpoints (money, cardprice) VALUES (${row.money}, ${row.cardprice})`
-        }
+export const setVarCost = async (varCost: FinanzenTable) => {
+    await sql`DELETE FROM varkosten`
+    for (const row of varCost) {
+        await sql`INSERT INTO varkosten (name, money) VALUES (${row.name}, ${row.money})`
     }
+}
+
+export const setGeneralFinanzen = async (einnahmen: number, guestCount: number, customZiel: number, customCardPrice: number) => {
+    noStore();
+    await sql`UPDATE finanzen SET value = ${einnahmen} WHERE id = ${einnahmenID}`
+    await sql`UPDATE finanzen SET value = ${guestCount} WHERE id = ${guestCountID}`
+    await sql`UPDATE finanzen SET value = ${customZiel} WHERE id = ${customZielID}`
+    await sql`UPDATE finanzen SET value = ${customCardPrice} WHERE id = ${customCardPriceID}`
 }
 
 export const updateAccountName = async (token: string, username: string) => {

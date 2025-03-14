@@ -1,7 +1,7 @@
 'use client'
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { setFixCost } from "@/app/lib/dbConnection";
 import { useRouter } from "next/navigation";
-import { updateFinanzen } from "@/app/lib/dbConnection";
 
 const plusSVG = (
     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 50 50">
@@ -9,43 +9,43 @@ const plusSVG = (
     </svg>
 )
 
-type FinanzenTable = {name: string, money: number}[]
-type AusgabenRow = {name: string, money: number}
 
-export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, ausgaben: FinanzenTable}) {
-    const [localAusgaben, setLocalAusgaben] = useState(ausgaben);
-    const [localEinnahmen, setLocalEinnahmen] = useState(einnahmen);
+type FinanzenTable = {name: string, money: number}[]
+type FixCostRow = {name: string, money: number}
+
+export default function EditFixCost({fixCost}: {fixCost: FinanzenTable}) {
+    const [localFixCost, setLocalFixCost] = useState<FinanzenTable>(fixCost);
+    const [showToast, setShowToast] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+
     const router = useRouter();
+
+    useEffect(() => {
+        if (showToast) {
+            setIsVisible(true);
+            setTimeout(() => setShowToast(false), 3000);
+        } else {
+            setTimeout(() => setIsVisible(false), 1000);
+        }
+    }, [showToast]);
 
     const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setLocalAusgaben(prevAusgaben => {
-          const newAusgaben = [...prevAusgaben];
-          newAusgaben[index] = { ...newAusgaben[index], [name]: value };
-          return newAusgaben;
+        setLocalFixCost(prevFixCost => {
+            const newFixCost = [...prevFixCost];
+            newFixCost[index] = { ...newFixCost[index], [name]: value };
+            return newFixCost;
         });
     };
-    
-    
-    
+        
+
     return(
         <div className="min-w-[250px] w-[500px] h-[580px] bg-white shadow-sm rounded-lg p-10 flex flex-col">
+            <h2 className="text-[#05004E] text-xl mb-4">Fixkosten</h2>
             <div className="flex flex-col overflow-auto scrollbar-none mb-8">
-                <h2 className="text-[#05004E] text-xl mb-4">Einnahmen</h2>
-                <div>
-                    <label className="input input-bordered flex items-center">
-                        <input type="number" name='einnahmen' placeholder="Einnahmen" className="grow" value={localEinnahmen} onChange={e => {
-                            const { name, value } = e.target;
-                            setLocalEinnahmen(Number(value));
-                        }}/>
-                    </label>
-                </div>
-                
-                <div className="divider mt-4 mb-4"></div>
-                <h2 className="text-[#05004E] text-xl mb-4">Ausgaben</h2>
                 <div id="ausgaben">
                     {
-                        localAusgaben.map((row: AusgabenRow, index: number) => (
+                        localFixCost.map((row: FixCostRow, index: number) => (
                             <div className="mb-4 xs:flex" key={index}>
                                 <label className="input input-bordered flex items-center min-w-[150px]">
                                     <input type="text" name='name' placeholder="Name" className="grow" value={row.name} onChange={e => handleInputChange(index, e)}/>
@@ -55,10 +55,10 @@ export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, 
                                         <input type="number" name='money' placeholder="Kosten" className="grow xs:w-14" value={row.money} onChange={e => handleInputChange(index, e)}/>
                                     </label>
                                     <button className="btn btn-error ml-1 shrink-0" onClick={() => {
-                                        setLocalAusgaben(prevAusgaben => {
-                                            const newAusgaben = [...prevAusgaben];
-                                            newAusgaben.splice(index, 1);
-                                            return newAusgaben;
+                                        setLocalFixCost(prevFixCost => {
+                                            const newFixCost = [...prevFixCost];
+                                            newFixCost.splice(index, 1);
+                                            return newFixCost;
                                         });
                                     }}>X</button>
                                 </div>
@@ -68,24 +68,36 @@ export default function EditFinanzen({einnahmen, ausgaben}: {einnahmen: number, 
                 </div>
                 
                 <button className="btn btn-outline border-gray-300 hover:bg-gray-200" onClick={() => {
-                    setLocalAusgaben(prevArray => [...prevArray, {name: "", money: 0}])
+                    setLocalFixCost(prevArray => [...prevArray, {name: "", money: 0}])
                 }}>
                     {plusSVG}
                 </button>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-auto">
                 <button className="btn" onClick={() => {
-                    setLocalAusgaben(ausgaben)
-                }}>Zurück</button>
+                    setLocalFixCost(fixCost)
+                }}>Reset</button>
                 <button className="btn" onClick={() => {
-                    const localCleanedAusgaben = localAusgaben.filter(item => !(item.name === "" && item.money === 0));
-                    if (JSON.stringify(ausgaben) === JSON.stringify(localCleanedAusgaben) && einnahmen == localEinnahmen) {
+                    const localCleanedFixCost = localFixCost.filter(item => !(item.name === "" && item.money === 0)).map(item => ({name: item.name, money: Number(item.money)}));
+                    if (JSON.stringify(fixCost) === JSON.stringify(localCleanedFixCost)) {
                         return
                     }
-                    updateFinanzen(localCleanedAusgaben, localEinnahmen);
+                    setFixCost(localCleanedFixCost);
+                    router.refresh();
+                    setShowToast(true);
                 }}>Speichern</button>
             </div>
+            <div className="toast fixed bottom-10 left-1/2 -translate-x-1/2">
+                {isVisible && (
+                    <div 
+                        className={`px-4 py-2 rounded-lg shadow-lg alert alert-success flex justify-center items-center 
+                            transition-all ease-out
+                            ${showToast ? "opacity-100 scale-100 duration-150" : "opacity-0 scale-95 duration-1000"}`}
+                    >
+                        <span>Gespeichert!</span>
+                    </div>
+                )}
+            </div>
         </div>
-        
-    );
+    )
 }
