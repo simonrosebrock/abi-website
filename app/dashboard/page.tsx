@@ -2,7 +2,7 @@
 import { getAuth } from '@/app/lib/getAuth';
 import NextAppointment from '@/app/ui/dashboard/nextAppointment';
 import RevenueTracker from '@/app/ui/dashboard/revenueTracker';
-import { getClosestTermin, getAusgaben, getEinnahmen, getCheckpoints, getExcessGoal } from '@/app/lib/dbConnection';
+import { getClosestTermin, getEinnahmen, getCheckpoints, getExcessGoal, getFixCost } from '@/app/lib/dbConnection';
 import { QueryResultRow } from '@vercel/postgres';
 
 type FinanzenTable = {name: string, money: number}[]
@@ -15,7 +15,7 @@ const Dashboard = async () => {
     }
     const [token, role, user] = auth as [string, string, string];
     const termin: QueryResultRow = await getClosestTermin();
-    const ausgaben: FinanzenTable = await getAusgaben();
+    const ausgaben: FinanzenTable = await getFixCost();
     const einnahmen: number = await getEinnahmen();
     const checkpoints:CheckpointsTable = await getCheckpoints();
     const excessGoal:number = await getExcessGoal();
@@ -31,7 +31,7 @@ const Dashboard = async () => {
         return (
             <div className='grow flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal'>
                 <NextAppointment termin={termin}/> 
-                <RevenueTracker value={einnahmen} max={ausgabenSum} excessGoal={excessGoal} checkpoints={checkpoints}/>
+                {/* <RevenueTracker value={einnahmen} max={ausgabenSum} excessGoal={excessGoal} checkpoints={checkpoints}/> */}
             </div>);
     else if (role === "admin") //admin user
         return <h1>Welcome Admin</h1>;
