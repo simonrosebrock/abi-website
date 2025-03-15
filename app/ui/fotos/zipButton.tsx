@@ -1,6 +1,7 @@
 'use client'
 
 import { createZip } from "@/app/lib/imageHandling";
+import { useState } from "react";
 
 const zipSVG = (
     <svg className="stroke-current h-[25px] w-[25px] xs:h-[40px] xs:w-[40px]" width="40px" height="40px" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -9,30 +10,48 @@ const zipSVG = (
 )
 
 export default function ZipButton() {
+    const [loading, setLoading] = useState<boolean>(true);
+
     return(
         <>
-            <button className="btn w-[125px] h-[50px] xs:w-[180px] xs:h-[80px] bg-white shadow-sm rounded-lg flex items-center text-abi-gray hover:text-white justify-around" onClick={() => {
-                createZip();
+            <button className="btn w-[125px] h-[50px] xs:w-[180px] xs:h-[80px] bg-white shadow-sm rounded-lg flex items-center text-abi-gray hover:text-white justify-around" onClick={async () => {
                 var modal = document.getElementById(`zip-modal`) as HTMLDialogElement;
                 modal.showModal();
+                await createZip();
+                setLoading(false)
             }}>
                 <span className="font-semibold text-2xl">Zip</span>
                 {zipSVG}
             </button>
-            <ZipModal/>
+            <ZipModal loading={loading} setLoading={setLoading}/>
         </>
     );
 }
 
-function ZipModal() {
+function ZipModal({loading, setLoading}: {loading: boolean, setLoading: React.Dispatch<React.SetStateAction<boolean>>}) {
     return(
         <dialog className="modal" id="zip-modal" >
             <div className="modal-box flex flex-col justify-center items-center">
-                <span className="font-semibold text-2xl">Zip Datei wurde erstellt!</span>
+                { loading ? 
+                    <>
+                        <span className="font-semibold text-2xl">Zip Datei wird erstellt!</span>
+                        <div className="loading loading-dots loading-lg"></div>
+                        <span className="font-semibold text-sm text-gray-400">Bitte haben sie etwas geduld</span>
+                    </> : 
+                    <>
+                        <span className="font-semibold text-2xl">Zip Datei wurde erstellt!</span>
+                        <span className="font-semibold text-sm text-gray-400">Sie können das Feld jetzt schliesen</span>
+                    </>
+                }
+                
             </div>
             <form method="dialog" className="modal-backdrop">
-                <button onClick={() => {
-                    
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    if (loading) return;
+                    var modal = document.getElementById(`zip-modal`) as HTMLDialogElement;
+                    modal.close();
+                    setLoading(true)
                 }}>close</button>
             </form>
         </dialog>
