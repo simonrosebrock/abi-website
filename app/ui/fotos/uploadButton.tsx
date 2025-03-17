@@ -123,12 +123,12 @@ const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ token }, ref) =
 
 
         setIsVisible(false);
-        
+        const serverURL = "https://image-proxy.simon-rosebrock.workers.dev"
         for (const file of (Array.from(selectedFiles as FileList))) {
             const formData = new FormData();
             formData.append('file', file);
             try {
-                const res = await fetch(`/api/uploadFile?token=${token}`, {
+                const res = await fetch(`${serverURL}/uploadFile?token=${token}`, {
                     method: 'POST',
                     body: formData,
                 });

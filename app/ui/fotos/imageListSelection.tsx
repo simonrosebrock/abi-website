@@ -12,6 +12,8 @@ export default function ImageListSelection({images, token, setSelectedImages, sh
             </div>
         )
     }
+    const serverURL = "https://image-proxy.simon-rosebrock.workers.dev"
+
     return (
         <div className="flex flex-wrap gap-5 justify-center sm:justify-normal">
             {
@@ -42,7 +44,7 @@ export default function ImageListSelection({images, token, setSelectedImages, sh
                         
                         <input type="checkbox" defaultChecked={false} className="checkbox checkbox-primary bg-white absolute right-3 top-3" />
                         <Image
-                        src={`/api/getImage?url=${image}&token=${token}`}
+                        src={`${serverURL}/getImage?url=${image}&token=${token}&quality=low`}
                         alt={`image`}
                         width={246}
                         height={246}
