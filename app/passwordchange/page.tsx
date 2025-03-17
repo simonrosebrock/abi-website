@@ -19,7 +19,7 @@ export default async function PasswordChange() {
                 <span className="absolute text-4xl rotate-12 text-abi-black ml-96">THG</span>
             </div>
             <div className="flex justify-center mt-10 sm:mt-20">
-                <div className="bg-[#FAFBFC] w-3/4 md:w-[600px] rounded-xl max-h-[80vh] overflow-y-auto scrollbar-none">
+                <div className="bg-[#FAFBFC] w-4/5 md:w-[600px] rounded-xl max-h-[80vh] overflow-y-auto scrollbar-none">
                     <div className='flex justify-center items-center mt-10'>
                         <Image
                             src="/logo.png"

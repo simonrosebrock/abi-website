@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-export default nextConfig;
+const nextConfig = {
+    images: {
+      domains: ["image-proxy.simon-rosebrock.workers.dev"],
+    },
+  };
+  
+  export default nextConfig;

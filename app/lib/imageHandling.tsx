@@ -1,31 +1,6 @@
 'use server'
 import { unstable_noStore as noStore } from "next/cache";
 
-export const uploadFile = async (file: File, student: string) => {
-    try {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const res = await fetch('http://homeapp.webredirect.org:4000/upload', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'x-api-key': 'your-secure-key',
-                'content-type': 'multipart/form-data',
-                'folder-name': student,
-            }
-        });
-
-        if (res.ok) {
-            alert('File uploaded successfully');
-        } else {
-            alert('File upload failed');
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 export const getVerifiedList = async (page: number, limit: number) => {
     noStore()
     const res = await fetch('http://homeapp.webredirect.org:4000/images', {

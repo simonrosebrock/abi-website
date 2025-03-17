@@ -5,8 +5,10 @@ import { unstable_noStore as noStore } from "next/cache";
 import { getUsername, validToken } from "@/app/lib/getAuth";
 
 async function GET(req: NextRequest) {
-  const imageUrl = new URL(req.url).searchParams.get('url')
-  const token = new URL(req.url).searchParams.get('token')
+  const searchParams = new URL(req.url).searchParams;
+  const imageUrl = searchParams.get('url') as string;
+  const token = searchParams.get('token') as string;
+  const quality = searchParams.get('quality') as string; // low | high
 
   if (imageUrl === "") {
     return NextResponse.json(
@@ -21,9 +23,9 @@ async function GET(req: NextRequest) {
     );
   }
 
-  if (typeof imageUrl !== 'string') {
+  if (!['low', 'high'].includes(quality)) {
     return NextResponse.json(
-      { value: "Invalid image URL" },
+      { value: "Invalid Quality given" },
       { status: 400, }
     );
   }
@@ -44,6 +46,7 @@ async function GET(req: NextRequest) {
       method: 'GET',
       headers: {
         'x-api-key': 'your-secure-key',
+        'quality': quality,
       }
     });
   
