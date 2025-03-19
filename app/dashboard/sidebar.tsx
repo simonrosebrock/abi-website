@@ -18,6 +18,7 @@ export default async function Sidebar({children, role}: Readonly<{children: Reac
         {name: "Dashboard", href: "/dashboard", status: "/dashboard", visibility: 0},
         {name: "Accounts", href: "/dashboard/accounts", status: "/dashboard/accounts", visibility: 2},
         {name: "Termine", href: "/dashboard/termine", status: "/dashboard/termine", visibility: 0},
+        {name: "Mottos", href: "/dashboard/mottos", status: "/dashboard/mottos", visibility: 0},
         {name: "Finanzen", href: "/dashboard/finanzen", status: "/dashboard/finanzen", visibility: 0},
         {name: "Deine Fotos", href: "/dashboard/deinefotos?type=uploaded&page=1", status: "/dashboard/deinefotos", visibility: 1},
         {name: "Foto Verifikation", href: "/dashboard/fotoverifikation?student=all&page=1", status: "/dashboard/fotoverifikation", visibility: 2},
@@ -47,7 +48,7 @@ export default async function Sidebar({children, role}: Readonly<{children: Reac
                         <Image src={"/menu.png"} alt='menu' width={50} height={50}></Image>
                     </label>
                 </div> 
-                <div className="drawer-side">
+                <div className="drawer-side overflow-auto">
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-60 min-h-full bg-base-200 text-base-content">
                         <div className='flex justify-center items-center pt-[40px] scale-75'>
@@ -63,7 +64,7 @@ export default async function Sidebar({children, role}: Readonly<{children: Reac
                         <SidebarButtons tabs={visibleTabs} mode={0}/>
                         <li className='content-center mt-auto mb-4'>
                             <Link href={"/passwordchange"} className={`btn btn-ghost text-abi-gray w-[170px] content-start flex-col ${role === "admin" ? "hidden" : "flex"}`}>
-                                Passwort öndern
+                                Passwort ändern
                             </Link>
                         </li>
                     </ul>
@@ -71,7 +72,7 @@ export default async function Sidebar({children, role}: Readonly<{children: Reac
             </div>
            
             <div className='h-full w-[256px] bg-white rounded-tl-lg rounded-bl-lg shadow-lg hidden lg:block '>
-                <div className='flex flex-col h-full'>
+                <div className='flex flex-col h-full overflow-auto'>
                     <div className='flex justify-center items-center pt-[40px] scale-75'>
                         <Image
                             src="/logo.png"

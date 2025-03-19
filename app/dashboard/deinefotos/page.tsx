@@ -45,7 +45,7 @@ const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: str
     const images: imageListType = (await getFileList(type, cleanUser, page, image_limit_per_page));
 
     return(
-        <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
+        <div className="flex flex-col h-full p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
             <UserImageEditing images={images} token={token}/>
             { images.length == 0 ? 
                 <></> : <div className="w-auto mt-5 flex">

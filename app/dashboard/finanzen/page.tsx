@@ -38,7 +38,7 @@ const Finanzen = async () => {
 
     if (role === "admin") {
         return(
-            <div className="flex flex-wrap gap-5 p-5 h-[calc(100dvh-103px)] lg:h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
+            <div className="flex flex-wrap gap-5 p-5 md:pt-5 pt-0 h-[calc(100dvh-103px)] lg:h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
                 <EditGeneral einnahmen={einnahmen} guestCount={guestCount} customZiel={customZiel} customCardPrice={customCardPrice}/>
                 <EditFixCost fixCost={fixCost}/>
                 <EditVarCost varCost={varCost}/>
@@ -51,7 +51,7 @@ const Finanzen = async () => {
     }
     
     return(
-        <div className="flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
+        <div className="flex flex-wrap gap-5 p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
             <RevenueTrackerBig ausgaben={fixCostSum} einnahmen={einnahmen} customZiel={customZiel}/>
             <FixCostChart ausgaben={fixCost}/>
             <VarCostChart ausgaben={varCost}/>

@@ -123,7 +123,7 @@ const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ token }, ref) =
 
 
         setIsVisible(false);
-        const serverURL = "https://image-proxy.simon-rosebrock.workers.dev"
+        const serverURL = "/api" //ich benutzte hier lieber die lokale API, (scheint schneller zu sein) https://image-proxy.simon-rosebrock.workers.dev
         for (const file of (Array.from(selectedFiles as FileList))) {
             const formData = new FormData();
             formData.append('file', file);
@@ -132,6 +132,7 @@ const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ token }, ref) =
                     method: 'POST',
                     body: formData,
                 });
+                
                 setCurrentFile((prev) => prev + 1)
             } catch (error) {
                 console.error('Fetch error:', error);

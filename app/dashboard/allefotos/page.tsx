@@ -1,6 +1,6 @@
 import UploadButton from "@/app/ui/fotos/uploadButton";
 import DownloadButton from "@/app/ui/fotos/downloadButton";
-import {getVerifiedList, getFileCount } from "@/app/lib/imageHandling"; // getFile, 
+import {getVerifiedList, getFileCount} from "@/app/lib/imageHandling"; // getFile, 
 import ImageList from "@/app/ui/fotos/imageList";
 import { getAuth } from "@/app/lib/getAuth";
 import ImagePagination from "@/app/ui/fotos/imagePagination";
@@ -29,11 +29,9 @@ const AlleFotos = async ({ searchParams }: { searchParams: { [key: string]: stri
     }
 
     const images: imageListType = (await getVerifiedList(page, image_limit_per_page));
-    
-
 
     return(
-        <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
+        <div className="flex flex-col h-full p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
             <div className="flex flex-wrap w-auto gap-5 items-center mb-5 xs:justify-normal justify-center">
                 {role === "admin" ? <></> : <UploadButton token={token}/>}
                 <DownloadButton token={token}/>

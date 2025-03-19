@@ -43,15 +43,13 @@ export default function ImageListSelection({images, token, setSelectedImages, sh
                         }
                         
                         <input type="checkbox" defaultChecked={false} className="checkbox checkbox-primary bg-white absolute right-3 top-3" />
-                        <Image
-                        src={`${serverURL}/getImage?url=${image}&token=${token}&quality=low`}
-                        alt={`image`}
-                        width={246}
-                        height={246}
-                        loading="lazy"
-                        style={{maxWidth: 250, maxHeight: 250, objectFit: 'contain'}}
-                        className="rounded-lg flex w-[121px] h-[121px] xs:w-[146px] xs:h-[146px] sm:w-[196px] sm:h-[196px] lg:w-[246px] lg:h-[246px]"
-                        key={image}
+                        <img
+                            src={`${serverURL}/getImage?url=${image}&token=${token}&quality=low`}
+                            alt={``}
+                            loading="lazy"
+                            style={{maxWidth: 250, maxHeight: 250, objectFit: 'contain'}}
+                            className="rounded-lg flex w-[121px] h-[121px] xs:w-[146px] xs:h-[146px] sm:w-[196px] sm:h-[196px] lg:w-[246px] lg:h-[246px]"
+                            key={image}
                         />
                     </div>
                     

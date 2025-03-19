@@ -2,7 +2,7 @@
 
 import { verifyFile } from "@/app/lib/imageHandling";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const checkSVG = (
     <svg className="fill-current h-[25px] w-[25px] xs:h-[40px] xs:w-[40px]" width="40px" height="40px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -13,10 +13,15 @@ const checkSVG = (
 export default function VerifyButton({selectedImages, setSelectedImages}: {selectedImages: string[], setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>}) {
     const [currentImage, setCurrentImage] = useState<number>(0)
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const type = searchParams.get('type');
+    if (type === "verified") {
+        return <></>
+    }
 
     return(
         <>
-            <button className="btn btn-success w-[125px] h-[50px] xs:w-[180px] xs:h-[80px] bg-white shadow-sm rounded-lg flex items-center text-abi-gray hover:text-white justify-around" onClick={() => {
+            <button className="btn btn-success w-[125px] h-[50px] xs:w-[180px] xs:h-[80px] bg-white shadow-sm rounded-lg flex flex-nowrap items-center text-abi-gray hover:text-white justify-around" onClick={() => {
                 if (selectedImages.length == 0) {
                     return;
                 }
@@ -36,9 +41,10 @@ const handleVerification = async (selectedImages: string[], setSelectedImages: R
     var modal = document.getElementById(`verify-modal`) as HTMLDialogElement;
     modal.showModal();
     for (var image of selectedImages) {
+        var originFolder = image.split("/")[0]
         var student = image.split("/")[1]
         var fileName = image.split("/")[2]
-        await verifyFile(student, fileName)
+        await verifyFile(originFolder, student, fileName)
         setCurrentImage(prev => prev+1)
     }
     setSelectedImages([])

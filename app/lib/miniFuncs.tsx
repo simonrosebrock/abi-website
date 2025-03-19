@@ -26,3 +26,7 @@ export function getDateString(date: Date) {
 export function getCleanUser(user: string) {
     return user?.replaceAll("_", " ").split(" ").map(word => word[0]?.toUpperCase() + word.slice(1)).join(" ")
 }
+
+export function toCapitalized(text: string) {
+    return text.charAt(0).toUpperCase() + text.slice(1)
+}

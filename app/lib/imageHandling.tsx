@@ -39,6 +39,29 @@ export const getFileList = async (type: string, student: string, page: number, l
     return data;
 }
 
+export const getAllDeletedFileList = async () => {
+    noStore()
+    const res = await fetch('blacklisted/images', {
+        method: 'GET',
+        headers: {
+            'x-api-key': 'blacklisted',
+            'folder-type': 'deleted',
+            'student-name': 'all',
+            'page': `1`,
+            'limit': `10000`,
+        }
+        });
+    var data = []
+    try {
+        data = await res.json()
+    } catch {
+        
+    }
+    
+    return data;
+}
+
+
 export const getAllFileCount = async (type: string) => {
     noStore()
     const res = await fetch('blacklisted/get-image-count', {
@@ -93,35 +116,41 @@ export const createZip = async () => {
     });
 }
 
-export const verifyFile = async (student: string, file: string) => {
+export const verifyFile = async (originFolder: string, student: string, file: string) => {
+    if (originFolder === 'verified') {
+        return;
+    }
     await fetch('blacklisted/verification', {
         method: 'POST',
         headers: {
             'x-api-key': 'blacklisted',
             'action': 'verify',
+            'origin-folder': originFolder,
             'folder-name': student,
             'file-name': file,
         }
     });
 }
 
-export const deleteFile = async (student: string, file: string) => {
+export const deleteFile = async (originFolder: string, student: string, file: string) => {
     await fetch('blacklisted/verification', {
         method: 'POST',
         headers: {
             'x-api-key': 'blacklisted',
             'action': 'delete',
+            'origin-folder': originFolder,
             'folder-name': student,
             'file-name': file,
         }
     });
 }
 
-export const deleteFilePermanent = async (student: string, file: string) => {
+export const deleteFilePermanent = async (originFolder: string, student: string, file: string) => {
     await fetch('blacklisted/delete', {
         method: 'POST',
         headers: {
             'x-api-key': 'blacklisted',
+            'origin-folder': originFolder,
             'folder-name': student,
             'file-name': file,
         }

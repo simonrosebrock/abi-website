@@ -134,3 +134,32 @@ export const deleteAccount = async (token: string) => {
     await sql`DELETE FROM users WHERE token = ${token}`
 }
 
+export const getAbimotto = async () => {
+    noStore();
+    const rows = await sql`SELECT * FROM mottos WHERE type = 'abimotto'`
+    return rows.rows[0] as {title: string, addition: string};
+}
+
+export const setAbimotto = async (title: string, addition: string, date: string) => {
+    await sql`UPDATE mottos SET title = ${title}, addition = ${addition}, date = ${date} WHERE type = 'abimotto'`
+}
+
+export const getMottowoche = async () => {
+    noStore();
+    const rows = await sql`SELECT * FROM mottos 
+    WHERE type IN ('montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag')
+    ORDER BY CASE 
+    WHEN type = 'montag' THEN 1 
+    WHEN type = 'dienstag' THEN 2
+    WHEN type = 'mittwoch' THEN 3
+    WHEN type = 'donnerstag' THEN 4
+    WHEN type = 'freitag' THEN 5
+    END;`
+    return rows.rows as {type: string, title: string, addition: string, date: string}[];
+}
+
+export const updateMottowoche = async (mottowoche: {type: string, title: string, addition: string, date: string}[]) => {
+    mottowoche.forEach(async (motto) => {
+        await sql`UPDATE mottos SET title = ${motto.title}, addition = ${motto.addition}, date = ${motto.date} WHERE type = ${motto.type}`;
+    })
+}

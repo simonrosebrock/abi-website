@@ -7,6 +7,7 @@ const HomePageEdit = async () => {
         return(<></>)
     }
     const [token, role, user] = auth as [string, string, string];
+    if (user !== "admin") return <></>
 
     return(
         <></>

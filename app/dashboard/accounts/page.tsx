@@ -14,7 +14,7 @@ const Accounts = async () => {
     if (role !== "admin") return <></>
 
     return(
-        <div className="flex flex-col h-full p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] gap-5">
+        <div className="flex flex-col h-full p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] gap-5">
             <AddAccount/>
             <AccountList userList={userList}/>
         </div>

@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import MottosWocheDisplay from "./ui/homepage/mottoWocheDisplay";
 import AbiMottoDisplay from "./ui/homepage/abiMottoDisplay";
+import { getBlobList } from './lib/blobHandling';
+import { getMottowoche } from './lib/dbConnection';
 
 const pfeilSVG = (
   <svg version="1.0" xmlns="http://www.w3.org/2000/svg"width="32.000000pt" height="32.000000pt" viewBox="0 0 1280.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
@@ -20,7 +22,16 @@ const pfeilSVG = (
 
 
 
-export default function Home() {
+export default async function Home() {
+  
+  const mottowoche = await getMottowoche();
+  const blobList = await getBlobList();
+  async function getBlobUrl(name: string) {
+    const blob = blobList.find(blob => blob.pathname.includes(name));
+    return blob?.url ||'';
+  }
+  const mottowocheImages = [await getBlobUrl("montag.webp"), await getBlobUrl("dienstag.webp"), await getBlobUrl("mittwoch.webp"), await getBlobUrl("donnerstag.webp"), await getBlobUrl("freitag.webp")]
+
   return (
     
     <div className="overflow-y-auto scrollbar-none max-h-[100dvh]">
@@ -37,7 +48,7 @@ export default function Home() {
       
       <h1 className="text-5xl font-semibold text-abi-black font-serif mb-4 text-center mt-20">Mottowoche</h1>
       <div className="flex justify-center">
-        <MottosWocheDisplay/>
+        <MottosWocheDisplay mottos={mottowoche} mottoImages={mottowocheImages}/>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const Dashboard = async () => {
 
     if (role === "user")
         return (
-            <div className='grow flex flex-wrap gap-5 p-5 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal'>
+            <div className='grow flex flex-wrap gap-5 p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal'>
                 <NextAppointment termin={termin}/> 
             </div>);
     else if (role === "admin") //admin user

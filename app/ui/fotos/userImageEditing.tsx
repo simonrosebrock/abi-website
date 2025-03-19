@@ -13,7 +13,7 @@ export default function UserImageEditing({images, token}: {images: string[], tok
         <>
             <div className="flex w-auto gap-5 items-center mb-5 flex-wrap justify-center xs:justify-normal">
                 <UploadButton token={token}/>
-                <TypeSelection/>
+                <TypeSelection setSelectedImages={setSelectedImages}/>
                 <DeleteButton selectedImages={selectedImages} setSelectedImages={setSelectedImages} permanent={true}/>
             </div>
             <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">

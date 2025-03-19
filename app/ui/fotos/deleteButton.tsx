@@ -2,7 +2,7 @@
 
 import { deleteFile, deleteFilePermanent } from "@/app/lib/imageHandling";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 const crossSVG = (
     <svg className="fill-current h-[15px] w-[15px] xs:h-[25px] xs:w-[25px]" height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -19,10 +19,16 @@ const crossSVG = (
 export default function DeleteButton({selectedImages, setSelectedImages, permanent}: {selectedImages: string[], setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>, permanent: boolean}) {
     const [currentImage, setCurrentImage] = useState<number>(0)
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const type = searchParams.get('type');
+    const pathname = usePathname();
+    if (type === "deleted" && pathname.includes('/deinefotos')) {
+        return <></>
+    }
 
     return(
         <>
-            <button className="btn btn-error w-[125px] h-[50px] xs:w-[180px] xs:h-[80px] bg-white shadow-sm rounded-lg flex items-center text-abi-gray hover:text-white justify-around lg:ml-auto" onClick={() => {
+            <button className="btn btn-error w-[125px] h-[50px] xs:w-[180px] xs:h-[80px] bg-white shadow-sm rounded-lg flex items-center text-abi-gray hover:text-white justify-around" onClick={() => {
                 if (selectedImages.length == 0) {
                     return;
                 }
@@ -33,7 +39,6 @@ export default function DeleteButton({selectedImages, setSelectedImages, permane
             </button>
             <DeleteModal currentImage={currentImage} imageCount={selectedImages.length}/>
         </>
-        
     );
 }
 
@@ -42,12 +47,13 @@ const handleDeletion = async (permanent: boolean, selectedImages: string[], setS
     var modal = document.getElementById(`delete-modal`) as HTMLDialogElement;
     modal.showModal();
     for (var image of selectedImages) {
+        var originFolder = image.split("/")[0]
         var student = image.split("/")[1]
         var fileName = image.split("/")[2]
         if (permanent) {
-            await deleteFilePermanent(student, fileName);
+            await deleteFilePermanent(originFolder, student, fileName);
         } else {
-            await deleteFile(student, fileName)
+            await deleteFile(originFolder, student, fileName)
         }
         setCurrentImage(prev => prev+1)
     }

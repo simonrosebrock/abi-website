@@ -26,11 +26,9 @@ export default function ImageList({images, token}: {images: imageListType, token
                             const modal = document.getElementById(image) as HTMLDialogElement;
                             modal.showModal();
                         }}>
-                            <Image
+                            <img
                                 src={`${serverURL}/getImage?url=${image}&token=${token}&quality=low`}
-                                alt={`image`}
-                                width={246}
-                                height={246}
+                                alt={``}
                                 loading="lazy"
                                 style={{maxWidth: 246, maxHeight: 246, objectFit: 'contain'}}
                                 className="rounded-md flex w-[121px] h-[121px] xs:w-[146px] xs:h-[146px] sm:w-[196px] sm:h-[196px] lg:w-[246px] lg:h-[246px]"

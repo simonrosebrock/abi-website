@@ -1,15 +1,23 @@
 'use client'
 import Image from "next/image"
+import { toCapitalized } from "@/app/lib/miniFuncs"
 
-export default function MottoWocheDisplay() {
+type Motto = {type: string, title: string, addition: string, date: string}
+
+export default function MottoWocheDisplay({mottos, mottoImages}: {mottos: Motto[], mottoImages: string[]}) {
   return(
     <div className="carousel carousel-center gap-4 w-auto flex p-4 min-h-40">
-        <MottoCard day="Montag" motto="Nationalitäten" date="07.04.25" additions="" image="/Nationalitäten.jpg"/>
+      {
+        mottos.map((motto, index) => (
+          <MottoCard key={`${motto}-${index}`} day={toCapitalized(motto.type)} motto={motto.title} date={motto.date} additions={motto.addition} image={mottoImages[index]}/>
+        ))
+      }
+        {/* <MottoCard day="Montag" motto="Nationalitäten" date="07.04.25" additions="" image="/Nationalitäten.jpg"/>
         <MottoCard day="Dienstag" motto="Gruppenkostüme" date="08.04.25" additions="" image="/Gruppenkostüme.jpg"/>
         <MottoCard day="Mittwoch" motto="Filme/Serien/ Videospiele" date="09.04.25" additions="Everything but a Backpack" image="/FilmSerieVideospiele.png"/>
         <MottoCard day="Donnerstag" motto="Kindheitshelden" date="10.04.25" additions="" image="/Kindheitshelden.jpg"/>
-        <MottoCard day="Freitag" motto="Mafia" date="11.04.25" additions="Chaos Tag und Aula Programm" image="/Mafia.jpg"/>
-        <NoMottoCard date="07.04.25"/>
+        <MottoCard day="Freitag" motto="Mafia" date="11.04.25" additions="Chaos Tag und Aula Programm" image="/Mafia.jpg"/> */}
+      <NoMottoCard date={mottos[0].date}/>
     </div>
   )
 }
@@ -38,7 +46,7 @@ export function MottoCard({day, motto, date, additions, image}: {day: string, mo
           style={{ textShadow: '0 0 5px rgba(255, 0, 0, 0.4), 0 0 10px rgba(255, 0, 0, 0.2), 0 0 15px rgba(255, 0, 0, 0.1)' }}>{additions}</h2>
         </div>
         }
-        <span className="mt-auto ml-auto mr-4 text-gray-500 text-sm">{date}</span>
+        <span className="absolute right-4 bottom-3 text-gray-500 text-sm">{date}</span>
     </div>
   )
 }
