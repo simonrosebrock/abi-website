@@ -4,6 +4,9 @@ import { unstable_noStore as noStore } from "next/cache";
 import {NextResponse, NextRequest } from "next/server";
 import { validToken } from "@/app/lib/getAuth";
 
+const serverUrl = process.env.SERVER_URL as string;
+const apiKey = process.env.API_KEY as string;
+
 async function GET(req: NextRequest) {
   noStore()
   const token = new URL(req.url).searchParams.get('token')
@@ -16,10 +19,10 @@ async function GET(req: NextRequest) {
   }
   
   if (await validToken(token!)) {
-    const res = await fetch(`blacklisted/download`, {
+    const res = await fetch(`${serverUrl}/download`, {
       method: 'GET',
       headers: {
-        'x-api-key': 'blacklisted',
+        'x-api-key': apiKey,
       }
     });
   

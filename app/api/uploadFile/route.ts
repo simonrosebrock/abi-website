@@ -3,6 +3,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validToken, getUsername } from "@/app/lib/getAuth";
 
+const serverUrl = process.env.SERVER_URL as string;
+const apiKey = process.env.API_KEY as string;
+
 async function POST(req: NextRequest) {
     try {
         const token = new URL(req.url).searchParams.get('token')
@@ -14,11 +17,11 @@ async function POST(req: NextRequest) {
             const user = (await getUsername(token!) as string)
             
             const formData = await req.formData();
-            const res = await fetch('blacklisted/upload', {
+            const res = await fetch(`${serverUrl}/upload`, {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'x-api-key': 'blacklisted',
+                    'x-api-key': apiKey,
                     'folder-name': user,
                 }
             });
