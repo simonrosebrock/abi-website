@@ -7,13 +7,14 @@ interface ImageModalProps {
   token: string
 }
 
+const proxyUrl = process.env.PROXY_URL as string;
+
 export default function ImageModal({ image, token }: ImageModalProps) {
     const [open, setOpen] = useState<boolean>(false)
     const [loaded, setLoaded] = useState<boolean>(false)
     const dialogRef = useRef<HTMLDialogElement>(null)
 
-    const serverURL = "https://image-proxy.simon-rosebrock.workers.dev"
-    const downloadURL = `${serverURL}/getImage?url=${image}&token=${token}&quality=high`
+    const downloadURL = `${proxyUrl}/getImage?url=${image}&token=${token}&quality=high`
     const imageName = image.split("/")[2]
 
     useEffect(() => {

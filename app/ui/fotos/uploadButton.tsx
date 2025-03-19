@@ -123,7 +123,7 @@ const UploadForm = forwardRef<UploadFormRef, UploadFormProps>(({ token }, ref) =
 
 
         setIsVisible(false);
-        const serverURL = "/api" //ich benutzte hier lieber die lokale API, (scheint schneller zu sein) https://image-proxy.simon-rosebrock.workers.dev
+        const serverURL = "/api" //ich benutzte hier lieber die lokale API, (scheint schneller zu sein)
         for (const file of (Array.from(selectedFiles as FileList))) {
             const formData = new FormData();
             formData.append('file', file);

@@ -1,12 +1,15 @@
 'use server'
 import { unstable_noStore as noStore } from "next/cache";
 
+const serverURL = process.env.SERVER_URL as string;
+const apiKey = process.env.API_KEY as string;
+
 export const getVerifiedList = async (page: number, limit: number) => {
     noStore()
-    const res = await fetch('blacklisted/images', {
+    const res = await fetch(`${serverURL}/images`, {
         method: 'GET',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
             'folder-type': 'verified',
             'student-name': 'all',
             'page': `${page}`,
@@ -19,10 +22,10 @@ export const getVerifiedList = async (page: number, limit: number) => {
 
 export const getFileList = async (type: string, student: string, page: number, limit: number) => {
     noStore()
-    const res = await fetch('blacklisted/images', {
+    const res = await fetch(`${serverURL}/images`, {
         method: 'GET',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
             'folder-type': type,
             'student-name': student,
             'page': `${page}`,
@@ -41,10 +44,10 @@ export const getFileList = async (type: string, student: string, page: number, l
 
 export const getAllDeletedFileList = async () => {
     noStore()
-    const res = await fetch('blacklisted/images', {
+    const res = await fetch(`${serverURL}/images`, {
         method: 'GET',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
             'folder-type': 'deleted',
             'student-name': 'all',
             'page': `1`,
@@ -64,10 +67,10 @@ export const getAllDeletedFileList = async () => {
 
 export const getAllFileCount = async (type: string) => {
     noStore()
-    const res = await fetch('blacklisted/get-image-count', {
+    const res = await fetch(`${serverURL}/get-image-count`, {
       method: 'GET',
       headers: {
-        'x-api-key': 'blacklisted',
+        'x-api-key': apiKey,
         'folder-type': type,
       }
     });
@@ -77,10 +80,10 @@ export const getAllFileCount = async (type: string) => {
 
 export const getFileCount = async (type: string, student: string) => {
     noStore()
-    const res = await fetch('blacklisted/get-image-count', {
+    const res = await fetch(`${serverURL}/get-image-count`, {
         method: 'GET',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
             'folder-type': type,
         }
     });
@@ -96,10 +99,10 @@ export const getFileCount = async (type: string, student: string) => {
 
 export const getFileCountAdmin = async (type: string) => {
     noStore()
-    const res = await fetch('blacklisted/get-image-count', {
+    const res = await fetch(`${serverURL}/get-image-count`, {
         method: 'GET',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
             'folder-type': type,
         }
     });
@@ -108,10 +111,10 @@ export const getFileCountAdmin = async (type: string) => {
 }
 
 export const createZip = async () => {
-    await fetch('blacklisted/createzip', {
+    await fetch(`${serverURL}/createzip`, {
         method: 'POST',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
         }
     });
 }
@@ -120,10 +123,10 @@ export const verifyFile = async (originFolder: string, student: string, file: st
     if (originFolder === 'verified') {
         return;
     }
-    await fetch('blacklisted/verification', {
+    await fetch(`${serverURL}/verification`, {
         method: 'POST',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
             'action': 'verify',
             'origin-folder': originFolder,
             'folder-name': student,
@@ -133,10 +136,10 @@ export const verifyFile = async (originFolder: string, student: string, file: st
 }
 
 export const deleteFile = async (originFolder: string, student: string, file: string) => {
-    await fetch('blacklisted/verification', {
+    await fetch(`${serverURL}/verification`, {
         method: 'POST',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
             'action': 'delete',
             'origin-folder': originFolder,
             'folder-name': student,
@@ -146,10 +149,10 @@ export const deleteFile = async (originFolder: string, student: string, file: st
 }
 
 export const deleteFilePermanent = async (originFolder: string, student: string, file: string) => {
-    await fetch('blacklisted/delete', {
+    await fetch(`${serverURL}/delete`, {
         method: 'POST',
         headers: {
-            'x-api-key': 'blacklisted',
+            'x-api-key': apiKey,
             'origin-folder': originFolder,
             'folder-name': student,
             'file-name': file,

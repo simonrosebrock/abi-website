@@ -5,6 +5,8 @@ import ImageModal from "@/app/ui/fotos/imageModal"
 
 type imageListType = string[]
 
+const proxyUrl = process.env.PROXY_URL as string;
+
 export default function ImageList({images, token}: {images: imageListType, token: string}) {
 
     if (images.length == 0) {
@@ -14,7 +16,6 @@ export default function ImageList({images, token}: {images: imageListType, token
             </div>
         )
     }
-    const serverURL = "https://image-proxy.simon-rosebrock.workers.dev"
 
     return (
         <div className="flex flex-wrap gap-5 justify-center sm:justify-normal">
@@ -27,7 +28,7 @@ export default function ImageList({images, token}: {images: imageListType, token
                             modal.showModal();
                         }}>
                             <img
-                                src={`${serverURL}/getImage?url=${image}&token=${token}&quality=low`}
+                                src={`${proxyUrl}/getImage?url=${image}&token=${token}&quality=low`}
                                 alt={``}
                                 loading="lazy"
                                 style={{maxWidth: 246, maxHeight: 246, objectFit: 'contain'}}

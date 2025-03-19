@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { validToken, getUsername } from "@/app/lib/getAuth";
 import { deleteBlobs } from "@/app/lib/blobHandling";
 
+const adminToken = process.env.ADMIN_TOKEN as string;
+
 async function POST(req: NextRequest) {
     try {
         const searchParams = new URL(req.url).searchParams;
@@ -14,7 +16,7 @@ async function POST(req: NextRequest) {
             return NextResponse.json({ error: "No token given" }, { status: 400 });
         }
 
-        if (token === "blacklisted") {
+        if (token === adminToken) {
             if (!req.body) {
                 return NextResponse.json({ error: "No file given" }, { status: 400 });
             }

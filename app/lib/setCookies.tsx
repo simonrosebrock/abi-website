@@ -9,6 +9,8 @@ type response = {
   success: boolean,
 }
 
+const adminToken = process.env.ADMIN_TOKEN as string;
+
 export const setCookies = async (formData: FormData) => {
   const vorname = (formData.get('vorname') as string).toLowerCase().trim();
   const nachname = (formData.get('nachname') as string).toLowerCase().trim();
@@ -22,8 +24,8 @@ export const setCookies = async (formData: FormData) => {
     } as response;
   }
 
-  if (username === "admin" && password === "blacklisted") {
-    cookies().set('token', "blacklisted");
+  if (username === "admin" && await bcrypt.compare(password, "$2a$10$jFvCuVqbhC1MwjzR72p1euFKp2.G5j/Cg61tsBvXBC2rq.uC6Pcgq")) {
+    cookies().set('token', adminToken);
     return { success: true, message: 'Login successful, redirecting...' } as response;
   } 
   const {rows} = await sql`SELECT * FROM users WHERE username = ${String(username)};`;

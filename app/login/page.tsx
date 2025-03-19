@@ -45,7 +45,6 @@ export default function Login() {
       };
 
     return(
-        <>
         <div className='max-h-screen overflow-y-auto scrollbar-none'>
             <div className="flex justify-center mt-10 scale-75 sm:scale-100">
                 <span className="text-8xl text-abi-black">ABI 25</span>
@@ -101,12 +100,5 @@ export default function Login() {
                 </form>
             </div>
         </div>
-            
-            
-            {/* <div className="flex">
-                <div className="bg-white h-2/3 mt-20 w-80"></div>
-            </div> */}
-            
-        </>
     );
 }

@@ -4,6 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { unstable_noStore as noStore } from "next/cache";
 import { getUsername, validToken } from "@/app/lib/getAuth";
 
+const adminToken = process.env.ADMIN_TOKEN as string;
+const apiKey = process.env.API_KEY as string;
+const serverUrl = process.env.SERVER_URL as string;
+
 async function GET(req: NextRequest) {
   const searchParams = new URL(req.url).searchParams;
   const imageUrl = searchParams.get('url') as string;
@@ -32,7 +36,7 @@ async function GET(req: NextRequest) {
 
   //authentication
   var hasAuth = false;
-  if (token === "blacklisted") {
+  if (token === adminToken) {
     hasAuth = true;
   } else if (await validToken(token!)) {
     const user = (await getUsername(token!) as string)
@@ -42,10 +46,10 @@ async function GET(req: NextRequest) {
   }
 
   if (hasAuth) {
-    const res = await fetch(`blacklisted/images/${imageUrl}`, {
+    const res = await fetch(`${serverUrl}/images/${imageUrl}`, {
       method: 'GET',
       headers: {
-        'x-api-key': 'blacklisted',
+        'x-api-key': apiKey,
         'quality': quality,
       }
     });

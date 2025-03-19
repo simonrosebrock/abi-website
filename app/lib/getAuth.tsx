@@ -3,10 +3,12 @@
 import { sql } from '@vercel/postgres';
 import { cookies } from 'next/headers';
 
+const adminToken = process.env.ADMIN_TOKEN as string;
+
 export const getAuth = async (): Promise<null | [string, string, string]> => {
     const token = cookies().get('token')?.value;
     if (token) {
-        if (token === "blacklisted") {
+        if (token === adminToken) {
             return [token, "admin", "admin"]
         }
 
@@ -28,7 +30,7 @@ export const getUsername = async (token: string) => {
 }
 
 export const validToken = async (token: string) => {
-    if (token === "blacklisted") return true
+    if (token === adminToken) return true
     const {rows} = await sql`SELECT * FROM users WHERE token = ${token};`;
     if (rows.length === 0) {
         return false
