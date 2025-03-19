@@ -1,14 +1,14 @@
 'use client'
 import Image from "next/image"
 import ImageModal from "@/app/ui/fotos/imageModal"
+import { GetServerSideProps } from 'next';
 
 
 type imageListType = string[]
 
-const proxyUrl = process.env.PROXY_URL as string;
+
 
 export default function ImageList({images, token}: {images: imageListType, token: string}) {
-
     if (images.length == 0) {
         return(
             <div className="w-[250px] h-[250px] rounded-lg flex items-center justify-center">
@@ -28,7 +28,7 @@ export default function ImageList({images, token}: {images: imageListType, token
                             modal.showModal();
                         }}>
                             <img
-                                src={`${proxyUrl}/getImage?url=${image}&token=${token}&quality=low`}
+                                src={`https://image-proxy.simon-rosebrock.workers.dev/getImage?url=${image}&token=${token}&quality=low`}
                                 alt={``}
                                 loading="lazy"
                                 style={{maxWidth: 246, maxHeight: 246, objectFit: 'contain'}}

@@ -4,7 +4,7 @@ import { getCleanUser } from "@/app/lib/miniFuncs"
 
 type imageListType = string[]
 
-const proxyUrl = process.env.PROXY_URL as string;
+
 
 export default function ImageListSelection({images, token, setSelectedImages, showName}: {images: imageListType, token: string, setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>, showName: boolean}) {
     if (images.length == 0) {
@@ -45,7 +45,7 @@ export default function ImageListSelection({images, token, setSelectedImages, sh
                         
                         <input type="checkbox" defaultChecked={false} className="checkbox checkbox-primary bg-white absolute right-3 top-3" />
                         <img
-                            src={`${proxyUrl}/getImage?url=${image}&token=${token}&quality=low`}
+                            src={`https://image-proxy.simon-rosebrock.workers.dev/getImage?url=${image}&token=${token}&quality=low`}
                             alt={``}
                             loading="lazy"
                             style={{maxWidth: 250, maxHeight: 250, objectFit: 'contain'}}
