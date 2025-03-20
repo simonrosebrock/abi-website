@@ -5,7 +5,7 @@ import RevenueTracker from '@/app/ui/dashboard/revenueTracker';
 import { getClosestTermin, getFixCost } from '@/app/lib/dbConnection';
 import { QueryResultRow } from '@vercel/postgres';
 
-type FinanzenTable = {name: string, money: number}[]
+type FinanzenTable = {name: string, value: number}[]
 type CheckpointsTable = {money: number, cardprice: number}[]
 
 const Dashboard = async () => {
