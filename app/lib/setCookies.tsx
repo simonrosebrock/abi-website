@@ -10,6 +10,7 @@ type response = {
 }
 
 const adminToken = process.env.ADMIN_TOKEN as string;
+const adminPW = process.env.ADMIN_PW as string;
 
 export const setCookies = async (formData: FormData) => {
   const vorname = (formData.get('vorname') as string).toLowerCase().trim();
@@ -24,7 +25,7 @@ export const setCookies = async (formData: FormData) => {
     } as response;
   }
 
-  if (username === "admin" && await bcrypt.compare(password, "$2a$10$jFvCuVqbhC1MwjzR72p1euFKp2.G5j/Cg61tsBvXBC2rq.uC6Pcgq")) {
+  if (username === "admin" && password === adminPW) {
     cookies().set('token', adminToken);
     return { success: true, message: 'Login successful, redirecting...' } as response;
   } 

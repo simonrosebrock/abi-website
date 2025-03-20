@@ -1,12 +1,10 @@
 'use server'
 import { getAuth } from '@/app/lib/getAuth';
 import NextAppointment from '@/app/ui/dashboard/nextAppointment';
-import RevenueTracker from '@/app/ui/dashboard/revenueTracker';
 import { getClosestTermin, getFixCost } from '@/app/lib/dbConnection';
 import { QueryResultRow } from '@vercel/postgres';
 
 type FinanzenTable = {name: string, value: number}[]
-type CheckpointsTable = {money: number, cardprice: number}[]
 
 const Dashboard = async () => {
     const auth = await getAuth()
