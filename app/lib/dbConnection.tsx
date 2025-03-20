@@ -59,50 +59,47 @@ export const updateTermin = async (id: string, termin: Termin) => {
     await sql`UPDATE termine SET title = ${termin.title}, description = ${termin.description}, ort = ${termin.ort}, date = ${termin.date}, start_time = ${termin.start_time}, end_time = ${termin.end_time}, helfer = ${termin.helfer} WHERE id = ${id}`
 }
 
-type FinanzenTable = {name: string, money: number}[]
-const einnahmenID = '0956deb0-141b-48a6-b7bd-5181fc205f76'
-const guestCountID = 'ed77f63a-d6e9-4b81-9d28-f2285e2ce584'
-const customCardPriceID = '124ffcab-cdcb-4a6c-8a77-668951eb78e7'
-const customZielID = 'b2b6df9e-daad-4301-bc48-536692258001'
+type FinanzenTable = {name: string, value: number}[]
 
 export const getFixCost = async () => {
     noStore();
-    const rows = await sql`SELECT name, money FROM fixkosten ORDER BY money ASC`
+    const rows = await sql`SELECT name, value FROM finanzen WHERE type = 'fixkosten' ORDER BY value ASC`
     return rows.rows as FinanzenTable; 
 }
 
 export const getVarCost = async () => {
     noStore();
-    const rows = await sql`SELECT name, money FROM varkosten ORDER BY money ASC`
+    const rows = await sql`SELECT name, value FROM finanzen WHERE type = 'varkosten' ORDER BY value ASC`
     return rows.rows as FinanzenTable;
 }
 
 export const getGeneralFinanzen = async () => {
     noStore();
-    const rows = await sql`SELECT name, value FROM finanzen`
+    const rows = await sql`SELECT name, value FROM finanzen WHERE type = 'general'`
+    
     return rows.rows as {name: string, value: number}[];
 }
 
 export const setFixCost = async (fixCost: FinanzenTable) => {
-    await sql`DELETE FROM fixkosten`
+    await sql`DELETE FROM finanzen WHERE type = 'fixkosten'`
     for (const row of fixCost) {
-        await sql`INSERT INTO fixkosten (name, money) VALUES (${row.name}, ${row.money})`
+        await sql`INSERT INTO finanzen (name, value, type) VALUES (${row.name}, ${row.value}, 'fixkosten')`
     }
 }
 
 export const setVarCost = async (varCost: FinanzenTable) => {
-    await sql`DELETE FROM varkosten`
+    await sql`DELETE FROM finanzen WHERE type = 'varkosten'`
     for (const row of varCost) {
-        await sql`INSERT INTO varkosten (name, money) VALUES (${row.name}, ${row.money})`
+        await sql`INSERT INTO finanzen (name, value, type) VALUES (${row.name}, ${row.value}, 'varkosten')`
     }
 }
 
 export const setGeneralFinanzen = async (einnahmen: number, guestCount: number, customZiel: number, customCardPrice: number) => {
     noStore();
-    await sql`UPDATE finanzen SET value = ${einnahmen} WHERE id = ${einnahmenID}`
-    await sql`UPDATE finanzen SET value = ${guestCount} WHERE id = ${guestCountID}`
-    await sql`UPDATE finanzen SET value = ${customZiel} WHERE id = ${customZielID}`
-    await sql`UPDATE finanzen SET value = ${customCardPrice} WHERE id = ${customCardPriceID}`
+    await sql`UPDATE finanzen SET value = ${einnahmen} WHERE name = 'einnahmen'`
+    await sql`UPDATE finanzen SET value = ${guestCount} WHERE name = 'guestcount'`
+    await sql`UPDATE finanzen SET value = ${customZiel} WHERE name = 'customziel'`
+    await sql`UPDATE finanzen SET value = ${customCardPrice} WHERE name = 'customcardprice'`
 }
 
 export const updateAccountName = async (token: string, username: string) => {

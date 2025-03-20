@@ -8,7 +8,7 @@ import EditGeneral from "@/app/ui/finanzen/editGeneral";
 import EditFixCost from "@/app/ui/finanzen/editFixCost";
 import EditVarCost from "@/app/ui/finanzen/editVarCost";
 
-type FinanzenTable = {name: string, money: number}[]
+type FinanzenTable = {name: string, value: number}[]
 
 const Finanzen = async () => {
     const auth = await getAuth()
@@ -21,10 +21,10 @@ const Finanzen = async () => {
     const varCost:FinanzenTable = await getVarCost();
 
     const generalFinanzen = await getGeneralFinanzen();
-    const einnahmen = generalFinanzen.find(row => row.name === 'Einnahmen')?.value || 0;
-    const guestCount = generalFinanzen.find(row => row.name === 'GuestCount')?.value || 0;
-    const customZiel = generalFinanzen.find(row => row.name === 'CustomZiel')?.value || 0;
-    const customCardPrice = generalFinanzen.find(row => row.name === 'CustomCardPrice')?.value || 0;
+    const einnahmen = generalFinanzen.find(row => row.name === 'einnahmen')?.value || 0;
+    const guestCount = generalFinanzen.find(row => row.name === 'guestcount')?.value || 0;
+    const customZiel = generalFinanzen.find(row => row.name === 'customziel')?.value || 0;
+    const customCardPrice = generalFinanzen.find(row => row.name === 'customcardprice')?.value || 0;
 
     var fixCostSum = 0;
     fixCost.forEach((element: any) => {

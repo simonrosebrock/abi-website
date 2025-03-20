@@ -10,8 +10,8 @@ const plusSVG = (
 )
 
 
-type FinanzenTable = {name: string, money: number}[]
-type VarCostRow = {name: string, money: number}
+type FinanzenTable = {name: string, value: number}[]
+type VarCostRow = {name: string, value: number}
 
 export default function EditVarCost({varCost}: {varCost: FinanzenTable}) {
     const [localVarCost, setLocalVarCost] = useState<FinanzenTable>(varCost);
@@ -53,7 +53,7 @@ export default function EditVarCost({varCost}: {varCost: FinanzenTable}) {
                                 </label>
                                 <div className="flex xs:ml-1 xs:w-[170px]">
                                     <label className="input input-bordered flex items-center grow overflow-hidden">
-                                        <input type="number" name='money' placeholder="Kosten" className="grow xs:w-14" value={row.money} onChange={e => handleInputChange(index, e)}/>
+                                        <input type="number" name='value' placeholder="Kosten" className="grow xs:w-14" value={row.value} onChange={e => handleInputChange(index, e)}/>
                                     </label>
                                     <button className="btn btn-error ml-1 shrink-0" onClick={() => {
                                         setLocalVarCost(prevVarCost => {
@@ -69,7 +69,7 @@ export default function EditVarCost({varCost}: {varCost: FinanzenTable}) {
                 </div>
                 
                 <button className="btn btn-outline border-gray-300 hover:bg-gray-200" onClick={() => {
-                    setLocalVarCost(prevArray => [...prevArray, {name: "", money: 0}])
+                    setLocalVarCost(prevArray => [...prevArray, {name: "", value: 0}])
                 }}>
                     {plusSVG}
                 </button>
@@ -79,7 +79,7 @@ export default function EditVarCost({varCost}: {varCost: FinanzenTable}) {
                     setLocalVarCost(varCost)
                 }}>Reset</button>
                 <button className="btn" onClick={() => {
-                    const localCleanedVarCost = localVarCost.filter(item => !(item.name === "" && item.money === 0)).map(item => ({name: item.name, money: Number(item.money)}));
+                    const localCleanedVarCost = localVarCost.filter(item => !(item.name === "" && item.value === 0)).map(item => ({name: item.name, value: Number(item.value)}));
                     if (JSON.stringify(varCost) === JSON.stringify(localCleanedVarCost)) {
                         return
                     }

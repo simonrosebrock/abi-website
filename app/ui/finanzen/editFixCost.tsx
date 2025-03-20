@@ -10,8 +10,8 @@ const plusSVG = (
 )
 
 
-type FinanzenTable = {name: string, money: number}[]
-type FixCostRow = {name: string, money: number}
+type FinanzenTable = {name: string, value: number}[]
+type FixCostRow = {name: string, value: number}
 
 export default function EditFixCost({fixCost}: {fixCost: FinanzenTable}) {
     const [localFixCost, setLocalFixCost] = useState<FinanzenTable>(fixCost);
@@ -52,7 +52,7 @@ export default function EditFixCost({fixCost}: {fixCost: FinanzenTable}) {
                                 </label>
                                 <div className="flex xs:ml-1 xs:w-[170px]">
                                     <label className="input input-bordered flex items-center grow overflow-hidden">
-                                        <input type="number" name='money' placeholder="Kosten" className="grow xs:w-14" value={row.money} onChange={e => handleInputChange(index, e)}/>
+                                        <input type="number" name='value' placeholder="Kosten" className="grow xs:w-14" value={row.value} onChange={e => handleInputChange(index, e)}/>
                                     </label>
                                     <button className="btn btn-error ml-1 shrink-0" onClick={() => {
                                         setLocalFixCost(prevFixCost => {
@@ -68,7 +68,7 @@ export default function EditFixCost({fixCost}: {fixCost: FinanzenTable}) {
                 </div>
                 
                 <button className="btn btn-outline border-gray-300 hover:bg-gray-200" onClick={() => {
-                    setLocalFixCost(prevArray => [...prevArray, {name: "", money: 0}])
+                    setLocalFixCost(prevArray => [...prevArray, {name: "", value: 0}])
                 }}>
                     {plusSVG}
                 </button>
@@ -78,7 +78,7 @@ export default function EditFixCost({fixCost}: {fixCost: FinanzenTable}) {
                     setLocalFixCost(fixCost)
                 }}>Reset</button>
                 <button className="btn" onClick={() => {
-                    const localCleanedFixCost = localFixCost.filter(item => !(item.name === "" && item.money === 0)).map(item => ({name: item.name, money: Number(item.money)}));
+                    const localCleanedFixCost = localFixCost.filter(item => !(item.name === "" && item.value === 0)).map(item => ({name: item.name, value: Number(item.value)}));
                     if (JSON.stringify(fixCost) === JSON.stringify(localCleanedFixCost)) {
                         return
                     }

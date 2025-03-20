@@ -3,11 +3,11 @@
 import { useRef, useEffect } from "react";
 import { Chart, ChartOptions, Plugin } from "chart.js/auto";
 
-type FinanzenTable = {name: string, money: number}[]
+type FinanzenTable = {name: string, value: number}[]
 
 type AusgabenRow = {
     name: string,
-    money: number
+    value: number
 }
 
 //  ["#ff0000", "#1900ff", "#ff2a00", "#ffee00", "#0a2418", "#de760d", "#0d0dde", "#0d98de", "#800dde", "#de0dc6"]
@@ -29,7 +29,7 @@ export default function FixCostChart({ausgaben}: {ausgaben: FinanzenTable}) {
                     labels: ausgaben.map((element: AusgabenRow) => element.name),
                     datasets: [
                         {
-                            data: ausgaben.map((element: AusgabenRow) => element.money),
+                            data: ausgaben.map((element: AusgabenRow) => element.value),
                             backgroundColor: ["#7ED321", "#F8E71C", "#F5A623", "#FF6F61", "#D0021B", "#8B572A", "#9013FE", "#4A90E2", "#50E3C2", "#B8E986"],
                         }
                     ]
