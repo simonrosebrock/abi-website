@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+![Logo](https://github.com/simonrosebrock/abi-website/blob/main/public/logo.png)
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Abi Website
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Die Abi-Website ist eine zentrale Plattform, auf der wichtige Termine eingetragen, Mottos und Finanzübersichten eingesehen sowie Fotos hochgeladen werden können – alles, was für eine erfolgreiche Organisation des Abiturs benötigt wird.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+Benutzerseite:
+- Termine einsehen und sich als Teilnehmer eintragen
+- Mottos einsehen
+- Finanzübersicht anzeigen
+- Fotos hochladen (werden nach Verifizierung angezeigt)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Adminseite:
+- Zugriff nur für Admin-Account
+- Benutzerkonten verwalten
+- Termine bearbeiten, hinzufügen und verwalten
+- Mottos aktualisieren, eintragen und verwalten
+- Finanzübersicht bearbeiten, eintragen und verwalten
+- Fotos verwalten
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Allgemein:
+- Übersichtliche Darstellung von wichtigen Abiturinformationen
+- Homepage zur Anzeige des Abimottos und der Mottowoche
 
-## Deploy on Vercel
+## Preview
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Homepage:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![HomepagePreview](https://github.com/simonrosebrock/abi-website/blob/main/public/HomepagePreview.png)
+
+Userside:
+
+![UserPreview](https://github.com/simonrosebrock/abi-website/blob/main/public/UserPreview.png)
+
+Adminside:
+
+![AdminPreview](https://github.com/simonrosebrock/abi-website/blob/main/public/AdminPreview.png)

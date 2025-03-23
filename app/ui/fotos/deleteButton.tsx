@@ -22,7 +22,7 @@ export default function DeleteButton({selectedImages, setSelectedImages, permane
     const searchParams = useSearchParams();
     const type = searchParams.get('type');
     const pathname = usePathname();
-    if (type === "deleted" && pathname.includes('/deinefotos')) {
+    if (type === "deleted" && pathname.includes('/fotoverifikation')) {
         return <></>
     }
 
