@@ -1,8 +1,10 @@
+'use server'
+
 import Link from 'next/link';
 import MottosWocheDisplay from "./ui/homepage/mottoWocheDisplay";
 import AbiMottoDisplay from "./ui/homepage/abiMottoDisplay";
 import { getBlobList } from './lib/blobHandling';
-import { getMottowoche } from './lib/dbConnection';
+import { getFeatures, getMottowoche } from './lib/dbConnection';
 
 const pfeilSVG = (
   <svg version="1.0" xmlns="http://www.w3.org/2000/svg"width="32.000000pt" height="32.000000pt" viewBox="0 0 1280.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
@@ -32,6 +34,12 @@ export default async function Home() {
   }
   const mottowocheImages = [await getBlobUrl("montag.webp"), await getBlobUrl("dienstag.webp"), await getBlobUrl("mittwoch.webp"), await getBlobUrl("donnerstag.webp"), await getBlobUrl("freitag.webp")]
 
+  const features = await getFeatures("homepage");
+  const featureList = features.reduce((acc: any, { feature, value }) => {
+    acc[feature] = value;
+    return acc;
+  }, {});
+
   return (
     
     <div className="overflow-y-auto scrollbar-none max-h-[100dvh]">
@@ -42,14 +50,21 @@ export default async function Home() {
         </div>
         <Link href={"/dashboard"} className="btn btn-primary w-64 h-20 text-3xl text-white lg:ml-auto lg:mr-10 mt-10 lg:mt-0">{"Login"}{pfeilSVG}</Link>
       </div>
-      <div className="flex justify-center mt-20">
+      { featureList['Abimotto Homepage'] ? 
+        <div className="flex justify-center mt-20">
           <AbiMottoDisplay/>
-      </div>
+        </div> : <></>
+      }
       
-      <h1 className="text-5xl font-semibold text-abi-black font-serif mb-4 text-center mt-20">Mottowoche</h1>
-      <div className="flex justify-center">
-        <MottosWocheDisplay mottos={mottowoche} mottoImages={mottowocheImages}/>
-      </div>
+      { featureList['Mottowoche Homepage'] ?
+        <>
+          <h1 className="text-5xl font-semibold text-abi-black font-serif mb-4 text-center mt-20">Mottowoche</h1>
+          <div className="flex justify-center">
+            <MottosWocheDisplay mottos={mottowoche} mottoImages={mottowocheImages}/>
+          </div>
+        </> : <></>
+      }
+      
     </div>
   );
 }

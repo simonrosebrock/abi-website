@@ -4,14 +4,14 @@ import { unstable_noStore as noStore } from "next/cache";
 const serverURL = process.env.SERVER_URL as string;
 const apiKey = process.env.API_KEY as string;
 
-export const getVerifiedList = async (page: number, limit: number) => {
+export const getVerifiedList = async (student: string, page: number, limit: number) => {
     noStore()
     const res = await fetch(`${serverURL}/images`, {
         method: 'GET',
         headers: {
             'x-api-key': apiKey,
             'folder-type': 'verified',
-            'student-name': 'all',
+            'student-name': `${student}`,
             'page': `${page}`,
             'limit': `${limit}`,
         }
@@ -65,18 +65,18 @@ export const getAllDeletedFileList = async () => {
 }
 
 
-export const getAllFileCount = async (type: string) => {
+export const getVerifiedFileCount = async () => {
     noStore()
     const res = await fetch(`${serverURL}/get-image-count`, {
-      method: 'GET',
-      headers: {
-        'x-api-key': apiKey,
-        'folder-type': type,
-      }
+        method: 'GET',
+        headers: {
+            'x-api-key': apiKey,
+            'folder-type': "verified",
+        }
     });
-    const data = await res.json()
-    return data.all;
-  }
+    const data = await res.json();
+    return data;
+}
 
 export const getFileCount = async (type: string, student: string) => {
     noStore()

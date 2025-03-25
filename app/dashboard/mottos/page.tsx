@@ -6,8 +6,9 @@ import MottoWocheDisplay from "@/app/ui/mottos/mottoWocheDisplay"
 import EditAbimotto from "@/app/ui/mottos/editAbimotto"
 import { getBlobList } from "@/app/lib/blobHandling"
 import EditAbipulli from "@/app/ui/mottos/editAbipulli"
-import { getAbimotto, getMottowoche } from "@/app/lib/dbConnection"
+import { getAbimotto, getFeatures, getMottowoche } from "@/app/lib/dbConnection"
 import EditMottowoche from "@/app/ui/mottos/editMottowoche"
+import FeatureSelect from "@/app/ui/general/featureSelect"
 
 const Mottos = async () => {
     const auth = await getAuth()
@@ -30,6 +31,12 @@ const Mottos = async () => {
         return blob?.url ||'';
     }
 
+    const features = await getFeatures("mottos");
+    const featureList = features.reduce((acc: any, { feature, value }) => {
+        acc[feature] = value;
+        return acc;
+    }, {});
+
     if (role === "user") {
         const abimottoUrl = await getBlobUrl("abimotto.webp");
         const abipulliFrontUrl = await getBlobUrl("abipulli_front.webp");
@@ -40,9 +47,9 @@ const Mottos = async () => {
 
         return(
             <div className="flex flex-col p-5 md:pt-5 pt-0 gap-5 overflow-auto max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] scrollbar-none">
-                <AbiMottoDisplay image={abimottoUrl} zeile1={abimotto.title} zeile2={abimotto.addition}/>
-                <MottoWocheDisplay mottos={mottowoche} mottoImages={mottowocheImages}/>
-                <AbipulliDisplay frontUrl={abipulliFrontUrl} backUrl={abipulliBackUrl}/>
+                { featureList.abimotto ? <AbiMottoDisplay image={abimottoUrl} zeile1={abimotto.title} zeile2={abimotto.addition}/> : <></> }
+                { featureList.mottowoche ? <MottoWocheDisplay mottos={mottowoche} mottoImages={mottowocheImages}/> : <></> }
+                { featureList.abipulli ? <AbipulliDisplay frontUrl={abipulliFrontUrl} backUrl={abipulliBackUrl}/> : <></> }
             </div>
         );
     }
@@ -55,7 +62,11 @@ const Mottos = async () => {
 
     return(
         <div className="flex flex-col p-5 md:pt-5 pt-0 gap-5 overflow-auto max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] scrollbar-none">
-            <EditAbimotto token={token} exists={abimottoExists} zeile1={abimotto['title']} zeile2={abimotto.addition}/>
+            <div className="flex flex-col sm:flex-row gap-5">
+                <FeatureSelect  featureList={features}/> 
+                <EditAbimotto token={token} exists={abimottoExists} zeile1={abimotto['title']} zeile2={abimotto.addition}/>
+            </div>
+            
             <EditMottowoche token={token} mottowoche={mottowoche} exists={mottowocheExists}/>
             <EditAbipulli token={token} exists1={abipulliFrontExits} exists2={abipulliBackExits}/>
         </div>

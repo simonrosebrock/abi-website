@@ -125,7 +125,8 @@ type EditAppointmentFromProps = {
 }
 
 const EditAppointmentForm = ({id, title, description, ort, start_time, end_time, date, gruppen, setGruppen}: EditAppointmentFromProps) => {
-    var dateString = date.getFullYear()+'-' + String((date.getMonth()+1)).padStart(2, '0') + '-'+ String((date.getDate())).padStart(2, '0')
+    const parsedDate = date instanceof Date ? date : new Date(date);
+    var dateString = parsedDate.getFullYear()+'-' + String((parsedDate.getMonth()+1)).padStart(2, '0') + '-'+ String((parsedDate.getDate())).padStart(2, '0')
 
     return(
         <form id={`edit-form-${id}`}>

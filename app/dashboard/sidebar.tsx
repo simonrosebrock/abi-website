@@ -1,11 +1,14 @@
-'use server'
+'use client'
 
 import Image from 'next/image';
 import SidebarButtons from '../ui/sidebar/sidebarButtons';
 import Link from 'next/link';
+import { usePathname, redirect } from 'next/navigation';
 
+type Feature = {feature: string, value: boolean}
 
-export default async function Sidebar({children, role}: Readonly<{children: React.ReactNode, role: string}>) {
+export default function Sidebar({children, role, features}: Readonly<{children: React.ReactNode, role: string, features:Feature[]}>) {
+    const pathname = usePathname();
 
     type Tab = {
         name: string;
@@ -22,22 +25,43 @@ export default async function Sidebar({children, role}: Readonly<{children: Reac
         {name: "Finanzen", href: "/dashboard/finanzen", status: "/dashboard/finanzen", visibility: 0},
         {name: "Deine Fotos", href: "/dashboard/deinefotos?type=uploaded&page=1", status: "/dashboard/deinefotos", visibility: 1},
         {name: "Foto Verifikation", href: "/dashboard/fotoverifikation?student=all&page=1", status: "/dashboard/fotoverifikation", visibility: 2},
-        {name: "Alle Fotos", href: "/dashboard/allefotos?page=1", status: "/dashboard/allefotos", visibility: 0},
-        {name: "Homepage Edit", href: "/dashboard/homepageedit", status: "/dashboard/homepageedit", visibility: 2}
+        {name: "Alle Fotos", href: "/dashboard/allefotos?student=all&page=1", status: "/dashboard/allefotos", visibility: 0}
     ]
+
+    const disabledFeatures = features.flatMap((element) => {
+        if (element.value) {
+            return;
+        }
+        if (element.feature === "termine") {
+            return ("/dashboard/termine")
+        }
+        if (element.feature === "mottos") {
+            return ("/dashboard/mottos")
+        }
+        if (element.feature === "finanzen") {
+            return ("/dashboard/finanzen")
+        }
+        if (element.feature === "fotos") {
+            return ([
+                "/dashboard/allefotos",
+                "/dashboard/deinefotos",
+                "/dashboard/fotoverifikation"
+            ])
+        }
+    })
 
 
     const visibleTabs: Tab[] = []
 
     tabs.forEach((tab) => {
-        if (tab.visibility === 0 || tab.visibility === 1 && role === "user" || tab.visibility === 2 && role === "admin") {
+        if ((tab.visibility === 0 || tab.visibility === 1 && role === "user" || tab.visibility === 2 && role === "admin") && !disabledFeatures.includes(tab.href.split("?")[0])) {
             visibleTabs.push(tab)
         }
     })
     
-    
-
-    
+    if (disabledFeatures.includes(pathname)) {
+        redirect("/dashboard")
+    }
     
     return(
         <div className='h-[calc(100dvh-40px)] w-[calc(100dvw-40px)] bg-[#F9FAFB] m-5 rounded-xl flex lg:flex-row flex-col'>

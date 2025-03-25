@@ -1,4 +1,4 @@
-import { getFixCost, getVarCost, getGeneralFinanzen } from "@/app/lib/dbConnection";
+import { getFixCost, getVarCost, getGeneralFinanzen, getFeatures } from "@/app/lib/dbConnection";
 import FixCostChart from "@/app/ui/finanzen/fixCostChart";
 import VarCostChart from "@/app/ui/finanzen/varCostChart";
 import RevenueTrackerBig from "@/app/ui/finanzen/revenueTrackerBig";
@@ -7,6 +7,7 @@ import CardPrice from "@/app/ui/finanzen/cardPrice";
 import EditGeneral from "@/app/ui/finanzen/editGeneral";
 import EditFixCost from "@/app/ui/finanzen/editFixCost";
 import EditVarCost from "@/app/ui/finanzen/editVarCost";
+import FeatureSelect from "@/app/ui/general/featureSelect";
 
 type FinanzenTable = {name: string, value: number}[]
 
@@ -36,9 +37,16 @@ const Finanzen = async () => {
         varCostSum += element.money;
     });
 
+    const features = await getFeatures("finanzen");
+    const featureList = features.reduce((acc: any, { feature, value }) => {
+        acc[feature] = value;
+        return acc;
+    }, {});
+
     if (role === "admin") {
         return(
             <div className="flex flex-wrap gap-5 p-5 md:pt-5 pt-0 h-[calc(100dvh-103px)] lg:h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
+                <FeatureSelect featureList={features}/>
                 <EditGeneral einnahmen={einnahmen} guestCount={guestCount} customZiel={customZiel} customCardPrice={customCardPrice}/>
                 <EditFixCost fixCost={fixCost}/>
                 <EditVarCost varCost={varCost}/>
@@ -52,15 +60,12 @@ const Finanzen = async () => {
     
     return(
         <div className="flex flex-wrap gap-5 p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] overflow-auto scrollbar-none justify-center lg:justify-normal">
-            <RevenueTrackerBig ausgaben={fixCostSum} einnahmen={einnahmen} customZiel={customZiel}/>
-            <FixCostChart ausgaben={fixCost}/>
-            <VarCostChart ausgaben={varCost}/>
-            <CardPrice einnahmen={einnahmen} fixCost={fixCostSum} varCost={varCostSum} guestCount={guestCount} customCardPrice={customCardPrice}/>
+            { featureList["Einnahmeziel"] ? <RevenueTrackerBig ausgaben={fixCostSum} einnahmen={einnahmen} customZiel={customZiel}/> : <></> }
+            { featureList["Fixkosten"] ? <FixCostChart ausgaben={fixCost}/> : <></> }
+            { featureList["Kosten pro Person"] ? <VarCostChart ausgaben={varCost}/> : <></> }
+            { featureList["Kartenpreis"] ? <CardPrice einnahmen={einnahmen} fixCost={fixCostSum} varCost={varCostSum} guestCount={guestCount} customCardPrice={customCardPrice}/> : <></> }
         </div>
-    );
-
-    
-    
+    );    
 }
 
 export default Finanzen;
