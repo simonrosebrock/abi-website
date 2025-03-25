@@ -49,6 +49,9 @@ export default function Sidebar({children, role, features}: Readonly<{children: 
                 "/dashboard/fotoverifikation"
             ])
         }
+        if (element.feature === "vorschläge") {
+            return("/dashboard/vorschlag")
+        }
     })
 
 
