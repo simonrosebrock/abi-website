@@ -21,6 +21,7 @@ export default function Sidebar({children, role, features}: Readonly<{children: 
         {name: "Dashboard", href: "/dashboard", status: "/dashboard", visibility: 0},
         {name: "Accounts", href: "/dashboard/accounts", status: "/dashboard/accounts", visibility: 2},
         {name: "Termine", href: "/dashboard/termine", status: "/dashboard/termine", visibility: 0},
+        {name: "Vorschläge", href: "/dashboard/vorschlag", status: "/dashboard/vorschläge", visibility: 0},
         {name: "Mottos", href: "/dashboard/mottos", status: "/dashboard/mottos", visibility: 0},
         {name: "Finanzen", href: "/dashboard/finanzen", status: "/dashboard/finanzen", visibility: 0},
         {name: "Deine Fotos", href: "/dashboard/deinefotos?type=uploaded&page=1", status: "/dashboard/deinefotos", visibility: 1},

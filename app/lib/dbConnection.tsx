@@ -189,3 +189,69 @@ export const getFeatures = cache(async (type: string) => {
     const result = await sql`SELECT feature, value FROM features WHERE type = ${type}`
     return(result.rows) as Feature[]
 }, ['features'], {revalidate: false, tags: ['features']})
+
+
+
+// section for vorschläge
+
+export const addKategorie = async (name: string) => {
+    await sql`INSERT INTO kategorien (name, enabled) VALUES (${name}, ${true})`
+    revalidateTag("vorschlaege")
+}
+
+export const deleteKategorie = async (kategorie_id: string) => {
+    await sql`DELETE FROM kategorien WHERE id = ${kategorie_id}`
+    revalidateTag("vorschlaege")
+}
+
+export const updateKategorie = async (kategorie_id: string, name: string, enabled: boolean) => {
+    await sql`UPDATE kategorien SET name = ${name}, enabled = ${enabled} WHERE id = ${kategorie_id};`
+    revalidateTag("vorschlaege")
+}
+
+export const addVorschlag = async (category_id: string, author_token: string, vorschlag: string) => {
+    await sql`INSERT INTO vorschläge (kategorie_id, author_token, vorschlag) VALUES (${category_id}, ${author_token}, ${vorschlag})`
+    revalidateTag("vorschlaege")
+}
+
+export const deleteVorschlag = async (vorschlag_id: string) => {
+    await sql`DELETE FROM vorschläge WHERE id = ${vorschlag_id}`
+    revalidateTag("vorschlaege")
+}
+
+export const addLike = async (vorschlag_id: string, schüler_token: string) => {
+    await sql`INSERT INTO likes (vorschlag_id, schüler_token) VALUES (${vorschlag_id}, ${schüler_token})`
+    revalidateTag("vorschlaege")
+}
+
+export const deleteLike = async (vorschlag_id: string, schüler_token: string) => {
+    await sql`DELETE FROM likes WHERE vorschlag_id = ${vorschlag_id} AND schüler_token = ${schüler_token}`
+    revalidateTag("vorschlaege")
+}
+
+export const getVorschlaege = cache(async() => {
+    const result = await sql`
+    SELECT 
+    k.id AS kategorie_id,
+    k.name AS kategorie_name,
+    k.enabled AS kategorie_enabled,
+    COALESCE(
+        JSON_AGG(
+            JSONB_BUILD_OBJECT(
+                'id', v.id,
+                'vorschlag', v.vorschlag,
+                'author', u.username,
+                'likes', COALESCE(
+                    (SELECT JSON_AGG(u.username) 
+                     FROM likes l 
+                     JOIN users u ON l.schüler_token = u.token 
+                     WHERE l.vorschlag_id = v.id), '[]'::JSON)
+            )
+        ) FILTER (WHERE v.id IS NOT NULL), '[]'::JSON) AS vorschläge
+    FROM kategorien k
+    LEFT JOIN vorschläge v ON k.id = v.kategorie_id
+    LEFT JOIN users u ON v.author_token = u.token
+    GROUP BY k.id, k.name;
+    `
+    return result.rows;
+}, ['vorschlaege'], {revalidate: false, tags: ['vorschlaege']})

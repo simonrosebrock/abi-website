@@ -37,3 +37,8 @@ export const validToken = async (token: string) => {
     }
     return true
 }
+
+export const isAdmin = async (token: string) => {
+    if (token === adminToken) return true
+    return false
+}
