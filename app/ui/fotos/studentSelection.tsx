@@ -19,7 +19,7 @@ export default function StudentSelection({studentEntries, fileCount}: {studentEn
     
 
     return(
-        <select className="select select-bordered flex font-semibold w-[125px] h-[50px] xs:w-auto xs:h-[80px] text-lg border border-gray-200 " onChange={(e) => {
+        <select className="select select-bordered flex font-semibold w-[125px] h-[50px] xs:w-[180px] lg:w-auto xs:h-[80px] text-lg border border-gray-200 " onChange={(e) => {
             params.set('student', `${e.target.value}`);
             params.set('page', '1' )
             replace(`${pathname}?${params.toString()}`);

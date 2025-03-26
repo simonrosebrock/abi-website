@@ -27,12 +27,12 @@ export function MottoCard({day, motto, date, additions, image}: {day: string, mo
         <div className="border-2 border-gray-300 rounded-md w-[200px] h-[150px] mt-4 flex items-center">
           <Image src={image} alt="image" width={200} height={150} className="w-full h-full object-cover rounded-md"></Image>
         </div>
-        <h2 className="text-3xl font-bold text-abi-black flex justify-center text-center mt-4 text-wrap">{motto}</h2>
+        <h2 className="text-3xl font-bold text-abi-black flex justify-center text-center mt-4 text-wrap break-all">{motto}</h2>
         { additions === "" ? <></> : 
         <div className="relative">
           <span className="text-4xl font-bold text-red-500 absolute rotate-[0.6rad]"
           style={{ textShadow: '0 0 5px rgba(255, 0, 0, 0.4), 0 0 10px rgba(255, 0, 0, 0.2), 0 0 15px rgba(255, 0, 0, 0.1)' }}>&</span>
-          <h2 className="text-red-600 font-bold text-xl text-balance ml-10 text-wrap"
+          <h2 className="text-red-600 font-bold text-xl ml-10 text-wrap"
           style={{ textShadow: '0 0 5px rgba(255, 0, 0, 0.4), 0 0 10px rgba(255, 0, 0, 0.2), 0 0 15px rgba(255, 0, 0, 0.1)' }}>{additions}</h2>
         </div>
         }

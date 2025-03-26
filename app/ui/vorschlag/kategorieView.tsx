@@ -38,18 +38,23 @@ export default function KategorieView ({kategorie, username, token}: {kategorie:
     
     return(
         <div className="w-[400px] h-[400px] bg-white shadow-sm rounded-lg p-4 flex flex-col">
-            <div className="flex mb-4">
-                <h2 className="text-[#05004E] text-xl">{kategorie["kategorie_name"]}</h2>
-                { username === "admin" ? <KategorieSettings kategorie={kategorie}/> :
+            {
+                username === "admin" ? 
+                <div className="flex xs:flex-row flex-col-reverse mb-4 items-center xs:items-start xs:gap-0 gap-2">
+                    <h2 className="text-[#05004E] text-xl">{kategorie["kategorie_name"]}</h2>
+                    <KategorieSettings kategorie={kategorie}/>
+                </div> :
+                <div className="flex mb-4">
+                    <h2 className="text-[#05004E] text-xl">{kategorie["kategorie_name"]}</h2>
                     <button className="btn btn-sm ml-auto" onClick={() => {
                         const modal = document.getElementById("vorschlag-create-modal") as HTMLDialogElement;
                         modal.showModal();
                     }}>+</button>
-                }
-                
-            </div>
+                </div>
+            }
+            
             <VorschlagCreateModal token={token} kategorie_id={kategorie.kategorie_id} kategorie_name={kategorie.kategorie_name}/>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 p-3 overflow-auto">
                 {
                     kategorie['vorschläge'].map((element) => (
                         <Vorschlag key={element.id} vorschlag={element} username={username} token={token}/>
@@ -69,12 +74,12 @@ function KategorieSettings({kategorie}: {kategorie: Kategorie}) {
     }
 
     return(
-        <div className="flex items-center w-full ml-2 gap-2">
+        <div className="flex items-center w-full ml-2 gap-2 mb-auto">
             <button className="btn btn-xs" onClick={() => {
                 const modal = document.getElementById(`${kategorie.kategorie_id}-edit-modal`) as HTMLDialogElement;
                 modal.showModal();
             }}>EDIT</button>
-            <button className="btn btn-xs" onClick={() => {
+            <button className="btn btn-xs " onClick={() => {
                 const modal = document.getElementById(`${kategorie.kategorie_id}-deletion-modal`) as HTMLDialogElement;
                 modal.showModal();
             }}>DELETE</button>
@@ -95,11 +100,11 @@ function KategorieDeleteModal({kategorie_id, kategorie_name}: {kategorie_id: str
         <dialog id={`${kategorie_id}-deletion-modal`} className="modal">
             <div className="modal-box flex flex-col items-center gap-5">
                 <h1 className="text-xl">Bist du sicher?</h1>
-                <div className="flex gap-1">
+                <span className="text-wrap">
                     <span>{`Kategorie "`}</span>
                     <span className="text-red-500">{kategorie_name}</span>
                     <span>{`" wird gelöscht!`}</span>
-                </div>
+                </span>
                 
                 <div className="flex gap-5 w-full">
                     <button className="btn btn-success w-[calc(50%-10px)]" onClick={() => {

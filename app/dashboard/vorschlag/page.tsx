@@ -26,12 +26,19 @@ const Vorschlag = async () => {
     const vorschlaege: Kategorie[] = await getVorschlaege() as Kategorie[];
     return(
         <div className="flex flex-col h-full p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)] gap-5">
-            <div className="w-full"><AddKategorie/></div>
-            <div className="flex grow gap-4">
+            {
+                 role === "admin" ? <div className="w-full"><AddKategorie/></div> : <></>
+            }
+            <div className="flex grow gap-4 overflow-auto flex-wrap">
                 {
-                    vorschlaege.map((element, index) => (
-                        <KategorieView key={element.kategorie_id} kategorie={element} username={user} token={token}/>
-                    ))
+                    vorschlaege.map((element, index) => {
+                            if (element.kategorie_enabled || role === "admin") {
+                                return(
+                                    <KategorieView key={element.kategorie_id} kategorie={element} username={user} token={token}/>
+                                )
+                            }
+                            
+                    })
                 }
             </div>
         </div>

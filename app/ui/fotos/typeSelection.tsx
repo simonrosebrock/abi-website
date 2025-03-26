@@ -11,7 +11,7 @@ export default function TypeSelection({setSelectedImages}: {setSelectedImages: R
     const type = searchParams.get('type');
 
     return(
-        <select className="select select-bordered flex font-sans font-bold text-xl h-[50px] xs:h-[80px] w-[125px] xs:w-auto border border-gray-200 lg:mr-auto" onChange={(e) => {
+        <select className="select select-bordered flex font-sans font-bold text-xl h-[50px] xs:h-[80px] w-[125px] xs:w-[180px] lg:w-auto border border-gray-200 lg:mr-auto" onChange={(e) => {
             params.set('type', `${e.target.value}`);
             params.set('page', '1' );
             replace(`${pathname}?${params.toString()}`);

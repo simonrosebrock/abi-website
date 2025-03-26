@@ -44,63 +44,63 @@ const CreateAppointmentModal = ({termine, setTermine}: CreateAppointmentModalPro
     const router = useRouter();
     return(
         <dialog id={`create_appointment_modal`} className="modal">
-                        <div className="modal-box">
-                            <h3 className="text-abi-black text-lg font-bold">Termin</h3>
-                            <CreateAppointmentForm gruppen={gruppen} setGruppen={setGruppen}/>
-                            <div className="modal-action">
-                                <form method="dialog">
-                                    <button className="btn" onClick={async (event) => {
-                                        event.preventDefault();
-                                        const form = document.getElementById("create-form") as HTMLFormElement
-                                        var formData = new FormData(form);
+            <div className="modal-box">
+                <h3 className="text-abi-black text-lg font-bold">Termin</h3>
+                <CreateAppointmentForm gruppen={gruppen} setGruppen={setGruppen}/>
+                <div className="modal-action">
+                    <form method="dialog">
+                        <button className="btn" onClick={async (event) => {
+                            event.preventDefault();
+                            const form = document.getElementById("create-form") as HTMLFormElement
+                            var formData = new FormData(form);
 
-                                        var title = (formData.get('title') as string).trim();
-                                        var description = (formData.get('description') as string).trim();
-                                        var ort = (formData.get('ort') as string).trim();
-                                        var start_time = formData.get('start_time') + ":00";
-                                        var end_time = formData.get('end_time') + ":00";
-                                        var date = formData.get('date') as string;
+                            var title = (formData.get('title') as string).trim();
+                            var description = (formData.get('description') as string).trim();
+                            var ort = (formData.get('ort') as string).trim();
+                            var start_time = formData.get('start_time') + ":00";
+                            var end_time = formData.get('end_time') + ":00";
+                            var date = formData.get('date') as string;
 
-                                        if (title === "" || description === "" || ort === "" || start_time === "" || end_time === "" || date === "" || gruppen.length === 0) {
-                                            return
-                                        }
+                            if (title === "" || description === "" || ort === "" || start_time === "" || end_time === "" || date === "" || gruppen.length === 0) {
+                                return
+                            }
 
-                                        const helferObject: { [key: string]: any } = {};
-                                            gruppen.map(name => {
-                                            helferObject[name] = [];
-                                        });
-                                        
-                                        const new_termin = {
-                                            'title': title,
-                                            'description': description,
-                                            'ort': ort,
-                                            'start_time': start_time,
-                                            'end_time': end_time,
-                                            'date': date,
-                                            'helfer': JSON.stringify(helferObject)
-                                        }
+                            const helferObject: { [key: string]: any } = {};
+                                gruppen.map(name => {
+                                helferObject[name] = [];
+                            });
+                            
+                            const new_termin = {
+                                'title': title,
+                                'description': description,
+                                'ort': ort,
+                                'start_time': start_time,
+                                'end_time': end_time,
+                                'date': date,
+                                'helfer': JSON.stringify(helferObject)
+                            }
 
-                                        addTermin(new_termin);
+                            addTermin(new_termin);
 
-                                        const dialog = document.getElementById('create_appointment_modal') as HTMLDialogElement;
-                                        dialog.close();
+                            const dialog = document.getElementById('create_appointment_modal') as HTMLDialogElement;
+                            dialog.close();
 
-                                        form.reset();
-                                        setGruppen([]);
+                            form.reset();
+                            setGruppen([]);
 
-                                        router.refresh()
-                                    }}>Speichern</button>
-                                </form>
-                            </div>
-                        </div>
-                        <form method="dialog" className="modal-backdrop">
-                            <button onClick={() => {
-                                const form = document.getElementById(`create-form`) as HTMLFormElement;
-                                setGruppen([])
-                                form.reset();
-                            }}>close</button>
-                        </form>
-                    </dialog>
+                            router.refresh()
+                        }}>Speichern</button>
+                    </form>
+                </div>
+            </div>
+            <form method="dialog" className="modal-backdrop">
+                <button onClick={() => {
+                    const form = document.getElementById(`create-form`) as HTMLFormElement;
+                    setGruppen([])
+                    form.reset();
+                }}>close</button>
+            </form>
+        </dialog>
     )
 }
 
@@ -119,7 +119,7 @@ const CreateAppointmentForm = ({gruppen, setGruppen}:CreateAppointmentFormProps)
                     <input type="text" name='title' placeholder="Titel" className="grow"/>
                 </label>
                 <label className="flex items-center m-10">
-                    <textarea name="description" placeholder="Beschreibung" className="grow textarea textarea-bordered textarea-lg text-base p-4"></textarea>
+                    <textarea name="description" placeholder="Beschreibung" className="grow min-w-0 textarea textarea-bordered textarea-lg text-base p-4"></textarea>
                 </label>
                 <label className="input input-bordered flex items-center m-10">
                     <input type="text" name='ort' placeholder="Ort" className="grow"/>
