@@ -11,10 +11,7 @@ const infoSVG = (
 
 
 export default function CardPrice({einnahmen, fixCost, varCost, guestCount, customCardPrice}: {einnahmen: number, fixCost: number, varCost: number, guestCount: number,  customCardPrice: number}) {
-    if (customCardPrice === 0 && (guestCount === 0 || fixCost === 0 || varCost === 0)) {
-        return(<></>)
-    }
-
+    
     var cardPriceEinnahmen = []
     const ziel = fixCost+varCost*guestCount;
 
@@ -44,6 +41,9 @@ export default function CardPrice({einnahmen, fixCost, varCost, guestCount, cust
     var height = isSmall ? Math.round((1 / maxValue * ziel * 150) + 22 - 25) : Math.round((1 / maxValue * ziel * 360) + 28 - 40);
     var percentage = einnahmen/ziel
     
+    if (customCardPrice === 0 && (guestCount === 0 || fixCost === 0 || varCost === 0)) {
+        return(<></>)
+    }
 
     return(
         <div className="w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-white shadow-sm rounded-lg p-2 flex flex-col items-center">
