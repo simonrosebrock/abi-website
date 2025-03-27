@@ -41,7 +41,7 @@ export default function ImageModal({ image, token, proxyUrl }: ImageModalProps) 
         <dialog ref={dialogRef} id={image} className="modal">
             {open && (
                 <div className={`${loaded ? "" : "skeleton"} modal-box p-0 relative w-[250px] h-[250px] xs:w-[350px] xs:h-[350px] md:w-[500px] md:h-[500px] overflow-hidden`}>
-                    <img
+                    <Image
                     src={downloadURL}
                     alt="image"
                     width={600}
@@ -50,7 +50,7 @@ export default function ImageModal({ image, token, proxyUrl }: ImageModalProps) 
                     style={{ objectFit: "contain" }}
                     className={` rounded-lg flex w-[250px] h-[250px] xs:w-[350px] xs:h-[350px] md:w-[500px] md:h-[500px] p-2`}
                     key={image}
-                    onLoad={() => setLoaded(true)}
+                    onLoadingComplete={() => setLoaded(true)}
                     />
                     <a href={downloadURL} download={imageName} className="absolute btn btn-sm xs:btn-md btn-circle right-5 top-5">
                         <Image src={"/download.png"} width={30} height={30} alt="Download" className="w-[20px] h-[20px] xs:w-[30px] xs:h-[30px]"></Image>
