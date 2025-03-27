@@ -7,6 +7,7 @@ import ImagePagination from "@/app/ui/fotos/imagePagination";
 import UserImageEditing from "@/app/ui/fotos/userImageEditing";
 
 type imageListType = string[]
+const proxyUrl = process.env.PROXY_URL as string;
 
 const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
     const auth = await getAuth()
@@ -46,7 +47,7 @@ const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: str
 
     return(
         <div className="flex flex-col h-full p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
-            <UserImageEditing images={images} token={token}/>
+            <UserImageEditing images={images} token={token} proxyUrl={proxyUrl}/>
             { images.length == 0 ? 
                 <></> : <div className="w-auto mt-5 flex">
                             <ImagePagination image_limit_per_page={image_limit_per_page} fileCount={fileCount}/>

@@ -5,16 +5,17 @@ import { useState, useRef, useEffect } from "react"
 interface ImageModalProps {
   image: string
   token: string
+  proxyUrl: string
 }
 
 
 
-export default function ImageModal({ image, token }: ImageModalProps) {
+export default function ImageModal({ image, token, proxyUrl }: ImageModalProps) {
     const [open, setOpen] = useState<boolean>(false)
     const [loaded, setLoaded] = useState<boolean>(false)
     const dialogRef = useRef<HTMLDialogElement>(null)
 
-    const downloadURL = `https://image-proxy.simon-rosebrock.workers.dev/getImage?url=${image}&token=${token}&quality=high`
+    const downloadURL = `${proxyUrl}/getImage?url=${image}&token=${token}&quality=high`
     const imageName = image.split("/")[2]
 
     useEffect(() => {

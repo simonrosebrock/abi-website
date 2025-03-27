@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-db": "node app/lib/setup-db.mjs"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -16,6 +17,7 @@
     "bcrypt": "^5.1.1",
     "browser-image-compression": "^2.0.2",
     "chart.js": "^4.4.8",
+    "dotenv": "^16.4.7",
     "next": "14.2.24",
     "react": "^18",
     "react-dom": "^18",

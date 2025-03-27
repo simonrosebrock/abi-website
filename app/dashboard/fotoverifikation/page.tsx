@@ -13,6 +13,7 @@ type FileCount = {
 type imageListType = string[]
 
 const adminToken = process.env.ADMIN_TOKEN as string;
+const proxyUrl = process.env.PROXY_URL as string;
 
 const FotoVerifikation = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
     const auth = await getAuth()
@@ -61,7 +62,7 @@ const FotoVerifikation = async ({ searchParams }: { searchParams: { [key: string
 
     return(
         <div className="flex flex-col h-full p-5 md:pt-5 pt-0 max-h-[calc(100dvh-103px)] lg:max-h-[calc(100dvh-40px)]">
-            <ImageEditing images={images} deletedImages={deletedImages} token={adminToken} studentEntries={studentEntries} fileCount={fileCount[type]}/>
+            <ImageEditing images={images} deletedImages={deletedImages} token={adminToken} studentEntries={studentEntries} fileCount={fileCount[type]} proxyUrl={proxyUrl}/>
             { images.length == 0 ? 
                 <></> : <div className="w-auto mt-5 flex">
                             <ImagePagination image_limit_per_page={image_limit_per_page} fileCount={fileCount[type][student]}/>

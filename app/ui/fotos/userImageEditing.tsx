@@ -6,7 +6,7 @@ import TypeSelection from "./typeSelection"
 import ImageListSelection from "./imageListSelection"
 import DeleteButton from "./deleteButton"
 
-export default function UserImageEditing({images, token}: {images: string[], token: string}) {
+export default function UserImageEditing({images, token, proxyUrl}: {images: string[], token: string, proxyUrl: string}) {
     const [selectedImages, setSelectedImages] = useState<string[]>([])
     
     return (
@@ -18,7 +18,7 @@ export default function UserImageEditing({images, token}: {images: string[], tok
             </div>
             <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
                 {/* <ImageList images={images} token={token}/> */}
-                <ImageListSelection images={images} token={token} setSelectedImages={setSelectedImages} showName={false} />
+                <ImageListSelection images={images} token={token} setSelectedImages={setSelectedImages} showName={false} proxyUrl={proxyUrl} />
             </div>
         </>
     )

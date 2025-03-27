@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation'
 import StudentSelection from "@/app/ui/fotos/studentSelection";
 
 type imageListType = string[]
+const proxyUrl = process.env.PROXY_URL as string;
 
 const AlleFotos = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
     const auth = await getAuth()
@@ -45,10 +46,10 @@ const AlleFotos = async ({ searchParams }: { searchParams: { [key: string]: stri
             <div className="flex flex-wrap w-auto gap-5 items-center mb-5 xs:justify-normal justify-center">
                 {role === "admin" ? <></> : <UploadButton token={token}/>}
                 <StudentSelection  studentEntries={studentEntries} fileCount={fileCount}/>
-                <DownloadButton token={token}/>
+                <DownloadButton token={token} proxyUrl={proxyUrl}/>
             </div>
             <div className="flex-grow overflow-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
-                <ImageList images={images} token={token}/>
+                <ImageList images={images} token={token} proxyUrl={proxyUrl}/>
             </div>
             { images.length == 0 ? 
                 <></> : <div className="w-auto flex mt-5">

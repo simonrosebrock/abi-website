@@ -6,7 +6,7 @@ type imageListType = string[]
 
 
 
-export default function ImageListSelection({images, token, setSelectedImages, showName}: {images: imageListType, token: string, setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>, showName: boolean}) {
+export default function ImageListSelection({images, token, setSelectedImages, showName, proxyUrl}: {images: imageListType, token: string, setSelectedImages: React.Dispatch<React.SetStateAction<string[]>>, showName: boolean, proxyUrl: string}) {
     if (images.length == 0) {
         return(
             <div className="w-[250px] h-[250px] rounded-lg flex items-center justify-center">
@@ -45,7 +45,7 @@ export default function ImageListSelection({images, token, setSelectedImages, sh
                         
                         <input type="checkbox" defaultChecked={false} className="checkbox checkbox-primary bg-white absolute right-3 top-3" />
                         <img
-                            src={`https://image-proxy.simon-rosebrock.workers.dev/getImage?url=${image}&token=${token}&quality=low`}
+                            src={`${proxyUrl}/getImage?url=${image}&token=${token}&quality=low`}
                             alt={``}
                             loading="lazy"
                             style={{maxWidth: 250, maxHeight: 250, objectFit: 'contain'}}

@@ -8,7 +8,7 @@ import { useState } from "react"
 import TypeSelection from "./typeSelection"
 import ClearButton from "./clearButton"
 
-export default function ImageEditing ({images, deletedImages, token, studentEntries, fileCount}: {images: string[], deletedImages: string[], token: string,studentEntries: string[], fileCount: {[key: string]: number}}) {
+export default function ImageEditing ({images, deletedImages, token, studentEntries, fileCount, proxyUrl}: {images: string[], deletedImages: string[], token: string,studentEntries: string[], fileCount: {[key: string]: number}, proxyUrl: string}) {
     const [selectedImages, setSelectedImages] = useState<string[]>([])
     return(
         <>
@@ -21,7 +21,7 @@ export default function ImageEditing ({images, deletedImages, token, studentEntr
                 <ZipButton/>
             </div>
             <div className="flex-grow overflow-x-hidden overflow-y-auto flex flex-wrap gap-5 justify-center lg:justify-normal scrollbar-none">
-                <ImageListSelection images={images} token={token} setSelectedImages={setSelectedImages} showName={true}/>
+                <ImageListSelection images={images} token={token} setSelectedImages={setSelectedImages} showName={true} proxyUrl={proxyUrl}/>
             </div>
         </>
     )
