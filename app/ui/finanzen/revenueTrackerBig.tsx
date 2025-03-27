@@ -1,7 +1,7 @@
 
 
 export default function RevenueTrackerBig({ausgaben, einnahmen, customZiel}: {ausgaben: number, einnahmen: number, customZiel: number}) {
-    const ziel = customZiel === 0 ? ausgaben : customZiel;
+    const ziel = (customZiel === 0 ? ausgaben : customZiel) | 0;
 
     return(
         <div className="w-full h-[250px] bg-white shadow-sm rounded-lg p-2 flex flex-col items-center">

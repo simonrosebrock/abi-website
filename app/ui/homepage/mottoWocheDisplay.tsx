@@ -5,19 +5,17 @@ import { toCapitalized } from "@/app/lib/miniFuncs"
 type Motto = {type: string, title: string, addition: string, date: string}
 
 export default function MottoWocheDisplay({mottos, mottoImages}: {mottos: Motto[], mottoImages: string[]}) {
+  const filteredMottos = mottos.filter((motto) => motto.title)
   return(
-    <div className="carousel carousel-center gap-4 w-auto flex p-4 min-h-40">
+    <div className="carousel carousel-center gap-4 w-auto flex p-4 min-h-40 scrollbar">
       {
-        mottos.map((motto, index) => (
+        filteredMottos.map((motto, index) => (
           <MottoCard key={`${motto}-${index}`} day={toCapitalized(motto.type)} motto={motto.title} date={motto.date} additions={motto.addition} image={mottoImages[index]}/>
         ))
       }
-        {/* <MottoCard day="Montag" motto="Nationalitäten" date="07.04.25" additions="" image="/Nationalitäten.jpg"/>
-        <MottoCard day="Dienstag" motto="Gruppenkostüme" date="08.04.25" additions="" image="/Gruppenkostüme.jpg"/>
-        <MottoCard day="Mittwoch" motto="Filme/Serien/ Videospiele" date="09.04.25" additions="Everything but a Backpack" image="/FilmSerieVideospiele.png"/>
-        <MottoCard day="Donnerstag" motto="Kindheitshelden" date="10.04.25" additions="" image="/Kindheitshelden.jpg"/>
-        <MottoCard day="Freitag" motto="Mafia" date="11.04.25" additions="Chaos Tag und Aula Programm" image="/Mafia.jpg"/> */}
-      <NoMottoCard date={mottos[0].date}/>
+      {
+        mottos[0].date ? <NoMottoCard date={mottos[0].date}/> : <></>
+      }
     </div>
   )
 }

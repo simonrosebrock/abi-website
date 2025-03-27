@@ -29,12 +29,12 @@ const Finanzen = async () => {
 
     var fixCostSum = 0;
     fixCost.forEach((element: any) => {
-        fixCostSum += element.money;
+        fixCostSum += element.value;
     });
 
     var varCostSum = 0;
     varCost.forEach((element: any) => {
-        varCostSum += element.money;
+        varCostSum += element.value;
     });
 
     const features = await getFeatures("finanzen");

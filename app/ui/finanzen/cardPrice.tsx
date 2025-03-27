@@ -9,9 +9,11 @@ const infoSVG = (
     </svg>
 )
 
-type CheckpointsTable = {money: number, cardprice: number}[]
 
 export default function CardPrice({einnahmen, fixCost, varCost, guestCount, customCardPrice}: {einnahmen: number, fixCost: number, varCost: number, guestCount: number,  customCardPrice: number}) {
+    if (customCardPrice === 0 && (guestCount === 0 || fixCost === 0 || varCost === 0)) {
+        return(<></>)
+    }
 
     var cardPriceEinnahmen = []
     const ziel = fixCost+varCost*guestCount;

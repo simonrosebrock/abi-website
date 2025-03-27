@@ -1,53 +1,21 @@
 'use client'
+
 import Image from "next/image"
 
-export default function AbiMottoDisplay() {
+export default function AbiMottoDisplay({image, zeile1, zeile2}: {image: string, zeile1: string, zeile2: string}) {
   return(
-    <div className="w-auto max-w-[400] sm:w-[600px] md:w-[800px] h-auto min-h-[400px] bg-white flex rounded-box border-2 border-black md ml-2 mr-2">
-      <div className="hidden sm:flex h-full justify-center items-center ml-[30px] pt-[30px] pb-[30px]">
-        <div className="border-2 border-gray-300 rounded-box h-full w-[250px] flex justify-center items-center">
-            <Image src={"/ChatGPT-Logo.png"} alt="image" width={150} height={150}/>
-        </div>
-      </div>
-        
-        <div className="relative flex flex-col ml-10 mt-[30px] text-6xl font-mono">
-            <h1 className="text-5xl font-semibold text-abi-black font-serif text-left ">Abimotto</h1>
-            <div className="flex mt-10 z-10">
-                <span className="">A</span>
-                <span className="ml-[4px]">I-tur,</span>
+    <div className="flex flex-col gap-3 mx-5">
+      <h1 className="text-6xl font-semibold text-abi-black font-serif text-center ">Abimotto</h1>
+      <div className="w-auto max-w-[600px] h-min bg-white shadow-sm rounded-lg p-5 flex flex-col gap-5 border-2 border-solid border-black">
+          <div className="flex">
+            <Image src={image} alt="abimotto" height={100} width={100} className="h-full mr-5" style={{objectFit: 'contain'}}/>
+            <div className="flex flex-col text-2xl xs:text-4xl sm:text-5xl break-words">
+                <span>{zeile1}</span>
+                <span>{zeile2}</span>
             </div>
-            <span className="absolute text-gray-300 top-[88px] left-[20px] z-0">B</span>
-            <span className="">danke ChatGPT!</span>
-            <div className="md:mt-5">
-              <Chat/>
-            </div>
-        </div>
-    </div>
-  )
-}
-
-
-export function Chat() {
-  return(
-    <div className="text-sm relative h-[150px] md:h-[130px]">
-      <div className="chat chat-end absolute right-0">
-      <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <Image src="/thg-media.jpg" alt="avatar" width={50} height={50}/>
           </div>
-        </div>
-        <div className="chat-header">THG</div>
-        <div className="chat-bubble w-[200px]"></div>
-      </div> 
-      <div className="chat chat-start absolute top-16 md:top-12">
-        <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <Image src="/ChatGPT-Logo.png" alt="avatar" width={50} height={50}/>
-          </div>
-        </div>
-        <div className="chat-header">ChatGPT</div>
-        <div className="chat-bubble w-[150px]"></div>
       </div>
     </div>
+    
   )
 }
