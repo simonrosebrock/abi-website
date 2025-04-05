@@ -47,7 +47,7 @@ export default function KategorieView ({kategorie, username, token}: {kategorie:
                 <div className="flex mb-4">
                     <h2 className="text-[#05004E] text-xl">{kategorie["kategorie_name"]}</h2>
                     <button className="btn btn-sm ml-auto" onClick={() => {
-                        const modal = document.getElementById("vorschlag-create-modal") as HTMLDialogElement;
+                        const modal = document.getElementById(`vorschlag-create-modal-${kategorie.kategorie_id}`) as HTMLDialogElement;
                         modal.showModal();
                     }}>+</button>
                 </div>
