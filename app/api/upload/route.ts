@@ -4,6 +4,7 @@ import { put } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
 import { validToken, getUsername } from "@/app/lib/getAuth";
 import { deleteBlobs } from "@/app/lib/blobHandling";
+import { revalidateTag } from "next/cache";
 
 const adminToken = process.env.ADMIN_TOKEN as string;
 
@@ -33,7 +34,7 @@ async function POST(req: NextRequest) {
                 contentType,
                 access: 'public',
             })
-
+            revalidateTag('blob-list');
             return NextResponse.json({ message: "Files uploaded successfully" }, {status: 200});
         }
         return NextResponse.json({ error: "Access Denied" }, { status: 403 });

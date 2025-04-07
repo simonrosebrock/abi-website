@@ -1,5 +1,6 @@
 'use server'
 import { list, del } from '@vercel/blob';
+import { unstable_cache as cache, revalidateTag} from 'next/cache';
 
 export async function deleteBlobs(name: string) {
   try {
@@ -8,14 +9,14 @@ export async function deleteBlobs(name: string) {
     if (blobToDelete) {
         await del(blobToDelete.url);
     }
-
+    revalidateTag('blob-list');;
   } catch (error) {
     console.error('Fehler beim Löschen der Blobs:', error);
   }
 }
 
 
-export async function getBlobList() {
+export const getBlobList = cache(async () => {
   const listResult: {url: string, pathname: string}[] = (await list()).blobs;
   return listResult;
-}
+}, ['blob-list'], {revalidate: false, tags: ['blob-list']});
