@@ -30,7 +30,7 @@ export function MottoCard({day, motto, date, additions, image}: {day: string, mo
  }
 
   return(
-    <div className="carousel-item w-[234px] h-[334px] bg-white rounded-box flex flex-col items-center p-4 overflow-hidden border-black border-2">
+    <div className="relative carousel-item w-[234px] h-[334px] bg-white rounded-box flex flex-col items-center p-4 overflow-hidden border-black border-2">
         <h1 className="text-2xl font-mono text-abi-black flex justify-center">{day}</h1>
         <div className="border-2 border-gray-300 rounded-md w-[200px] h-[150px] mt-4 flex items-center">
           <Image src={image} alt="image" width={200} height={150} className="w-full h-full object-cover rounded-md"></Image>
