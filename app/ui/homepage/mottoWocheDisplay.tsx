@@ -1,5 +1,6 @@
 'use client'
 import { toCapitalized } from "@/app/lib/miniFuncs"
+import Image from "next/image"
 
 type Motto = {type: string, title: string, addition: string, date: string}
 
@@ -32,7 +33,7 @@ export function MottoCard({day, motto, date, additions, image}: {day: string, mo
     <div className="relative carousel-item w-[234px] h-[334px] bg-white rounded-box flex flex-col items-center p-4 overflow-hidden border-black border-2">
         <h1 className="text-2xl font-mono text-abi-black flex justify-center">{day}</h1>
         <div className="border-2 border-gray-300 rounded-md w-[200px] h-[150px] mt-4 flex items-center">
-          <img src={image} alt="image" width={200} height={150} className="w-full h-full object-cover rounded-md"></img>
+          <Image src={image} alt="image" width={200} height={150} className="w-full h-full object-cover rounded-md"/>
         </div>
         <h2 className="text-3xl font-bold text-abi-black flex justify-center text-center mt-4">{motto}</h2>
         { additions === "" ? <></> : 
