@@ -43,7 +43,7 @@ export const setCookies = async (formData: FormData) => {
     } as response;
 };
 
-export const deleteCookies = () => {
+export const deleteCookies = async () => {
   cookies().set('token', '', { expires: new Date(0) });
   redirect('/');
 };
