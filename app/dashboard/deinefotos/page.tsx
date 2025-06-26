@@ -9,7 +9,7 @@ import UserImageEditing from "@/app/ui/fotos/userImageEditing";
 type imageListType = string[]
 const proxyUrl = process.env.PROXY_URL as string;
 
-const DeineFotos = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
+const DeineFotos = async ({ searchParams }: any) => {
     const auth = await getAuth()
     if (!auth) {
         return(<></>)

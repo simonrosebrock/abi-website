@@ -15,7 +15,7 @@ type imageListType = string[]
 const adminToken = process.env.ADMIN_TOKEN as string;
 const proxyUrl = process.env.PROXY_URL as string;
 
-const FotoVerifikation = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
+const FotoVerifikation = async ({ searchParams }: any) => {
     const auth = await getAuth()
     if (!auth) {
         return(<></>)

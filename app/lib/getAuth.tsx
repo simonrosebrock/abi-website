@@ -6,7 +6,8 @@ import { cookies } from 'next/headers';
 const adminToken = process.env.ADMIN_TOKEN as string;
 
 export const getAuth = async (): Promise<null | [string, string, string]> => {
-    const token = cookies().get('token')?.value;
+    const cookie = await cookies();
+    const token = cookie.get('token')?.value;
     if (token) {
         if (token === adminToken) {
             return [token, "admin", "admin"]

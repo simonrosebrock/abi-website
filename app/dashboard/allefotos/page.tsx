@@ -10,7 +10,7 @@ import StudentSelection from "@/app/ui/fotos/studentSelection";
 type imageListType = string[]
 const proxyUrl = process.env.PROXY_URL as string;
 
-const AlleFotos = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
+const AlleFotos = async ({ searchParams }: any) => {
     const auth = await getAuth()
     if (!auth) {
         return(<></>)
