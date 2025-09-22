@@ -1,5 +1,5 @@
 
-![Logo](https://github.com/simonrosebrock/abi-website/blob/main/public/logo.png)
+![Logo](https://github.com/simondevx/abi-website/blob/main/public/logo.png)
 
 
 # Abi Website
@@ -35,21 +35,21 @@ Allgemein:
 
 Homepage:
 
-![HomepagePreview](https://github.com/simonrosebrock/abi-website/blob/main/public/HomepagePreview.png)
+![HomepagePreview](https://github.com/simondevx/abi-website/blob/main/public/HomepagePreview.png)
 
 Userside:
 
-![UserPreview](https://github.com/simonrosebrock/abi-website/blob/main/public/UserPreview.png)
+![UserPreview](https://github.com/simondevx/abi-website/blob/main/public/UserPreview.png)
 
 Adminside:
 
-![AdminPreview](https://github.com/simonrosebrock/abi-website/blob/main/public/AdminPreview.png)
+![AdminPreview](https://github.com/simondevx/abi-website/blob/main/public/AdminPreview.png)
 # Deployment
 
 Repository klonen:
 
 ```
-git clone https://github.com/simonrosebrock/abi-website
+git clone https://github.com/simondevx/abi-website
 ```
 
 Git-Ordner löschen:
@@ -113,7 +113,7 @@ Admin-Account erstellen:
 Repo auf deinem Server klonen:
 
 ```
-git clone https://github.com/simonrosebrock/image-server
+git clone https://github.com/simondevx/image-server
 ```
 
 Erstelle eine Datei namens `.env` und füge einen selbst gewählten API-Key hinzu:
@@ -150,7 +150,7 @@ Wenn der Server lokal läuft, richte ein Dynamic DNS ein und merke dir die Domai
 Repo lokal klonen und danach hochladen:
 
 ```
-git clone https://github.com/simonrosebrock/image-proxy
+git clone https://github.com/simondevx/image-proxy
 ```
 
 Gehe auf GitHub und erstelle ein neues privates Repository (verwende nur Kleinbuchstaben).
@@ -181,7 +181,7 @@ git push -u origin main
 | ADMIN_TOKEN   | <admin-token>               |
 | DB_URL        | <connection-string>         |
 
-Gehe in deinem lokal gespeicherten Projekt zu `next.config.mjs` und ersetze die Adresse `image-proxy.simon-rosebrock.workers.dev` mit deiner kopierten Adresse.
+Gehe in deinem lokal gespeicherten Projekt zu `next.config.mjs` und ersetze die Adresse `image-proxy.simon-devx.workers.dev` mit deiner kopierten Adresse.
 
 **Images und Vercel verbinden:**
 - Gehe in dein Vercel-Projekt auf "Settings".
