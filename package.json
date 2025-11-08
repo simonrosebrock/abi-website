@@ -16,7 +16,7 @@
     "@vercel/postgres": "^0.10.0",
     "bcrypt": "^6.0.0",
     "browser-image-compression": "^2.0.2",
-    "chart.js": "^4.4.8",
+    "chart.js": "^4.5.1",
     "dotenv": "^16.4.7",
     "next": "15.2.2",
     "react": "^18",
